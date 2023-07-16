@@ -3,33 +3,72 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { useGetBooksQuery } from "../redux/api/apiSlice";
+import { Row } from "react-bootstrap";
 
 const RecentBooks = () => {
+  const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
+  console.log(bookData);
+
   return (
-    <div>
-      <Card style={{ width: "18rem" }}>
-        <div className="d-flex">
-          <Card.Img
-            variant="top"
-            src=""
-            alt="fgfgggggg"
-            // className="w-50 "
-          />
-          <Card.Body>
-            <Card.Title>Reading on the World</Card.Title>
-            <Card.Text>Jhone Steben</Card.Text>
-            <FontAwesomeIcon icon={faStar}></FontAwesomeIcon>
-            <FontAwesomeIcon icon={faStar}></FontAwesomeIcon>
-            <FontAwesomeIcon icon={faStar}></FontAwesomeIcon>
-            <FontAwesomeIcon icon={faStar}></FontAwesomeIcon>
-            <FontAwesomeIcon icon={faStar}></FontAwesomeIcon>
-            <Card.Text>$100 $89</Card.Text>
-            <FontAwesomeIcon icon={faCartShopping}></FontAwesomeIcon>
-            <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-          </Card.Body>
+    <Row>
+      {bookData?.data?.map((book, i) => (
+        <div className="col-md-4 col-lg-3">
+          <Card>
+            <div className="d-flex">
+              <img
+                src={book?.image}
+                alt="fgfgggggg"
+                className="img-fluid"
+                width="130"
+                height="auto"
+              />
+              <Card.Body style={{ minWidth: 0 }}>
+                <Card.Title className="text-truncate">{book?.title}</Card.Title>
+                <Card.Text className="mb-0">{book?.author}</Card.Text>
+                <Card.Text className="text-muted mb-0">
+                  {" "}
+                  {book?.genre}
+                </Card.Text>
+                <div className="my-2">
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className="text-warning"
+                  ></FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className="text-warning"
+                  ></FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className="text-warning"
+                  ></FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className="text-warning"
+                  ></FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    icon={faStar}
+                    className="text-warning"
+                  ></FontAwesomeIcon>
+                </div>
+                <Card.Text className="fw-bold mb-1">${book?.price}</Card.Text>
+                <div className="">
+                  <FontAwesomeIcon
+                    icon={faCartShopping}
+                    className="text-success me-2"
+                  ></FontAwesomeIcon>
+                  <FontAwesomeIcon
+                    icon={faHeart}
+                    className="me-4 text-danger"
+                  ></FontAwesomeIcon>
+                </div>
+              </Card.Body>
+            </div>
+          </Card>
         </div>
-      </Card>
-    </div>
+      ))}
+    </Row>
   );
 };
 
