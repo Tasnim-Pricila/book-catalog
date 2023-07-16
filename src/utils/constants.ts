@@ -15,6 +15,6 @@ export const genres = [
 
   const currentYear = new Date().getFullYear();
   export const years = Array.from(
-    { length: currentYear - 1970 + 1 },
-    (_, index) => 1970 + index
+    { length: currentYear - 1900 + 1 },
+    (_, index) => 1900 + index
   );

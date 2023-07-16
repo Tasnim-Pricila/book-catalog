@@ -7,25 +7,42 @@ import { useGetBooksQuery } from "../redux/api/apiSlice";
 import { Button, Form, Row, Stack } from "react-bootstrap";
 import { genres, years } from "../utils/constants";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
-import { setGenre, setSearchedText } from "../redux/features/books/bookSlice";
+import {
+  setGenre,
+  setPublicationDate,
+  setSearchedText,
+} from "../redux/features/books/bookSlice";
 
 const AllBooks = () => {
   const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
   // console.log(bookData);
-  const { searchedText, genre } = useAppSelector((state) => state.book);
+  const { searchedText, genre, publicationDate } = useAppSelector(
+    (state) => state.book
+  );
+  // console.log(searchedText);
   const dispatch = useAppDispatch();
 
   let books;
-  if (genre !== "") {
+  if (searchedText) {
     books = bookData?.data?.filter(
-      (book: any) => book?.genre?.toLowerCase() === genre.toLowerCase()
-    )
-  } else if (searchedText) {
-    books = bookData?.data?.filter(
-      (book: any) =>
+      (book) =>
         book?.title?.toLowerCase().includes(searchedText.toLowerCase()) ||
         book?.author?.toLowerCase().includes(searchedText.toLowerCase()) ||
         book?.genre?.toLowerCase().includes(searchedText.toLowerCase())
+    )
+  } else if (genre && publicationDate) {
+    books = bookData?.data?.filter(
+      (book) =>
+        book?.genre?.toLowerCase() === genre.toLowerCase() &&
+        book?.publication_date?.substr(-4) === publicationDate
+    );
+  } else if (genre) {
+    books = bookData?.data?.filter(
+      (book) => book?.genre?.toLowerCase() === genre.toLowerCase()
+    );
+  } else if (publicationDate) {
+    books = bookData?.data?.filter(
+      (book) => book?.publication_date?.substr(-4) === publicationDate
     );
   } else {
     books = bookData?.data;
@@ -47,8 +64,13 @@ const AllBooks = () => {
             </option>
           ))}
         </Form.Select>
-        <Form.Select style={{ flex: 1 }}>
-          <option>Select Publication Year</option>
+        <Form.Select
+          style={{ flex: 1 }}
+          onChange={(e) => dispatch(setPublicationDate(e.target.value))}
+        >
+          <option key="" value="">
+            Select Publication Year
+          </option>
           {years.map((year) => (
             <option key={year} value={year}>
               {year}
@@ -84,6 +106,9 @@ const AllBooks = () => {
                     {book?.title}
                   </Card.Title>
                   <Card.Text className="mb-0">{book?.author}</Card.Text>
+                  <Card.Text className="mb-0">
+                    {book?.publication_date}
+                  </Card.Text>
                   <Card.Text className="text-muted mb-0">
                     {" "}
                     {book?.genre}
