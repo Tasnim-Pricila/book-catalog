@@ -16,18 +16,18 @@ const routes = createBrowserRouter([
           element: <Home />,
         },
         {
-          path: '/books',
+          path: '/allbooks',
           element: <AllBooks />,
+        },
+        {
+          path: '/signin',
+          element: <SignIn />,
+        },
+        {
+          path: '/signup',
+          element: <Signup />,
         }
       ],
-    },
-    {
-      path: '/signin',
-      element: <SignIn />,
-    },
-    {
-      path: '/signup',
-      element: <Signup />,
     },
     {
       path: '*',

@@ -2,6 +2,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -25,13 +26,13 @@ const Header = () => {
             className=""
             // className='d-flex justify-content-end w-100'
           >
-            <Nav.Link href="#deets">All Books</Nav.Link>
-            <Nav.Link eventKey={2} href="#memes">
+            <Link to="/allbooks">All Books</Link>
+            <Link to="/signin">
               Sign In
-            </Nav.Link>
-            <Nav.Link eventKey={3} href="#memes">
+            </Link>
+            <Link to="/signup">
               Sign Up
-            </Nav.Link>
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
