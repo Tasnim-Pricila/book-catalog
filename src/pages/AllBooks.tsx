@@ -12,15 +12,15 @@ import {
   setPublicationDate,
   setSearchedText,
 } from "../redux/features/books/bookSlice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AllBooks = () => {
+  const navigate = useNavigate();
   const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
   // console.log(bookData);
   const { searchedText, genre, publicationDate } = useAppSelector(
     (state) => state.book
   );
-  // console.log(searchedText);
   const dispatch = useAppDispatch();
 
   let books;
@@ -104,6 +104,7 @@ const AllBooks = () => {
                   className="img-fluid"
                   width="130"
                   height="auto"
+                  onClick={() => navigate(`/bookdetails/${book._id}`)}
                 />
                 <Card.Body style={{ minWidth: 0 }}>
                   <Card.Title className="text-truncate">
