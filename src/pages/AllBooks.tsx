@@ -12,6 +12,7 @@ import {
   setPublicationDate,
   setSearchedText,
 } from "../redux/features/books/bookSlice";
+import { Link } from "react-router-dom";
 
 const AllBooks = () => {
   const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
@@ -29,7 +30,7 @@ const AllBooks = () => {
         book?.title?.toLowerCase().includes(searchedText.toLowerCase()) ||
         book?.author?.toLowerCase().includes(searchedText.toLowerCase()) ||
         book?.genre?.toLowerCase().includes(searchedText.toLowerCase())
-    )
+    );
   } else if (genre && publicationDate) {
     books = bookData?.data?.filter(
       (book) =>
@@ -87,6 +88,9 @@ const AllBooks = () => {
           />
           <Button variant="primary">Search</Button>
         </Form>
+        <Button variant="success">
+          <Link to="/addnew" className="text-decoration-none text-white">+ Add New</Link>
+        </Button>
       </Stack>
 
       <Row>

@@ -5,6 +5,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import SignIn from "../pages/SignIn";
 import Signup from "../pages/Signup";
 import NotFound from "../pages/NotFound";
+import AddNew from "../pages/AddNew";
 
 const routes = createBrowserRouter([
     {
@@ -18,6 +19,10 @@ const routes = createBrowserRouter([
         {
           path: '/allbooks',
           element: <AllBooks />,
+        },
+        {
+          path: '/addnew',
+          element: <AddNew />,
         },
         {
           path: '/signin',
