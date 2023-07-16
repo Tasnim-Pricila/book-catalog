@@ -4,13 +4,43 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useGetBooksQuery } from "../redux/api/apiSlice";
-import { Row } from "react-bootstrap";
+import { Button, Form, Row, Stack } from "react-bootstrap";
+import { genres, years } from "../utils/constants";
 
 const AllBooks = () => {
-    const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
-    console.log(bookData);
-    return (
-        <Row>
+  const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
+  console.log(bookData);
+  
+  return (
+    <>
+      <Stack direction="horizontal" gap={3} className="mb-5 mx-5 px-5">
+        <Form.Select style={{ flex: 1 }}>
+          <option>Select Genre</option>
+          {genres?.map((genre) => (
+            <option key={genre} value={genre}>
+              {genre}
+            </option>
+          ))}
+        </Form.Select>
+        <Form.Select style={{ flex: 1 }}>
+          <option>Select Publication Year</option>
+          {years.map((year) => (
+            <option key={year} value={year}>
+              {year}
+            </option>
+          ))}
+        </Form.Select>
+        <Form className="d-flex" style={{ flex: 1 }}>
+          <Form.Control
+            type="search"
+            placeholder="Search"
+            className="me-2 border border-primary"
+            aria-label="Search"
+          />
+          <Button variant="primary">Search</Button>
+        </Form>
+      </Stack>
+      <Row>
         {bookData?.data?.map((book, i) => (
           <div className="col-md-4 col-lg-3">
             <Card>
@@ -23,7 +53,9 @@ const AllBooks = () => {
                   height="auto"
                 />
                 <Card.Body style={{ minWidth: 0 }}>
-                  <Card.Title className="text-truncate">{book?.title}</Card.Title>
+                  <Card.Title className="text-truncate">
+                    {book?.title}
+                  </Card.Title>
                   <Card.Text className="mb-0">{book?.author}</Card.Text>
                   <Card.Text className="text-muted mb-0">
                     {" "}
@@ -68,7 +100,8 @@ const AllBooks = () => {
           </div>
         ))}
       </Row>
-    );
+    </>
+  );
 };
 
 export default AllBooks;
