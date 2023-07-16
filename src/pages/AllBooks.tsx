@@ -7,29 +7,40 @@ import { useGetBooksQuery } from "../redux/api/apiSlice";
 import { Button, Form, Row, Stack } from "react-bootstrap";
 import { genres, years } from "../utils/constants";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
-import { setSearchedText } from "../redux/features/books/bookSlice";
+import { setGenre, setSearchedText } from "../redux/features/books/bookSlice";
 
 const AllBooks = () => {
   const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
   // console.log(bookData);
-  const { searchedText } = useAppSelector((state) => state.book)
+  const { searchedText, genre } = useAppSelector((state) => state.book);
   const dispatch = useAppDispatch();
 
   let books;
-  if (searchedText) {
-    books = bookData?.data?.filter((book: any) =>
-      book?.title?.toLowerCase().includes(searchedText.toLowerCase())
+  if (genre !== "") {
+    books = bookData?.data?.filter(
+      (book: any) => book?.genre?.toLowerCase() === genre.toLowerCase()
+    )
+  } else if (searchedText) {
+    books = bookData?.data?.filter(
+      (book: any) =>
+        book?.title?.toLowerCase().includes(searchedText.toLowerCase()) ||
+        book?.author?.toLowerCase().includes(searchedText.toLowerCase()) ||
+        book?.genre?.toLowerCase().includes(searchedText.toLowerCase())
     );
-  }
-  else{
-    books = bookData?.data
+  } else {
+    books = bookData?.data;
   }
 
   return (
     <>
       <Stack direction="horizontal" gap={3} className="mb-5 mx-5 px-5">
-        <Form.Select style={{ flex: 1 }}>
-          <option>Select Genre</option>
+        <Form.Select
+          style={{ flex: 1 }}
+          onChange={(e) => dispatch(setGenre(e.target.value))}
+        >
+          <option key="" value="">
+            Select Genre
+          </option>
           {genres?.map((genre) => (
             <option key={genre} value={genre}>
               {genre}
@@ -50,7 +61,7 @@ const AllBooks = () => {
             placeholder="Search Here..."
             className="me-2 border border-primary"
             aria-label="Search"
-            onChange={(e) => dispatch(setSearchedText(e.target.value)) }
+            onChange={(e) => dispatch(setSearchedText(e.target.value))}
           />
           <Button variant="primary">Search</Button>
         </Form>

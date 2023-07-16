@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 interface IBook {
-    searchedText: string
+    searchedText: string,
+    genre: string
 }
 
 const initialState: IBook = {
-    searchedText: ''
+    searchedText: '',
+    genre: ''
 };
 
 const bookSlice = createSlice({
@@ -16,9 +18,12 @@ const bookSlice = createSlice({
     setSearchedText: (state, action: PayloadAction<string>) => {
       state.searchedText = action.payload;
     },
+    setGenre: (state, action: PayloadAction<string>) => {
+      state.genre = action.payload;
+    },
   },
 });
 
-export const { setSearchedText } = bookSlice.actions;
+export const { setSearchedText, setGenre } = bookSlice.actions;
 
 export default bookSlice.reducer;
