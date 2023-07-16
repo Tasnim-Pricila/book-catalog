@@ -6,11 +6,25 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useGetBooksQuery } from "../redux/api/apiSlice";
 import { Button, Form, Row, Stack } from "react-bootstrap";
 import { genres, years } from "../utils/constants";
+import { useAppDispatch, useAppSelector } from "../redux/features/hook";
+import { setSearchedText } from "../redux/features/books/bookSlice";
 
 const AllBooks = () => {
   const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
-  console.log(bookData);
-  
+  // console.log(bookData);
+  const { searchedText } = useAppSelector((state) => state.book)
+  const dispatch = useAppDispatch();
+
+  let books;
+  if (searchedText) {
+    books = bookData?.data?.filter((book: any) =>
+      book?.title?.toLowerCase().includes(searchedText.toLowerCase())
+    );
+  }
+  else{
+    books = bookData?.data
+  }
+
   return (
     <>
       <Stack direction="horizontal" gap={3} className="mb-5 mx-5 px-5">
@@ -33,15 +47,17 @@ const AllBooks = () => {
         <Form className="d-flex" style={{ flex: 1 }}>
           <Form.Control
             type="search"
-            placeholder="Search"
+            placeholder="Search Here..."
             className="me-2 border border-primary"
             aria-label="Search"
+            onChange={(e) => dispatch(setSearchedText(e.target.value)) }
           />
           <Button variant="primary">Search</Button>
         </Form>
       </Stack>
+
       <Row>
-        {bookData?.data?.map((book, i) => (
+        {books?.map((book, i) => (
           <div className="col-md-4 col-lg-3">
             <Card>
               <div className="d-flex">
