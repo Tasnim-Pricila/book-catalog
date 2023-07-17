@@ -13,7 +13,7 @@ const AddNew = () => {
       title: e.target.title.value,
       author: e.target.author.value,
       genre: e.target.genre.value,
-      publicationDate: e.target.publicationDate.value,
+      publication_date: e.target.publicationDate.value,
       price: e.target.price.value,
       image: e.target.image.value,
     };

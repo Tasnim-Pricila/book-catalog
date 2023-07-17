@@ -17,8 +17,15 @@ export const api = createApi({
         method: 'POST',
         body: data
       })
+    }),
+    editBook : builder.mutation({
+      query: ({id, data}) => ({
+        url: `/book/${id}`,
+        method: 'PATCH',
+        body: data
+      })
     })
   }),
 });
 
-export const { useGetBooksQuery, useGetBookByIdQuery, useCreateBookMutation } = api;
+export const { useGetBooksQuery, useGetBookByIdQuery, useCreateBookMutation, useEditBookMutation  } = api;
