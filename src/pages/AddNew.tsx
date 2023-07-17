@@ -1,10 +1,38 @@
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Toast, ToastContainer } from "react-bootstrap";
 import { genres } from "../utils/constants";
+import { useCreateBookMutation } from "../redux/api/apiSlice";
+import { FormEvent } from "react";
 
 const AddNew = () => {
+  const [createBook, { isLoading, isError, isSuccess }] =
+    useCreateBookMutation();
+
+  const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data = {
+      title: e.target.title.value,
+      author: e.target.author.value,
+      genre: e.target.genre.value,
+      publicationDate: e.target.publicationDate.value,
+      price: e.target.price.value,
+      image: e.target.image.value,
+    };
+    createBook(data);
+  };
+
   return (
     <div>
-      <Form>
+      {isSuccess && (
+        <ToastContainer position="top-end" className="mt-5 me-5">
+          <Toast bg="success" autohide={true}>
+            <Toast.Body className="text-white">
+              Book created successfully
+            </Toast.Body>
+          </Toast>
+        </ToastContainer>
+      )}
+
+      <Form onSubmit={handleSumbit}>
         <Form.Group className="mb-2" controlId="bookTitle">
           <Form.Label className="fw-bold">Title</Form.Label>
           <Form.Control
@@ -27,17 +55,13 @@ const AddNew = () => {
 
         <Form.Group className="mb-2" controlId="bookGenre">
           <Form.Label className="fw-bold">Genre</Form.Label>
-          <Form.Control
-            as="select"
-            name="genre"
-            required
-          >
+          <Form.Control as="select" name="genre" required>
             <option value="">Select genre</option>
             {genres?.map((genre) => (
-            <option key={genre} value={genre}>
-              {genre}
-            </option>
-          ))}
+              <option key={genre} value={genre}>
+                {genre}
+              </option>
+            ))}
           </Form.Control>
         </Form.Group>
 
@@ -53,11 +77,7 @@ const AddNew = () => {
 
         <Form.Group className="mb-2" controlId="price">
           <Form.Label className="fw-bold">Price</Form.Label>
-          <Form.Control
-            type="number"
-            name="price"
-            placeholder="Enter price"
-          />
+          <Form.Control type="number" name="price" placeholder="Enter price" />
         </Form.Group>
 
         <Form.Group className="mb-2" controlId="image">
@@ -66,7 +86,6 @@ const AddNew = () => {
             type="text"
             name="image"
             placeholder="Enter image link"
-            required
           />
         </Form.Group>
 
