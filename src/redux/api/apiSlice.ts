@@ -24,8 +24,14 @@ export const api = createApi({
         method: 'PATCH',
         body: data
       })
-    })
+    }),
+    deleteBook : builder.mutation({
+      query: (id) => ({
+        url: `/book/${id}`,
+        method: 'DELETE',
+      })
+    }),
   }),
 });
 
-export const { useGetBooksQuery, useGetBookByIdQuery, useCreateBookMutation, useEditBookMutation  } = api;
+export const { useGetBooksQuery, useGetBookByIdQuery, useCreateBookMutation, useEditBookMutation , useDeleteBookMutation } = api;
