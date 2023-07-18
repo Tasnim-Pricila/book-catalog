@@ -3,12 +3,14 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000" }),
+  tagTypes: ['comment'],
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: () => "/books",
     }),
     getBookById: builder.query({
       query: (id) => `/book/${id}`,
+      providesTags: ['comment']
     }),
     createBook : builder.mutation({
       query: (data) => ({
@@ -22,7 +24,8 @@ export const api = createApi({
         url: `/book/${id}`,
         method: 'PATCH',
         body: data
-      })
+      }),
+      invalidatesTags: ['comment']
     }),
     deleteBook : builder.mutation({
       query: (id) => ({

@@ -2,6 +2,7 @@ import {
   Button,
   Card,
   Col,
+  Form,
   Image,
   Modal,
   Row,
@@ -11,6 +12,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useDeleteBookMutation,
+  useEditBookMutation,
   useGetBookByIdQuery,
 } from "../redux/api/apiSlice";
 import { useState, useEffect } from "react";
@@ -31,13 +33,27 @@ const BookDetails = () => {
   const handleDelete = async () => {
     await deleteBook(id);
   };
-  console.log(deleteBook);
+  // console.log(deleteBook);
   useEffect(() => {
     if (!isLoading && isSuccess) {
       setShow(false);
       navigate("/allbooks");
     }
   }, [isSuccess, isLoading]);
+  const [editBook] = useEditBookMutation();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const comment = {
+      comment: e.target.comment.value
+    }
+    const data = {
+      reviews: [...reviews, comment ],
+    };
+    console.log(data);
+    editBook({ id, data });
+    e.target.reset();
+  };
 
   return (
     <div>
@@ -76,22 +92,35 @@ const BookDetails = () => {
           </Button>
         </Col>
       </Row>
+      <Row className="w-50">
+        <h3 className="mt-3">Reviews: </h3>
+        <Form onSubmit={handleSubmit} className="d-flex">
+          <Form.Control
+            type="text"
+            name="comment"
+            placeholder="Write your comment"
+            className="me-2 border border-primary"
+            required
+          />
+          <Button type="submit" variant="outline-primary">
+            Submit
+          </Button>
+        </Form>
+      </Row>
 
       {reviews?.map((review) => (
         <Row key={review._id} className="my-4">
-          <Col md={2}>
-            {/* <Media> */}
+          <Col md={1}>
             <img
               src={review.userImage}
               alt={review.user_id}
               className="mr-3 rounded-circle"
               style={{ width: "64px", height: "64px" }}
             />
-            {/* </Media> */}
           </Col>
           <Col md={10}>
             <h5>{review.user_id}</h5>
-            <p>Rating: {review.rating}</p>
+            {/* <p>Rating: {review.rating}</p> */}
             <p>{review.comment}</p>
           </Col>
         </Row>
