@@ -3,8 +3,24 @@ import Nav from "react-bootstrap/Nav";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { Link } from "react-router-dom";
+import { signOut } from "firebase/auth";
+import { auth } from "../lib/firebase";
+import { useAppDispatch, useAppSelector } from "../redux/features/hook";
+import { logout } from "../redux/features/users/userSlice";
 
 const Header = () => {
+  const { user, isLoading } = useAppSelector((state) => state.user);
+  console.log(user);
+  const dispatch = useAppDispatch();
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        dispatch(logout());
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
   return (
     <>
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
@@ -27,12 +43,15 @@ const Header = () => {
             // className='d-flex justify-content-end w-100'
           >
             <Link to="/allbooks">All Books</Link>
-            <Link to="/signin">
-              Sign In
-            </Link>
-            <Link to="/signup">
-              Sign Up
-            </Link>
+
+            {user.email ? (
+              <Button onClick={() => handleLogout()}>Logout</Button>
+            ) : (
+              <>
+                <Link to="/signin">Sign In</Link>
+                <Link to="/signup">Sign Up</Link>
+              </>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

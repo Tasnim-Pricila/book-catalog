@@ -27,7 +27,7 @@ const Signup = () => {
         password: data.password,
       })
     );
-    console.log(data);
+    // console.log(data);
   };
 
   return (
