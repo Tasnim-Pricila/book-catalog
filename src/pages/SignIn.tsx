@@ -15,7 +15,7 @@ import { useEffect } from "react";
 const SignIn = () => {
   const { user, isLoading } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  console.log(user);
+  // console.log(user);
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
