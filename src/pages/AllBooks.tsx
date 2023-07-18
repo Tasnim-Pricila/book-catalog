@@ -1,6 +1,6 @@
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faBookOpenReader, faCircleCheck, faStar } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -30,9 +30,11 @@ const AllBooks = () => {
   const userData = getUser?.data;
   const id = userData?._id;
   const userWishlist = userData?.wishlist;
+  const completedBooks = userData?.completedBooks;
+  const currentlyReading = userData?.currentlyReading;
   // console.log(userWishlist);
 
-  const [updateUser, { data }] = useUpdateUserMutation();
+  const [updateUser] = useUpdateUserMutation();
 
   let books;
   if (searchedText) {
@@ -62,7 +64,6 @@ const AllBooks = () => {
 
   const addToWishlist = (book) => {
     const isExist = userWishlist?.find((list) => list._id === book._id);
-    console.log(isExist);
     if (isExist) {
       const removeFromWishlist = userWishlist?.filter(
         (list) => list._id !== book._id
@@ -78,6 +79,52 @@ const AllBooks = () => {
           }
         : {
             wishlist: [book],
+          };
+      updateUser({ id, data });
+    }
+  };
+
+  const markAsRead = (book) => {
+    const isExist = completedBooks?.find((list) => list._id === book._id);
+    console.log(isExist);
+    if (isExist) {
+      const removeFromCompleted = completedBooks?.filter(
+        (list) => list._id !== book._id
+      );
+      const data = {
+        completedBooks: [...removeFromCompleted],
+      };
+      updateUser({ id, data });
+    } else {
+      const data = completedBooks
+        ? {
+            completedBooks: [...completedBooks, book],
+          }
+        : {
+            completedBooks: [book],
+          };
+      updateUser({ id, data });
+    }
+  };
+
+  const readingNow = (book) => {
+    const isExist = currentlyReading?.find((list) => list._id === book._id);
+    console.log(isExist);
+    if (isExist) {
+      const removeFromReading = currentlyReading?.filter(
+        (list) => list._id !== book._id
+      );
+      const data = {
+        currentlyReading: [...removeFromReading],
+      };
+      updateUser({ id, data });
+    } else {
+      const data = currentlyReading
+        ? {
+          currentlyReading: [...currentlyReading, book],
+          }
+        : {
+          currentlyReading: [book],
           };
       updateUser({ id, data });
     }
@@ -180,23 +227,63 @@ const AllBooks = () => {
                   </div>
                   <Card.Text className="fw-bold mb-1">${book?.price}</Card.Text>
                   <div>
-                    {userWishlist?.find(
-                      (wishlist) => wishlist._id === book._id
-                    ) ? (
-                      <FontAwesomeIcon
-                        role="button"
-                        icon={faHeart}
-                        className="me-4 text-danger"
-                        onClick={() => addToWishlist(book)}
-                      ></FontAwesomeIcon>
-                    ) : (
-                      <FontAwesomeIcon
-                        role="button"
-                        icon={faHeart}
-                        className="me-4"
-                        onClick={() => addToWishlist(book)}
-                      ></FontAwesomeIcon>
-                    )}
+                    <>
+                      {userWishlist?.find(
+                        (wishlist) => wishlist._id === book._id
+                      ) ? (
+                        <FontAwesomeIcon
+                          role="button"
+                          icon={faHeart}
+                          className="me-4 text-danger"
+                          onClick={() => addToWishlist(book)}
+                        ></FontAwesomeIcon>
+                      ) : (
+                        <FontAwesomeIcon
+                          role="button"
+                          icon={faHeart}
+                          className="me-4"
+                          onClick={() => addToWishlist(book)}
+                        ></FontAwesomeIcon>
+                      )}
+                    </>
+                    <>
+                      {completedBooks?.find(
+                        (completed) => completed._id === book._id
+                      ) ? (
+                        <FontAwesomeIcon
+                          role="button"
+                          icon={faCircleCheck}
+                          className="me-4 text-success"
+                          onClick={() => markAsRead(book)}
+                        ></FontAwesomeIcon>
+                      ) : (
+                        <FontAwesomeIcon
+                          role="button"
+                          icon={faCircleCheck}
+                          className="me-4"
+                          onClick={() => markAsRead(book)}
+                        ></FontAwesomeIcon>
+                      )}
+                    </>
+                    <>
+                      {currentlyReading?.find(
+                        (reading) => reading._id === book._id
+                      ) ? (
+                        <FontAwesomeIcon
+                          role="button"
+                          icon={faBookOpenReader}
+                          className="me-4 text-primary"
+                          onClick={() => readingNow(book)}
+                        ></FontAwesomeIcon>
+                      ) : (
+                        <FontAwesomeIcon
+                          role="button"
+                          icon={faBookOpenReader}
+                          className="me-4"
+                          onClick={() => readingNow(book)}
+                        ></FontAwesomeIcon>
+                      )}
+                    </>
                   </div>
                 </Card.Body>
               </div>
