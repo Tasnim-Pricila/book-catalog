@@ -1,9 +1,44 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { faFacebook, faGoogle, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import {
+  faFacebook,
+  faGoogle,
+  faInstagram,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
+import { loginUser } from "../redux/features/users/userSlice";
+import { useAppDispatch, useAppSelector } from "../redux/features/hook";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const SignIn = () => {
+  const { user, isLoading } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  console.log(user);
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+    dispatch(
+      loginUser({
+        email: data.email,
+        password: data.password,
+      })
+    );
+    // console.log(data);
+  };
+
+  useEffect(() => {
+    if (user.email && !isLoading) {
+      navigate("/");
+    }
+  }, [user.email, isLoading]);
+
   return (
     <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5 bg-warning">
       <div className="row gx-lg-5 align-items-center mb-5">
@@ -23,15 +58,17 @@ const SignIn = () => {
         <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
           <div className="card bg-glass">
             <div className="card-body px-4 py-5 px-md-5">
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Form.Control
                   type="email"
+                  name="email"
                   placeholder="Enter email"
                   className="mb-4"
                 />
 
                 <Form.Control
                   type="password"
+                  name="password"
                   placeholder="Enter password"
                   className="mb-4"
                 />
@@ -53,11 +90,11 @@ const SignIn = () => {
                   </Button>
 
                   <Button className="btn btn-link btn-floating mx-1">
-                  <FontAwesomeIcon icon={faTwitter} />
+                    <FontAwesomeIcon icon={faTwitter} />
                   </Button>
 
                   <Button className="btn btn-link btn-floating mx-1">
-                  <FontAwesomeIcon icon={faInstagram} />
+                    <FontAwesomeIcon icon={faInstagram} />
                   </Button>
                 </div>
               </Form>

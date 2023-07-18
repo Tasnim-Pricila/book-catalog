@@ -1,9 +1,35 @@
-import { faFacebook, faGoogle, faInstagram, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import {
+  faFacebook,
+  faGoogle,
+  faInstagram,
+  faTwitter,
+} from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import { useAppDispatch } from "../redux/features/hook";
+import { createUser } from "../redux/features/users/userSlice";
 
 const Signup = () => {
+  const dispatch = useAppDispatch();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      firstName: e.target.firstName.value,
+      lastName: e.target.lastName.value,
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+    dispatch(
+      createUser({
+        email: data.email,
+        password: data.password,
+      })
+    );
+    console.log(data);
+  };
+
   return (
     <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5 bg-warning">
       <div className="row gx-lg-5 align-items-center mb-5">
@@ -23,24 +49,34 @@ const Signup = () => {
         <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
           <div className="card bg-glass">
             <div className="card-body px-4 py-5 px-md-5">
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <div className="row">
                   <div className="col-md-6 mb-4">
-                    <Form.Control type="text" placeholder="First Name" />
+                    <Form.Control
+                      type="text"
+                      name="firstName"
+                      placeholder="First Name"
+                    />
                   </div>
                   <div className="col-md-6 mb-4">
-                    <Form.Control type="text" placeholder="Last Name" />
+                    <Form.Control
+                      type="text"
+                      name="lastName"
+                      placeholder="Last Name"
+                    />
                   </div>
                 </div>
 
                 <Form.Control
                   type="email"
                   placeholder="Enter email"
+                  name="email"
                   className="mb-4"
                 />
 
                 <Form.Control
                   type="password"
+                  name="password"
                   placeholder="Enter password"
                   className="mb-4"
                 />
