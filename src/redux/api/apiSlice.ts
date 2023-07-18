@@ -19,6 +19,7 @@ export const api = createApi({
         body: data
       })
     }),
+   
     editBook : builder.mutation({
       query: ({id, data}) => ({
         url: `/book/${id}`,
@@ -32,6 +33,17 @@ export const api = createApi({
         url: `/book/${id}`,
         method: 'DELETE',
       })
+    }),
+
+    createUser : builder.mutation({
+      query: (data) => ({
+        url: '/user',
+        method: 'POST',
+        body: data
+      })
+    }),
+    getUserById: builder.query({
+      query: (id) => `/user/${id}`
     }),
   }),
 });
