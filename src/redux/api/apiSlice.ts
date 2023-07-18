@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000" }),
-  tagTypes: ['comment'],
+  tagTypes: ['comment', 'wishlist'],
   endpoints: (builder) => ({
     getBooks: builder.query({
       query: () => "/books",
@@ -45,7 +45,19 @@ export const api = createApi({
     getUserById: builder.query({
       query: (id) => `/user/${id}`
     }),
+    getUserByEmail: builder.query({
+      query: (email) => `/user/${email}`,
+      providesTags: ['wishlist']
+    }),
+    updateUser : builder.mutation({
+      query: ({id, data}) => ({
+        url: `/user/${id}`,
+        method: 'PATCH',
+        body: data
+      }),
+      invalidatesTags: ['wishlist']
+    }),
   }),
 });
 
-export const { useGetBooksQuery, useGetBookByIdQuery, useCreateBookMutation, useEditBookMutation , useDeleteBookMutation } = api;
+export const { useGetBooksQuery, useGetBookByIdQuery, useCreateBookMutation, useEditBookMutation , useDeleteBookMutation, useCreateUserMutation, useGetUserByEmailQuery, useUpdateUserMutation } = api;

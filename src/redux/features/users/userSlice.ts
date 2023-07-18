@@ -5,11 +5,13 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'fire
 
 interface IUserState {
   user: {
+    id: string | null,
     email: string | null;
   };
   isLoading: boolean;
   isError: boolean;
   error: string | null;
+  isSuccess: boolean
 }
 
 interface ICredential {
@@ -19,17 +21,20 @@ interface ICredential {
 
 const initialState: IUserState = {
   user: {
+    id: null,
     email: null,
   },
   isLoading: false,
   isError: false,
   error: null,
+  isSuccess: false
 };
 
 export const createUser = createAsyncThunk(
   'user/createUser',
   async ({ email, password }: ICredential) => {
     const data = await createUserWithEmailAndPassword(auth, email, password);
+    // console.log(data);
     return data.user.email;
   }
 );
@@ -46,6 +51,9 @@ const userSlice = createSlice({
   name: 'user ',
   initialState,
   reducers: {
+    setUserId: (state, action: PayloadAction<string | null>) => {
+      state.user.id = action.payload;
+    },
     setUser: (state, action: PayloadAction<string | null>) => {
       state.user.email = action.payload;
     },
@@ -67,6 +75,7 @@ const userSlice = createSlice({
       .addCase(createUser.fulfilled, (state, action) => {
         state.user.email = action.payload;
         state.isLoading = false;
+        state.isSuccess = true;
       })
       .addCase(createUser.rejected, (state, action) => {
         state.user.email = null;
@@ -92,6 +101,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, setLoading, logout } = userSlice.actions;
+export const { setUser, setLoading, logout, setUserId } = userSlice.actions;
 
 export default userSlice.reducer;

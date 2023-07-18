@@ -1,11 +1,19 @@
 import { Button, Form, Toast, ToastContainer } from "react-bootstrap";
 import { genres } from "../utils/constants";
-import { useCreateBookMutation } from "../redux/api/apiSlice";
+import {
+  useCreateBookMutation,
+  useGetUserByEmailQuery,
+} from "../redux/api/apiSlice";
 import { FormEvent } from "react";
+import { useAppSelector } from "../redux/features/hook";
 
 const AddNew = () => {
   const [createBook, { isLoading, isError, isSuccess }] =
     useCreateBookMutation();
+  const { user } = useAppSelector((state) => state.user);
+  // console.log(user);
+  // console.log(getUserByEmail);
+
 
   const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -16,7 +24,9 @@ const AddNew = () => {
       publication_date: e.target.publicationDate.value,
       price: e.target.price.value,
       image: e.target.image.value,
+      createdBy: user?.email
     };
+    // console.log(data);
     createBook(data);
   };
 
@@ -68,7 +78,7 @@ const AddNew = () => {
         <Form.Group className="mb-2" controlId="bookPublicationYear">
           <Form.Label className="fw-bold">Publication Date</Form.Label>
           <Form.Control
-            type="text"
+            type="date"
             name="publicationDate"
             placeholder="Enter publication date"
             required

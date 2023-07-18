@@ -7,12 +7,22 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import { useAppDispatch } from "../redux/features/hook";
-import { createUser } from "../redux/features/users/userSlice";
+import { useAppDispatch, useAppSelector } from "../redux/features/hook";
+import { createUser, setUserId } from "../redux/features/users/userSlice";
+import { useCreateUserMutation } from "../redux/api/apiSlice";
+import { useState, useEffect } from "react";
 
 const Signup = () => {
   const dispatch = useAppDispatch();
-
+  const { isLoading, isSuccess, id} = useAppSelector((state) => state.user);
+  const [createUserApi, {data}] = useCreateUserMutation();
+  const [userInfo, setUserInfo] = useState({
+    firstName: "",
+    lastName: "",
+    password: "",
+    email: "",
+  });
+  // console.log(data);
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = {
@@ -21,14 +31,29 @@ const Signup = () => {
       email: e.target.email.value,
       password: e.target.password.value,
     };
+    setUserInfo({
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+      password: data.password,
+    });
+    // console.log(data);
     dispatch(
       createUser({
         email: data.email,
-        password: data.password,
+        password: data.password
       })
     );
-    // console.log(data);
   };
+  // console.log(userInfo);
+  useEffect(() => {
+    if (isSuccess) {
+      createUserApi(userInfo);
+    }
+    // if(data){
+    //   dispatch(setUserId(data?.data?.insertedId))
+    // }
+  }, [isSuccess]);
 
   return (
     <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5 bg-warning">

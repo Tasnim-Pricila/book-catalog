@@ -16,11 +16,13 @@ import {
   useGetBookByIdQuery,
 } from "../redux/api/apiSlice";
 import { useState, useEffect } from "react";
+import { useAppSelector } from "../redux/features/hook";
 
 const BookDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { data: bookData, error } = useGetBookByIdQuery(id);
+  const { user } = useAppSelector((state) => state.user);
   const book = bookData?.data;
   // console.log(book);
   const reviews = bookData?.data?.reviews;
@@ -45,12 +47,12 @@ const BookDetails = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const comment = {
-      comment: e.target.comment.value
-    }
-    const data = {
-      reviews: [...reviews, comment ],
+      comment: e.target.comment.value,
     };
-    console.log(data);
+    const data = {
+      reviews: [...reviews, comment],
+    };
+    // console.log(data);
     editBook({ id, data });
     e.target.reset();
   };
@@ -84,29 +86,36 @@ const BookDetails = () => {
           <p>
             <strong>Publication Date:</strong> {book?.publication_date}
           </p>
-          <Button onClick={() => navigate(`/editbook/${book?._id}`)}>
-            Edit Book
-          </Button>{" "}
-          <Button variant="danger" onClick={handleShow}>
-            Delete Book
-          </Button>
+          {book?.createdBy === user?.email && (
+            <>
+              <Button onClick={() => navigate(`/editbook/${book?._id}`)}>
+                Edit Book
+              </Button>{" "}
+              <Button variant="danger" onClick={handleShow}>
+                Delete Book
+              </Button>
+            </>
+          )}
         </Col>
       </Row>
-      <Row className="w-50">
-        <h3 className="mt-3">Reviews: </h3>
-        <Form onSubmit={handleSubmit} className="d-flex">
-          <Form.Control
-            type="text"
-            name="comment"
-            placeholder="Write your comment"
-            className="me-2 border border-primary"
-            required
-          />
-          <Button type="submit" variant="outline-primary">
-            Submit
-          </Button>
-        </Form>
-      </Row>
+      
+      {user?.email && (
+        <Row className="w-50">
+          <h3 className="mt-3">Reviews: </h3>
+          <Form onSubmit={handleSubmit} className="d-flex">
+            <Form.Control
+              type="text"
+              name="comment"
+              placeholder="Write your comment"
+              className="me-2 border border-primary"
+              required
+            />
+            <Button type="submit" variant="outline-primary">
+              Submit
+            </Button>
+          </Form>
+        </Row>
+      )}
 
       {reviews?.map((review) => (
         <Row key={review._id} className="my-4">

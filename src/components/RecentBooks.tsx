@@ -8,7 +8,7 @@ import { Col, Row } from "react-bootstrap";
 
 const RecentBooks = () => {
   const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
-  console.log(bookData);
+  // console.log(bookData);
 
   return (
     <>

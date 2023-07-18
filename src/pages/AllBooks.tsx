@@ -3,7 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { useGetBooksQuery } from "../redux/api/apiSlice";
+import {
+  useGetBooksQuery,
+  useGetUserByEmailQuery,
+  useUpdateUserMutation,
+} from "../redux/api/apiSlice";
 import { Button, Col, Form, Row, Stack } from "react-bootstrap";
 import { genres, years } from "../utils/constants";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
@@ -16,13 +20,19 @@ import { Link, useNavigate } from "react-router-dom";
 
 const AllBooks = () => {
   const navigate = useNavigate();
-  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
   const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
-  // console.log(bookData);
   const { searchedText, genre, publicationDate } = useAppSelector(
     (state) => state.book
   );
-  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.user);
+  const { data: getUser } = useGetUserByEmailQuery(user?.email);
+  const userData = getUser?.data;
+  const id = userData?._id;
+  const userWishlist = userData?.wishlist;
+  // console.log(userWishlist);
+
+  const [updateUser, { data }] = useUpdateUserMutation();
 
   let books;
   if (searchedText) {
@@ -50,10 +60,33 @@ const AllBooks = () => {
     books = bookData?.data;
   }
 
+  const addToWishlist = (book) => {
+    const isExist = userWishlist?.find((list) => list._id === book._id);
+    console.log(isExist);
+    if (isExist) {
+      const removeFromWishlist = userWishlist?.filter(
+        (list) => list._id !== book._id
+      );
+      const data = {
+        wishlist: [...removeFromWishlist],
+      };
+      updateUser({ id, data });
+    } else {
+      const data = userWishlist
+        ? {
+            wishlist: [...userWishlist, book],
+          }
+        : {
+            wishlist: [book],
+          };
+      updateUser({ id, data });
+    }
+  };
+
   return (
     <>
       <Stack direction="horizontal" gap={3} className="mb-5 mx-5 px-5">
-        <Form.Select 
+        <Form.Select
           style={{ flex: 1 }}
           onChange={(e) => dispatch(setGenre(e.target.value))}
         >
@@ -146,15 +179,24 @@ const AllBooks = () => {
                     ></FontAwesomeIcon>
                   </div>
                   <Card.Text className="fw-bold mb-1">${book?.price}</Card.Text>
-                  <div className="">
-                    <FontAwesomeIcon
-                      icon={faCartShopping}
-                      className="text-success me-2"
-                    ></FontAwesomeIcon>
-                    <FontAwesomeIcon
-                      icon={faHeart}
-                      className="me-4 text-danger"
-                    ></FontAwesomeIcon>
+                  <div>
+                    {userWishlist?.find(
+                      (wishlist) => wishlist._id === book._id
+                    ) ? (
+                      <FontAwesomeIcon
+                        role="button"
+                        icon={faHeart}
+                        className="me-4 text-danger"
+                        onClick={() => addToWishlist(book)}
+                      ></FontAwesomeIcon>
+                    ) : (
+                      <FontAwesomeIcon
+                        role="button"
+                        icon={faHeart}
+                        className="me-4"
+                        onClick={() => addToWishlist(book)}
+                      ></FontAwesomeIcon>
+                    )}
                   </div>
                 </Card.Body>
               </div>
