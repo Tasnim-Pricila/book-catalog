@@ -4,7 +4,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useGetBooksQuery } from "../redux/api/apiSlice";
-import { Button, Form, Row, Stack } from "react-bootstrap";
+import { Button, Col, Form, Row, Stack } from "react-bootstrap";
 import { genres, years } from "../utils/constants";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
 import {
@@ -16,6 +16,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const AllBooks = () => {
   const navigate = useNavigate();
+  const { user } = useAppSelector((state) => state.user);
   const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
   // console.log(bookData);
   const { searchedText, genre, publicationDate } = useAppSelector(
@@ -52,7 +53,7 @@ const AllBooks = () => {
   return (
     <>
       <Stack direction="horizontal" gap={3} className="mb-5 mx-5 px-5">
-        <Form.Select
+        <Form.Select 
           style={{ flex: 1 }}
           onChange={(e) => dispatch(setGenre(e.target.value))}
         >
@@ -88,14 +89,18 @@ const AllBooks = () => {
           />
           <Button variant="primary">Search</Button>
         </Form>
-        <Button variant="success">
-          <Link to="/addnew" className="text-decoration-none text-white">+ Add New</Link>
-        </Button>
+        {user.email && (
+          <Button variant="success">
+            <Link to="/addnew" className="text-decoration-none text-white">
+              + Add New
+            </Link>
+          </Button>
+        )}
       </Stack>
 
       <Row>
         {books?.map((book, i) => (
-          <div className="col-md-4 col-lg-3">
+          <Col md={4} lg={3} className="mb-3">
             <Card>
               <div className="d-flex">
                 <img
@@ -154,7 +159,7 @@ const AllBooks = () => {
                 </Card.Body>
               </div>
             </Card>
-          </div>
+          </Col>
         ))}
       </Row>
     </>

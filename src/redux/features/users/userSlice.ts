@@ -54,6 +54,7 @@ const userSlice = createSlice({
     },
     logout: (state) => {
       state.user.email = null
+      state.isLoading = false
   },
   },
   extraReducers: (builder) => {

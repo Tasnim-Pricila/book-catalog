@@ -4,7 +4,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useGetBooksQuery } from "../redux/api/apiSlice";
-import { Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 
 const RecentBooks = () => {
   const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
@@ -14,7 +14,7 @@ const RecentBooks = () => {
     <>
       <Row>
         {bookData?.data?.map((book, i) => (
-          <div className="col-md-4 col-lg-3">
+          <Col md={4} lg={3} key={i}>
             <Card>
               <div className="d-flex">
                 <img
@@ -69,7 +69,7 @@ const RecentBooks = () => {
                 </Card.Body>
               </div>
             </Card>
-          </div>
+          </Col>
         ))}
       </Row>
     </>

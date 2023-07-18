@@ -10,7 +10,7 @@ import { logout } from "../redux/features/users/userSlice";
 
 const Header = () => {
   const { user, isLoading } = useAppSelector((state) => state.user);
-  console.log(user);
+  // console.log(user);
   const dispatch = useAppDispatch();
   const handleLogout = () => {
     signOut(auth)
@@ -38,18 +38,15 @@ const Header = () => {
               <Button variant="outline-primary">Search</Button>
             </Form>
           </Nav>
-          <Nav
-            className=""
-            // className='d-flex justify-content-end w-100'
-          >
-            <Link to="/allbooks">All Books</Link>
+          <Nav className="d-flex justify-content-center align-items-center" style={{gap: 12}}>
+            <Link to="/allbooks" className="text-decoration-none">All Books</Link>
 
             {user.email ? (
               <Button onClick={() => handleLogout()}>Logout</Button>
             ) : (
               <>
-                <Link to="/signin">Sign In</Link>
-                <Link to="/signup">Sign Up</Link>
+                <Link to="/signin" className="text-decoration-none">Sign In</Link>
+                <Link to="/signup" className="text-decoration-none">Sign Up</Link>
               </>
             )}
           </Nav>
