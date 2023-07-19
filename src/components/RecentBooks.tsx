@@ -7,8 +7,7 @@ import { useGetBooksQuery } from "../redux/api/apiSlice";
 import { Col, Row } from "react-bootstrap";
 
 const RecentBooks = () => {
-  const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
-  // console.log(bookData);
+  const { data: bookData } = useGetBooksQuery(undefined);
 
   return (
     <>

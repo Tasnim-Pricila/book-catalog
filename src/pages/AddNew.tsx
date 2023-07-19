@@ -1,33 +1,44 @@
 import { Button, Form, Toast, ToastContainer } from "react-bootstrap";
 import { genres } from "../utils/constants";
-import {
-  useCreateBookMutation,
-  useGetUserByEmailQuery,
-} from "../redux/api/apiSlice";
+import { useCreateBookMutation } from "../redux/api/apiSlice";
 import { FormEvent } from "react";
 import { useAppSelector } from "../redux/features/hook";
+import { IBook } from "../types/globalTypes";
 
 const AddNew = () => {
-  const [createBook, { isLoading, isError, isSuccess }] =
+  const [createBook, { isSuccess }] =
     useCreateBookMutation();
   const { user } = useAppSelector((state) => state.user);
-  // console.log(user);
-  // console.log(getUserByEmail);
-
 
   const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = {
-      title: e.target.title.value,
-      author: e.target.author.value,
-      genre: e.target.genre.value,
-      publication_date: e.target.publicationDate.value,
-      price: e.target.price.value,
-      image: e.target.image.value,
-      createdBy: user?.email
+    const target = e.target as typeof e.target & {
+      title: { value: string };
+      author: { value: string };
+      genre: { value: string };
+      publication_date: { value: string };
+      price: { value: number };
+      image: { value: string };
     };
+
+    const data: IBook = {
+      title: target.title.value,
+      author: target.author.value,
+      genre: target.genre.value,
+      publication_date: target.publication_date.value,
+      price: target.price.value,
+      image: target.image.value,
+      createdBy: user.email!,
+    };
+
     // console.log(data);
-    createBook(data);
+    createBook(data)
+      .then(() => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -79,7 +90,7 @@ const AddNew = () => {
           <Form.Label className="fw-bold">Publication Date</Form.Label>
           <Form.Control
             type="date"
-            name="publicationDate"
+            name="publication_date"
             placeholder="Enter publication date"
             required
           />

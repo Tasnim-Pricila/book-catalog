@@ -1,7 +1,6 @@
 import Card from "react-bootstrap/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBookOpenReader, faCircleCheck, faStar } from "@fortawesome/free-solid-svg-icons";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import {
   useGetBooksQuery,
@@ -17,26 +16,26 @@ import {
   setSearchedText,
 } from "../redux/features/books/bookSlice";
 import { Link, useNavigate } from "react-router-dom";
+import { IBook, IUser } from "../types/globalTypes";
 
 const AllBooks = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { data: bookData, isLoading, error } = useGetBooksQuery(undefined);
+  const { data: bookData } = useGetBooksQuery(undefined);
   const { searchedText, genre, publicationDate } = useAppSelector(
     (state) => state.book
   );
   const { user } = useAppSelector((state) => state.user);
-  const { data: getUser } = useGetUserByEmailQuery(user?.email);
-  const userData = getUser?.data;
+  const { data: getUser } = useGetUserByEmailQuery(user.email!);
+  const userData: IUser = getUser?.data as IUser;
   const id = userData?._id;
   const userWishlist = userData?.wishlist;
   const completedBooks = userData?.completedBooks;
   const currentlyReading = userData?.currentlyReading;
-  // console.log(userWishlist);
 
   const [updateUser] = useUpdateUserMutation();
 
-  let books;
+  let books: IBook[] | undefined;
   if (searchedText) {
     books = bookData?.data?.filter(
       (book) =>
@@ -48,7 +47,7 @@ const AllBooks = () => {
     books = bookData?.data?.filter(
       (book) =>
         book?.genre?.toLowerCase() === genre.toLowerCase() &&
-        book?.publication_date?.substr(-4) === publicationDate
+        book?.publication_date?.substr(4) === publicationDate
     );
   } else if (genre) {
     books = bookData?.data?.filter(
@@ -56,22 +55,28 @@ const AllBooks = () => {
     );
   } else if (publicationDate) {
     books = bookData?.data?.filter(
-      (book) => book?.publication_date?.substr(-4) === publicationDate
+      (book) => book?.publication_date?.substr(4) === publicationDate
     );
   } else {
     books = bookData?.data;
   }
 
-  const addToWishlist = (book) => {
+  const addToWishlist = (book: IBook) => {
     const isExist = userWishlist?.find((list) => list._id === book._id);
     if (isExist) {
       const removeFromWishlist = userWishlist?.filter(
         (list) => list._id !== book._id
       );
       const data = {
-        wishlist: [...removeFromWishlist],
+        wishlist: removeFromWishlist,
       };
-      updateUser({ id, data });
+      updateUser({ id, data })
+      .then(() => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     } else {
       const data = userWishlist
         ? {
@@ -80,11 +85,17 @@ const AllBooks = () => {
         : {
             wishlist: [book],
           };
-      updateUser({ id, data });
+      updateUser({ id, data })
+      .then(() => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     }
   };
 
-  const markAsRead = (book) => {
+  const markAsRead = (book: IBook) => {
     const isExist = completedBooks?.find((list) => list._id === book._id);
     console.log(isExist);
     if (isExist) {
@@ -92,9 +103,15 @@ const AllBooks = () => {
         (list) => list._id !== book._id
       );
       const data = {
-        completedBooks: [...removeFromCompleted],
+        completedBooks: removeFromCompleted,
       };
-      updateUser({ id, data });
+      updateUser({ id, data })
+      .then(() => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     } else {
       const data = completedBooks
         ? {
@@ -103,11 +120,17 @@ const AllBooks = () => {
         : {
             completedBooks: [book],
           };
-      updateUser({ id, data });
+      updateUser({ id, data })
+      .then(() => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     }
   };
 
-  const readingNow = (book) => {
+  const readingNow = (book: IBook) => {
     const isExist = currentlyReading?.find((list) => list._id === book._id);
     console.log(isExist);
     if (isExist) {
@@ -115,9 +138,15 @@ const AllBooks = () => {
         (list) => list._id !== book._id
       );
       const data = {
-        currentlyReading: [...removeFromReading],
+        currentlyReading: removeFromReading,
       };
-      updateUser({ id, data });
+      updateUser({ id, data })
+      .then(() => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     } else {
       const data = currentlyReading
         ? {
@@ -126,7 +155,13 @@ const AllBooks = () => {
         : {
           currentlyReading: [book],
           };
-      updateUser({ id, data });
+      updateUser({ id, data })
+      .then(() => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     }
   };
 
@@ -179,8 +214,8 @@ const AllBooks = () => {
       </Stack>
 
       <Row>
-        {books?.map((book, i) => (
-          <Col md={4} lg={3} className="mb-3">
+        {books?.map((book: IBook, i: number) => (
+          <Col md={4} lg={3} className="mb-3" key={i}>
             <Card>
               <div className="d-flex">
                 <img
@@ -189,7 +224,7 @@ const AllBooks = () => {
                   className="img-fluid"
                   width="130"
                   height="auto"
-                  onClick={() => navigate(`/bookdetails/${book._id}`)}
+                  onClick={() => navigate(`/bookdetails/${book._id!}`)}
                 />
                 <Card.Body style={{ minWidth: 0 }}>
                   <Card.Title className="text-truncate">

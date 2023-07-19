@@ -5,15 +5,18 @@ import {
   useEditBookMutation,
   useGetBookByIdQuery,
 } from "../redux/api/apiSlice";
-import { useEffect, useState } from "react";
+import { useEffect, useState, FormEvent } from "react";
+import { IBook } from "../types/globalTypes";
 
 const EditBook = () => {
   const { id } = useParams();
-  const { data: bookData, isLoading: bookDataLoading } =
-    useGetBookByIdQuery(id);
-  const book = !bookDataLoading && bookData?.data;
+  const { data: bookData } = useGetBookByIdQuery(
+    id!
+  );
+  const book: IBook = bookData!.data!;
+  // console.log(book);
 
-  const [editBook, { isLoading, isError, isSuccess }] = useEditBookMutation();
+  const [editBook, { isSuccess }] = useEditBookMutation();
   const [selectedOption, setSelectedOption] = useState("");
 
   useEffect(() => {
@@ -22,18 +25,32 @@ const EditBook = () => {
     }
   }, [book]);
 
-  const handleSumbit = (e) => {
+  const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const target = e.target as typeof e.target & {
+      title: { value: string };
+      author: { value: string };
+      genre: { value: string };
+      publication_date: { value: string };
+      price: { value: number };
+      image: { value: string };
+    };
     const data = {
-      title: e.target.title.value,
-      author: e.target.author.value,
-      genre: selectedOption,
-      publication_date: e.target.publicationDate.value,
-      price: e.target.price.value,
-      image: e.target.image.value,
+      title: target.title.value,
+      author: target.author.value,
+      genre: target.genre.value,
+      publication_date: target.publication_date.value,
+      price: target.price.value,
+      image: target.image.value,
     };
     // console.log(data);
-    editBook({ id, data });
+    editBook({ id, data })
+      .then(() => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -94,7 +111,7 @@ const EditBook = () => {
           <Form.Label className="fw-bold">Publication Date</Form.Label>
           <Form.Control
             type="date"
-            name="publicationDate"
+            name="publication_date"
             placeholder="Enter publication date"
             defaultValue={book?.publication_date}
             onChange={(e) => console.log(e.target.value)}

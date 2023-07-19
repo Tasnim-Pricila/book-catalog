@@ -10,34 +10,38 @@ import {
 import { loginUser } from "../redux/features/users/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, FormEvent } from "react";
 
 const SignIn = () => {
   const { user, isLoading } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-  // console.log(user);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = {
-      email: e.target.email.value,
-      password: e.target.password.value,
+    const target = e.target as typeof e.target & {
+      email: { value: string };
+      password: { value: string };
     };
-    dispatch(
-      loginUser({
-        email: data.email,
-        password: data.password,
+    const data = {
+      email: target.email.value,
+      password: target.password.value,
+    };
+
+    dispatch(loginUser({ email: data.email, password: data.password }))
+      .then(() => {
+        // Do something after successful login
       })
-    );
-    // console.log(data);
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
     if (user.email && !isLoading) {
       navigate("/");
     }
-  }, [user.email, isLoading]);
+  }, [user.email, isLoading, navigate]);
 
   return (
     <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5 bg-warning">

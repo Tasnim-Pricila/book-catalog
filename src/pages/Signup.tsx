@@ -8,52 +8,67 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
-import { createUser, setUserId } from "../redux/features/users/userSlice";
+import { createUser } from "../redux/features/users/userSlice";
 import { useCreateUserMutation } from "../redux/api/apiSlice";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const dispatch = useAppDispatch();
-  const { isLoading, isSuccess, id} = useAppSelector((state) => state.user);
-  const [createUserApi, {data}] = useCreateUserMutation();
+  const navigate = useNavigate();
+  const { user, isSuccess, isLoading } = useAppSelector((state) => state.user);
+  const [createUserApi] = useCreateUserMutation();
   const [userInfo, setUserInfo] = useState({
     firstName: "",
     lastName: "",
     password: "",
     email: "",
   });
-  // console.log(data);
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = {
-      firstName: e.target.firstName.value,
-      lastName: e.target.lastName.value,
-      email: e.target.email.value,
-      password: e.target.password.value,
+    const target = e.target as typeof e.target & {
+      firstName: { value: string };
+      lastName: { value: string };
+      email: { value: string };
+      password: { value: string };
     };
+    const data = {
+      firstName: target.firstName.value,
+      lastName: target.lastName.value,
+      email: target.email.value,
+      password: target.password.value,
+    };
+
     setUserInfo({
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
       password: data.password,
     });
-    // console.log(data);
-    dispatch(
-      createUser({
-        email: data.email,
-        password: data.password
+
+    dispatch(createUser({ email: data.email, password: data.password }))
+      .then(() => {
+        // Do something after successful login
       })
-    );
+      .catch((error) => {
+        console.log(error);
+      });
   };
-  // console.log(userInfo);
+
   useEffect(() => {
     if (isSuccess) {
-      createUserApi(userInfo);
+      createUserApi(userInfo)
+        .then(() => {
+          // Do something after successful login
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    // if(data){
-    //   dispatch(setUserId(data?.data?.insertedId))
-    // }
-  }, [isSuccess]);
+    if (user.email && !isLoading) {
+      navigate("/");
+    }
+  }, [isSuccess, user?.email, isLoading, navigate]);
 
   return (
     <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5 bg-warning">

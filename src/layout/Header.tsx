@@ -9,8 +9,7 @@ import { useAppDispatch, useAppSelector } from "../redux/features/hook";
 import { logout } from "../redux/features/users/userSlice";
 
 const Header = () => {
-  const { user, isLoading } = useAppSelector((state) => state.user);
-  // console.log(user);
+  const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const handleLogout = () => {
     signOut(auth)

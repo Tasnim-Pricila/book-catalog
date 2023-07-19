@@ -1,14 +1,4 @@
-import {
-  Button,
-  Card,
-  Col,
-  Form,
-  Image,
-  Modal,
-  Row,
-  Toast,
-  ToastContainer,
-} from "react-bootstrap";
+import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useDeleteBookMutation,
@@ -17,57 +7,69 @@ import {
 } from "../redux/api/apiSlice";
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../redux/features/hook";
+import { FormEvent } from "react";
+import { IReviews } from "../types/globalTypes";
 
 const BookDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { data: bookData, error } = useGetBookByIdQuery(id);
-  const { user } = useAppSelector((state) => state.user);
-  const book = bookData?.data;
-  // console.log(book);
-  const reviews = bookData?.data?.reviews;
   const [show, setShow] = useState(false);
+
+  const { data: bookData } = useGetBookByIdQuery(id!);
+  const [editBook] = useEditBookMutation();
+  const [deleteBook, { isSuccess, isLoading }] = useDeleteBookMutation();
+
+  const { user } = useAppSelector((state) => state.user);
+
+  const book = bookData?.data;
+  const reviews: IReviews[] | undefined = bookData?.data?.reviews ?? [];
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-
-  const [deleteBook, { isSuccess, isLoading }] = useDeleteBookMutation();
-  const handleDelete = async () => {
-    await deleteBook(id);
+  
+  const handleDelete = () => {
+     deleteBook(id!)
+     .then(() => {
+      console.log('');
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   };
-  // console.log(deleteBook);
+  
   useEffect(() => {
     if (!isLoading && isSuccess) {
       setShow(false);
       navigate("/allbooks");
     }
-  }, [isSuccess, isLoading]);
-  const [editBook] = useEditBookMutation();
+  }, [isSuccess, isLoading, navigate]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const target = e.target as typeof e.target & {
+      comment: { value: string },
+    };
+    const t = e.target as HTMLFormElement;
+
     const comment = {
-      comment: e.target.comment.value,
+      comment: target.comment.value,
     };
     const data = {
       reviews: [...reviews, comment],
     };
-    // console.log(data);
-    editBook({ id, data });
-    e.target.reset();
+    editBook({ id, data })
+    .then(() => {
+      console.log('');
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+    t.reset();
   };
 
   return (
     <div>
-      {/* {!isLoading && isSuccess && (
-        <ToastContainer position="top-end" className="mt-5 me-5">
-          <Toast bg="success" autohide={true}>
-            <Toast.Body className="text-white">
-              Book deleted successfully
-            </Toast.Body>
-          </Toast>
-        </ToastContainer>
-      )} */}
       <Row>
         <Col xs={12} sm={4}>
           <img src={book?.image} alt="Book" className="img-fluid" />
@@ -88,7 +90,7 @@ const BookDetails = () => {
           </p>
           {book?.createdBy === user?.email && (
             <>
-              <Button onClick={() => navigate(`/editbook/${book?._id}`)}>
+              <Button onClick={() => navigate(`/editbook/${book._id!}`)}>
                 Edit Book
               </Button>{" "}
               <Button variant="danger" onClick={handleShow}>
@@ -98,7 +100,7 @@ const BookDetails = () => {
           )}
         </Col>
       </Row>
-      
+
       {user?.email && (
         <Row className="w-50">
           <h3 className="mt-3">Reviews: </h3>
@@ -121,7 +123,7 @@ const BookDetails = () => {
         <Row key={review._id} className="my-4">
           <Col md={1}>
             <img
-              src={review.userImage}
+              src={review.user_image}
               alt={review.user_id}
               className="mr-3 rounded-circle"
               style={{ width: "64px", height: "64px" }}
