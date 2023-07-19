@@ -1,14 +1,10 @@
 import { Button, Col, Form, Modal, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  useDeleteBookMutation,
-  useEditBookMutation,
-  useGetBookByIdQuery,
-} from "../redux/api/apiSlice";
 import { useState, useEffect } from "react";
 import { useAppSelector } from "../redux/features/hook";
 import { FormEvent } from "react";
 import { IReviews } from "../types/globalTypes";
+import { useDeleteBookMutation, useEditBookMutation, useGetBookByIdQuery } from "../redux/features/books/bookApi";
 
 const BookDetails = () => {
   const navigate = useNavigate();

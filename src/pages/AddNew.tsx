@@ -1,9 +1,9 @@
 import { Button, Form, Toast, ToastContainer } from "react-bootstrap";
 import { genres } from "../utils/constants";
-import { useCreateBookMutation } from "../redux/api/apiSlice";
 import { FormEvent } from "react";
 import { useAppSelector } from "../redux/features/hook";
 import { IBook } from "../types/globalTypes";
+import { useCreateBookMutation } from "../redux/features/books/bookApi";
 
 const AddNew = () => {
   const [createBook, { isSuccess }] =
@@ -31,7 +31,6 @@ const AddNew = () => {
       createdBy: user.email!,
     };
 
-    // console.log(data);
     createBook(data)
       .then(() => {
         console.log(data);

@@ -9,9 +9,9 @@ import { Button } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
 import { createUser } from "../redux/features/users/userSlice";
-import { useCreateUserMutation } from "../redux/api/apiSlice";
 import { useState, useEffect, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCreateUserMutation } from "../redux/features/users/userApi";
 
 const Signup = () => {
   const dispatch = useAppDispatch();

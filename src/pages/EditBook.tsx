@@ -1,22 +1,20 @@
 import { useParams } from "react-router-dom";
 import { genres } from "../utils/constants";
 import { Button, Form, Toast, ToastContainer } from "react-bootstrap";
+import { useEffect, useState, FormEvent } from "react";
+import { IBook } from "../types/globalTypes";
 import {
   useEditBookMutation,
   useGetBookByIdQuery,
-} from "../redux/api/apiSlice";
-import { useEffect, useState, FormEvent } from "react";
-import { IBook } from "../types/globalTypes";
+} from "../redux/features/books/bookApi";
 
 const EditBook = () => {
   const { id } = useParams();
-  const { data: bookData } = useGetBookByIdQuery(
-    id!
-  );
-  const book: IBook = bookData!.data!;
-  // console.log(book);
-
+  const { data: bookData } = useGetBookByIdQuery(id!);
   const [editBook, { isSuccess }] = useEditBookMutation();
+
+  const book: IBook = bookData!.data!;
+
   const [selectedOption, setSelectedOption] = useState("");
 
   useEffect(() => {
