@@ -6,7 +6,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000" }),
   tagTypes: ['comment', 'wishlist'],
 
-  endpoints: (builder) => ({
+  endpoints: () => ({
     
   }),
 });
