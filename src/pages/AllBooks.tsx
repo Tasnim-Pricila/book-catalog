@@ -32,7 +32,7 @@ const AllBooks = () => {
     books = bookData?.data?.filter(
       (book) =>
         book?.genre?.toLowerCase() === genre.toLowerCase() &&
-        book?.publication_date?.substr(4) === publicationDate
+        book?.publication_date?.slice(0, 4) === publicationDate
     );
   } else if (genre) {
     books = bookData?.data?.filter(
@@ -40,7 +40,7 @@ const AllBooks = () => {
     );
   } else if (publicationDate) {
     books = bookData?.data?.filter(
-      (book) => book?.publication_date?.substr(4) === publicationDate
+      (book) => book?.publication_date?.slice(0, 4) === publicationDate
     );
   } else {
     books = bookData?.data;
@@ -48,7 +48,10 @@ const AllBooks = () => {
 
   return (
     <>
-      <Stack gap={3} className="d-flex flex-md-row flex-column mb-5 px-5 mx-md-5">
+      <Stack
+        gap={3}
+        className="d-flex flex-md-row flex-column mb-5 px-5 mx-md-5"
+      >
         <Form.Select
           style={{ flex: 1 }}
           onChange={(e) => dispatch(setGenre(e.target.value))}
