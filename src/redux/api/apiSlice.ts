@@ -3,10 +3,10 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000" }),
-  tagTypes: ['comment', 'wishlist'],
-
-  endpoints: () => ({
-    
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://book-catalog-backend-lyart.vercel.app",
   }),
+  tagTypes: ["comment", "wishlist"],
+
+  endpoints: () => ({}),
 });
