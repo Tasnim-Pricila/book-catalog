@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { Stack } from "react-bootstrap";
 import { faDribbble, faFacebook, faGoogle, faInstagram, faSkype, faTwitter } from "@fortawesome/free-brands-svg-icons";
 

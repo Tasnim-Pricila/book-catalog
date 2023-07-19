@@ -61,6 +61,7 @@ const Signup = () => {
     if (user.email && !isLoading) {
       navigate("/");
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, user?.email, isLoading, navigate]);
 
   return (
