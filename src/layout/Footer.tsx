@@ -1,22 +1,24 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { Stack } from "react-bootstrap";
+import { faDribbble, faFacebook, faGoogle, faInstagram, faSkype, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
     return (
         <div className="text-center text-lg-start bg-black text-white">
-        <section className="d-flex justify-content-between p-4 bg-success">
+        <section className="d-flex justify-content-between p-4 bg-success px-5">
           <div className="me-5">
             <span>Get connected with us on social networks:</span>
           </div>
 
-          <div>
-              <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-              <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-              <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-              <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-              <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-              <FontAwesomeIcon icon={faHeart}></FontAwesomeIcon>
-          </div>
+          <Stack direction="horizontal" gap={4}>
+              <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faInstagram}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faGoogle}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faSkype}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faDribbble}></FontAwesomeIcon>
+              <FontAwesomeIcon icon={faTwitter}></FontAwesomeIcon>
+          </Stack>
         </section>
 
         <section className="">
@@ -37,22 +39,22 @@ const Footer = () => {
                 <hr className="mb-4 mt-0 d-inline-block mx-auto" />
                 <p>
                   <a href="#!" className="text-white text-decoration-none">
-                    MDBootstrap
+                    Books
                   </a>
                 </p>
                 <p>
                   <a href="#!" className="text-white text-decoration-none">
-                    MDWordPress
+                  Books
                   </a>
                 </p>
                 <p>
                   <a href="#!" className="text-white text-decoration-none">
-                    BrandFlow
+                  Books
                   </a>
                 </p>
                 <p>
                   <a href="#!" className="text-white text-decoration-none">
-                    Bootstrap Angular
+                  Books
                   </a>
                 </p>
               </div>
@@ -103,9 +105,9 @@ const Footer = () => {
         </section>
 
         <div className="text-center p-3">
-          © 2020 Copyright:
-          <a className="text-white text-decoration-none" href="https://mdbootstrap.com/">
-            MDBootstrap.com
+          © 2023 Copyright:
+          <a className="text-white text-decoration-none" href="/">
+            bookzone.com
           </a>
         </div>
       </div>

@@ -5,12 +5,10 @@ import Footer from "./Footer";
 const MainLayout = () => {
   return (
     <>
-      <div className="mx-5">
         <Header></Header>
-        <div className="my-5">
+        <div className="my-5 px-5">
           <Outlet />
         </div>
-      </div>
       <Footer />
     </>
   );

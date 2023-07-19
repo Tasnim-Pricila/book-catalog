@@ -48,7 +48,7 @@ const AllBooks = () => {
 
   return (
     <>
-      <Stack direction="horizontal" gap={3} className="mb-5 mx-5 px-5">
+      <Stack gap={3} className="d-flex flex-md-row flex-column mb-5 px-5 mx-md-5">
         <Form.Select
           style={{ flex: 1 }}
           onChange={(e) => dispatch(setGenre(e.target.value))}

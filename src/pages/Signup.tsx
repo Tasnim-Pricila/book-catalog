@@ -5,7 +5,7 @@ import {
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "react-bootstrap";
+import { Button, Card, Col, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
 import { createUser } from "../redux/features/users/userSlice";
@@ -39,13 +39,6 @@ const Signup = () => {
       password: target.password.value,
     };
 
-    setUserInfo({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      password: data.password,
-    });
-
     dispatch(createUser({ email: data.email, password: data.password }))
       .then(() => {
         // Do something after successful login
@@ -71,9 +64,9 @@ const Signup = () => {
   }, [isSuccess, user?.email, isLoading, navigate]);
 
   return (
-    <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5 bg-warning">
-      <div className="row gx-lg-5 align-items-center mb-5">
-        <div className="col-lg-6 mb-5 mb-lg-0">
+    <div className="px-4 py-5 px-md-5 text-center text-lg-start my-5 bg-warning">
+      <Row className="gx-lg-5 align-items-center mb-5">
+        <Col className="mb-5 mb-lg-0" lg={6}>
           <h1 className="my-5 display-5 fw-bold ls-tight">
             The best offer <br />
             <span>for your business</span>
@@ -84,41 +77,51 @@ const Signup = () => {
             dolorum consequatur nulla, neque debitis eos reprehenderit quasi ab
             ipsum nisi dolorem modi. Quos?
           </p>
-        </div>
+        </Col>
 
-        <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
-          <div className="card bg-glass">
-            <div className="card-body px-4 py-5 px-md-5">
+        <Col lg={6} className="mb-5 mb-lg-0 position-relative">
+          <Card className="bg-glass">
+            <Card.Body className="px-4 py-5 px-md-5">
               <Form onSubmit={handleSubmit}>
-                <div className="row">
-                  <div className="col-md-6 mb-4">
+                <Row>
+                  <Col md={6} className="mb-4">
                     <Form.Control
                       type="text"
                       name="firstName"
                       placeholder="First Name"
+                      onChange={(e) =>
+                        setUserInfo({ ...userInfo, firstName: e.target.value })
+                      }
                     />
-                  </div>
-                  <div className="col-md-6 mb-4">
+                  </Col>
+                  <Col md={6} className="mb-4">
                     <Form.Control
                       type="text"
                       name="lastName"
                       placeholder="Last Name"
+                      onChange={(e) =>
+                        setUserInfo({ ...userInfo, lastName: e.target.value })
+                      }
                     />
-                  </div>
-                </div>
-
+                  </Col>
+                </Row>
                 <Form.Control
                   type="email"
                   placeholder="Enter email"
                   name="email"
                   className="mb-4"
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, email: e.target.value })
+                  }
                 />
-
                 <Form.Control
                   type="password"
                   name="password"
                   placeholder="Enter password"
                   className="mb-4"
+                  onChange={(e) =>
+                    setUserInfo({ ...userInfo, password: e.target.value })
+                  }
                 />
 
                 {/* <!-- Submit button --> */}
@@ -146,10 +149,10 @@ const Signup = () => {
                   </Button>
                 </div>
               </Form>
-            </div>
-          </div>
-        </div>
-      </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 };

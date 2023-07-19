@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button } from "react-bootstrap";
+import { Button, Card, Col, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import {
   faFacebook,
@@ -44,9 +44,9 @@ const SignIn = () => {
   }, [user.email, isLoading, navigate]);
 
   return (
-    <div className="container px-4 py-5 px-md-5 text-center text-lg-start my-5 bg-warning">
-      <div className="row gx-lg-5 align-items-center mb-5">
-        <div className="col-lg-6 mb-5 mb-lg-0">
+    <div className="py-5 px-md-5 text-center text-lg-start my-5 bg-warning">
+      <Row className="gx-lg-5 align-items-center mb-5">
+        <Col lg={6} className="mb-5 mb-lg-0">
           <h1 className="my-5 display-5 fw-bold ls-tight">
             The best offer <br />
             <span>for your business</span>
@@ -57,11 +57,11 @@ const SignIn = () => {
             dolorum consequatur nulla, neque debitis eos reprehenderit quasi ab
             ipsum nisi dolorem modi. Quos?
           </p>
-        </div>
+        </Col>
 
-        <div className="col-lg-6 mb-5 mb-lg-0 position-relative">
-          <div className="card bg-glass">
-            <div className="card-body px-4 py-5 px-md-5">
+        <Col lg={6} className="mb-5 mb-lg-0 position-relative">
+          <Card className="bg-glass">
+            <Card.Body className="px-4 py-5 px-md-5">
               <Form onSubmit={handleSubmit}>
                 <Form.Control
                   type="email"
@@ -102,10 +102,10 @@ const SignIn = () => {
                   </Button>
                 </div>
               </Form>
-            </div>
-          </div>
-        </div>
-      </div>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
     </div>
   );
 };

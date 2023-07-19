@@ -22,12 +22,12 @@ const Header = () => {
   };
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+      <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary px-5">
+        <Navbar.Brand href="#home">Book Zone</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav ">
           <Nav className="me-auto w-50 d-flex justify-content-end">
-            <Form className="d-flex">
+            {/* <Form className="d-flex">
               <Form.Control
                 type="search"
                 placeholder="Search"
@@ -35,7 +35,7 @@ const Header = () => {
                 aria-label="Search"
               />
               <Button variant="outline-primary">Search</Button>
-            </Form>
+            </Form> */}
           </Nav>
           <Nav className="d-flex justify-content-center align-items-center" style={{gap: 12}}>
             <Link to="/allbooks" className="text-decoration-none">All Books</Link>
