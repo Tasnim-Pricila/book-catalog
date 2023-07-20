@@ -1,44 +1,19 @@
-import { Button, Col, Form, Modal, Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
 import { useAppSelector } from "../redux/features/hook";
 import { FormEvent } from "react";
 import { IReviews } from "../types/globalTypes";
-import { useDeleteBookMutation, useEditBookMutation, useGetBookByIdQuery } from "../redux/features/books/bookApi";
+import { useEditBookMutation, useGetBookByIdQuery } from "../redux/features/books/bookApi";
+import DeleteBookModal from "../components/DeleteBookModal";
 
 const BookDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [show, setShow] = useState(false);
-
   const { data: bookData } = useGetBookByIdQuery(id!);
   const [editBook] = useEditBookMutation();
-  const [deleteBook, { isSuccess, isLoading }] = useDeleteBookMutation();
-
   const { user } = useAppSelector((state) => state.user);
-
   const book = bookData?.data;
   const reviews: IReviews[] | undefined = bookData?.data?.reviews ?? [];
-
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
-  
-  const handleDelete = () => {
-     deleteBook(id!)
-     .then(() => {
-      console.log('');
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  };
-  
-  useEffect(() => {
-    if (!isLoading && isSuccess) {
-      setShow(false);
-      navigate("/allbooks");
-    }
-  }, [isSuccess, isLoading, navigate]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -89,9 +64,7 @@ const BookDetails = () => {
               <Button onClick={() => navigate(`/editbook/${book._id!}`)}>
                 Edit Book
               </Button>{" "}
-              <Button variant="danger" onClick={handleShow}>
-                Delete Book
-              </Button>
+              <DeleteBookModal id={id!} />
             </>
           )}
         </Col>
@@ -132,21 +105,6 @@ const BookDetails = () => {
           </Col>
         </Row>
       ))}
-
-      <Modal show={show} centered onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Delete Modal</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Are you sure you want to delete this book?</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleDelete()}>
-            Yes
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            No
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };

@@ -1,14 +1,28 @@
-import { Button, Form, Toast, ToastContainer } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { genres } from "../utils/constants";
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAppSelector } from "../redux/features/hook";
 import { IBook } from "../types/globalTypes";
 import { useCreateBookMutation } from "../redux/features/books/bookApi";
+import ToastMessage from "../shared/ToastMessage";
+import { useNavigate } from "react-router-dom";
 
 const AddNew = () => {
-  const [createBook, { isSuccess }] =
-    useCreateBookMutation();
+  const navigate = useNavigate();
+  const [createBook, { isSuccess }] = useCreateBookMutation();
   const { user } = useAppSelector((state) => state.user);
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
+  useEffect(() => {
+    if (isSuccess) {
+      handleShow();
+      setTimeout(() => {
+        navigate("/allbooks");
+      }, 1500);
+    }
+  }, [isSuccess, navigate]);
 
   const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,7 +47,7 @@ const AddNew = () => {
 
     createBook(data)
       .then(() => {
-        console.log(data);
+        // console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -42,15 +56,12 @@ const AddNew = () => {
 
   return (
     <div>
-      {isSuccess && (
-        <ToastContainer position="top-end" className="mt-5 me-5">
-          <Toast bg="success" autohide={true}>
-            <Toast.Body className="text-white">
-              Book created successfully
-            </Toast.Body>
-          </Toast>
-        </ToastContainer>
-      )}
+      <ToastMessage
+        show={show}
+        handleClose={handleClose}
+        message="Book created successfully"
+        variant="success"
+      />
 
       <Form onSubmit={handleSumbit}>
         <Form.Group className="mb-2" controlId="bookTitle">

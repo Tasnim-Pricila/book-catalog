@@ -13,6 +13,9 @@ import {
   useUpdateUserMutation,
 } from "../redux/features/users/userApi";
 import { useAppSelector } from "../redux/features/hook";
+import { useEffect, useState } from "react";
+import ToastMessage from "../shared/ToastMessage";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 interface IProps {
   book: IBook;
@@ -20,7 +23,11 @@ interface IProps {
 
 const BookCard = ({ book }: IProps) => {
   const navigate = useNavigate();
-  const [updateUser] = useUpdateUserMutation();
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+
+  const [updateUser, { isSuccess }] = useUpdateUserMutation();
   const { user } = useAppSelector((state) => state.user);
   const { data: getUser } = useGetUserByEmailQuery(user.email!);
   const userData: IUser = getUser?.data as IUser;
@@ -30,7 +37,7 @@ const BookCard = ({ book }: IProps) => {
   const completedBooks = userData?.completedBooks;
   const currentlyReading = userData?.currentlyReading;
 
-  const addToWishlist = (book: IBook): void => {
+  const addToWishlist = (book: IBook) => {
     const isExist = userWishlist?.find((list) => list._id === book._id);
     if (isExist) {
       const removeFromWishlist = userWishlist?.filter(
@@ -135,8 +142,20 @@ const BookCard = ({ book }: IProps) => {
     }
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      handleShow();
+    }
+  }, [isSuccess]);
+
   return (
     <div>
+      <ToastMessage
+        show={show}
+        handleClose={handleClose}
+        message="Changes Saved"
+        variant="success"
+      />
       <Card>
         <div className="d-flex">
           <img
@@ -178,57 +197,105 @@ const BookCard = ({ book }: IProps) => {
             <div>
               <>
                 {userWishlist?.find((wishlist) => wishlist._id === book._id) ? (
-                  <FontAwesomeIcon
-                    role="button"
-                    icon={faHeart}
-                    className="me-4 text-danger"
-                    onClick={() => addToWishlist(book)}
-                  ></FontAwesomeIcon>
+                  <OverlayTrigger
+                    placement="bottom"
+                    delay={{ hide: 450, show: 300 }}
+                    overlay={(props) => (
+                      <Tooltip {...props}>Remove From Wishlist</Tooltip>
+                    )}
+                  >
+                    <FontAwesomeIcon
+                      role="button"
+                      icon={faHeart}
+                      className="me-4 text-danger"
+                      onClick={() => addToWishlist(book)}
+                    ></FontAwesomeIcon>
+                  </OverlayTrigger>
                 ) : (
-                  <FontAwesomeIcon
-                    role="button"
-                    icon={faHeart}
-                    className="me-4"
-                    onClick={() => addToWishlist(book)}
-                  ></FontAwesomeIcon>
+                  <OverlayTrigger
+                    placement="bottom"
+                    delay={{ hide: 450, show: 300 }}
+                    overlay={(props) => (
+                      <Tooltip {...props}>Add To Wishlist</Tooltip>
+                    )}
+                  >
+                    <FontAwesomeIcon
+                      role="button"
+                      icon={faHeart}
+                      className="me-4"
+                      onClick={() => addToWishlist(book)}
+                    ></FontAwesomeIcon>
+                  </OverlayTrigger>
                 )}
               </>
               <>
                 {completedBooks?.find(
                   (completed) => completed._id === book._id
                 ) ? (
-                  <FontAwesomeIcon
-                    role="button"
-                    icon={faCircleCheck}
-                    className="me-4 text-success"
-                    onClick={() => markAsRead(book)}
-                  ></FontAwesomeIcon>
+                  <OverlayTrigger
+                    placement="bottom"
+                    delay={{ hide: 450, show: 300 }}
+                    overlay={(props) => (
+                      <Tooltip {...props}>Mark as Unread</Tooltip>
+                    )}
+                  >
+                    <FontAwesomeIcon
+                      role="button"
+                      icon={faCircleCheck}
+                      className="me-4 text-success"
+                      onClick={() => markAsRead(book)}
+                    ></FontAwesomeIcon>
+                  </OverlayTrigger>
                 ) : (
-                  <FontAwesomeIcon
-                    role="button"
-                    icon={faCircleCheck}
-                    className="me-4"
-                    onClick={() => markAsRead(book)}
-                  ></FontAwesomeIcon>
+                  <OverlayTrigger
+                    placement="bottom"
+                    delay={{ hide: 450, show: 300 }}
+                    overlay={(props) => (
+                      <Tooltip {...props}>Mark as Read</Tooltip>
+                    )}
+                  >
+                    <FontAwesomeIcon
+                      role="button"
+                      icon={faCircleCheck}
+                      className="me-4"
+                      onClick={() => markAsRead(book)}
+                    ></FontAwesomeIcon>
+                  </OverlayTrigger>
                 )}
               </>
               <>
                 {currentlyReading?.find(
                   (reading) => reading._id === book._id
                 ) ? (
-                  <FontAwesomeIcon
-                    role="button"
-                    icon={faBookOpenReader}
-                    className="me-4 text-primary"
-                    onClick={() => readingNow(book)}
-                  ></FontAwesomeIcon>
+                  <OverlayTrigger
+                    placement="bottom"
+                    delay={{ hide: 450, show: 300 }}
+                    overlay={(props) => (
+                      <Tooltip {...props}>Read Later </Tooltip>
+                    )}
+                  >
+                    <FontAwesomeIcon
+                      role="button"
+                      icon={faBookOpenReader}
+                      className="me-4 text-primary"
+                      onClick={() => readingNow(book)}
+                    ></FontAwesomeIcon>
+                  </OverlayTrigger>
                 ) : (
-                  <FontAwesomeIcon
-                    role="button"
-                    icon={faBookOpenReader}
-                    className="me-4"
-                    onClick={() => readingNow(book)}
-                  ></FontAwesomeIcon>
+                  <OverlayTrigger
+                    placement="bottom"
+                    delay={{ hide: 450, show: 300 }}
+                    overlay={(props) => (
+                      <Tooltip {...props}>Reading Now</Tooltip>
+                    )}
+                  >
+                    <FontAwesomeIcon
+                      role="button"
+                      icon={faBookOpenReader}
+                      className="me-4"
+                      onClick={() => readingNow(book)}
+                    ></FontAwesomeIcon>
+                  </OverlayTrigger>
                 )}
               </>
             </div>

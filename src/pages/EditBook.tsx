@@ -1,27 +1,24 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { genres } from "../utils/constants";
-import { Button, Form, Toast, ToastContainer } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import { useEffect, useState, FormEvent } from "react";
 import { IBook } from "../types/globalTypes";
 import {
   useEditBookMutation,
   useGetBookByIdQuery,
 } from "../redux/features/books/bookApi";
+import ToastMessage from "../shared/ToastMessage";
 
 const EditBook = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { data: bookData } = useGetBookByIdQuery(id!);
   const [editBook, { isSuccess }] = useEditBookMutation();
-
-  const book: IBook = bookData!.data!;
-
   const [selectedOption, setSelectedOption] = useState("");
-
-  useEffect(() => {
-    if (book) {
-      setSelectedOption(book.genre);
-    }
-  }, [book]);
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const book: IBook = bookData!.data!;
 
   const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,27 +38,39 @@ const EditBook = () => {
       price: target.price.value,
       image: target.image.value,
     };
-    // console.log(data);
     editBook({ id, data })
       .then(() => {
-        console.log(data);
+        // console.log(data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+  useEffect(() => {
+    if (book) {
+      setSelectedOption(book.genre);
+    }
+  }, [book]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      handleShow();
+      setTimeout(() => {
+        navigate(`/bookdetails/${id!}`);
+      }, 1500);
+    }
+  }, [isSuccess, id, navigate]);
+
   return (
     <div>
-      {isSuccess && (
-        <ToastContainer position="top-end" className="mt-5 me-5">
-          <Toast bg="success" autohide={true}>
-            <Toast.Body className="text-white">
-              Book updated successfully
-            </Toast.Body>
-          </Toast>
-        </ToastContainer>
-      )}
+      <ToastMessage
+        show={show}
+        handleClose={handleClose}
+        message="Book updated successfully"
+        variant="success"
+      />
+
       <h1 className="mb-4">Edit Book</h1>
       <Form onSubmit={handleSumbit}>
         <Form.Group className="mb-2" controlId="bookTitle">
@@ -134,7 +143,6 @@ const EditBook = () => {
             name="image"
             placeholder="Enter image link"
             defaultValue={book?.image}
-            required
           />
         </Form.Group>
 
