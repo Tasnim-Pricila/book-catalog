@@ -8,9 +8,7 @@ interface IProps {
 
 const PrivateRoute = ({ children }: IProps) => {
   const { user, isLoading } = useAppSelector((state) => state.user);
-  
   const location = useLocation();
-  console.log(user?.email, isLoading);
 
   if (isLoading) {
     return <p>Loading...</p>;
