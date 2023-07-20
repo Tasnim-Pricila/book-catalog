@@ -21,18 +21,44 @@ const AllBooks = () => {
   const { user } = useAppSelector((state) => state.user);
 
   let books: IBook[] | undefined;
-  if (searchedText) {
+
+  if (genre && publicationDate && searchedText) {
     books = bookData?.data?.filter(
       (book) =>
-        book?.title?.toLowerCase().includes(searchedText.toLowerCase()) ||
-        book?.author?.toLowerCase().includes(searchedText.toLowerCase()) ||
-        book?.genre?.toLowerCase().includes(searchedText.toLowerCase())
+        book?.genre?.toLowerCase() === genre.toLowerCase() &&
+        book?.publication_date?.slice(0, 4) === publicationDate &&
+        (book?.title?.toLowerCase().includes(searchedText.toLowerCase()) ||
+          book?.author?.toLowerCase().includes(searchedText.toLowerCase()) ||
+          book?.genre?.toLowerCase().includes(searchedText.toLowerCase()))
     );
   } else if (genre && publicationDate) {
     books = bookData?.data?.filter(
       (book) =>
         book?.genre?.toLowerCase() === genre.toLowerCase() &&
         book?.publication_date?.slice(0, 4) === publicationDate
+    );
+  } else if (genre && searchedText) {
+    books = bookData?.data?.filter(
+      (book) =>
+        book?.genre?.toLowerCase() === genre.toLowerCase() &&
+        (book?.title?.toLowerCase().includes(searchedText.toLowerCase()) ||
+          book?.author?.toLowerCase().includes(searchedText.toLowerCase()) ||
+          book?.genre?.toLowerCase().includes(searchedText.toLowerCase()))
+    );
+  } else if (publicationDate && searchedText) {
+    books = bookData?.data?.filter(
+      (book) =>
+        book?.publication_date?.slice(0, 4) === publicationDate &&
+        (book?.title?.toLowerCase().includes(searchedText.toLowerCase()) ||
+          book?.author?.toLowerCase().includes(searchedText.toLowerCase()) ||
+          book?.genre?.toLowerCase().includes(searchedText.toLowerCase()))
+    );
+  } else if (searchedText) {
+    books = bookData?.data?.filter(
+      (book) =>
+        book?.title?.toLowerCase().includes(searchedText.toLowerCase()) ||
+        book?.author?.toLowerCase().includes(searchedText.toLowerCase()) ||
+        book?.genre?.toLowerCase().includes(searchedText.toLowerCase())
     );
   } else if (genre) {
     books = bookData?.data?.filter(
