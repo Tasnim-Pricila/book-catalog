@@ -10,6 +10,7 @@ const bookApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getBooks: builder.query<IAllResponse<IBook>, void>({
       query: () => "/books",
+      providesTags: ["create", "delete"]
     }),
 
     getBookById: builder.query<IResponse<IBook>, string>({
@@ -23,6 +24,7 @@ const bookApi = api.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["create"]
     }),
 
     editBook: builder.mutation<object, IEditBook>({
@@ -39,6 +41,7 @@ const bookApi = api.injectEndpoints({
         url: `/book/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["delete"]
     }),
   }),
 });

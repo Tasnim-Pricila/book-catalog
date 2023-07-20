@@ -6,7 +6,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://book-catalog-backend-lyart.vercel.app",
   }),
-  tagTypes: ["comment", "wishlist"],
+  tagTypes: ["comment", "wishlist", "create", "delete"],
 
   endpoints: () => ({}),
 });

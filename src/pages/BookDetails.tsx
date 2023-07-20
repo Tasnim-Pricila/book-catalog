@@ -3,38 +3,46 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../redux/features/hook";
 import { FormEvent } from "react";
 import { IReviews } from "../types/globalTypes";
-import { useEditBookMutation, useGetBookByIdQuery } from "../redux/features/books/bookApi";
+import {
+  useEditBookMutation,
+  useGetBookByIdQuery,
+} from "../redux/features/books/bookApi";
 import DeleteBookModal from "../components/DeleteBookModal";
+import userImage from "../../src/assets/images/user.png";
+import { useGetUserByEmailQuery } from "../redux/features/users/userApi";
 
 const BookDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { data: bookData } = useGetBookByIdQuery(id!);
+
   const [editBook] = useEditBookMutation();
   const { user } = useAppSelector((state) => state.user);
+  const { data: userData } = useGetUserByEmailQuery(user.email!);
   const book = bookData?.data;
   const reviews: IReviews[] | undefined = bookData?.data?.reviews ?? [];
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
-      comment: { value: string },
+      comment: { value: string };
     };
     const t = e.target as HTMLFormElement;
 
     const comment = {
+      user_id: userData?.data?.firstName,
       comment: target.comment.value,
     };
     const data = {
       reviews: [...reviews, comment],
     };
     editBook({ id, data })
-    .then(() => {
-      console.log('');
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      .then(() => {
+        console.log("");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
     t.reset();
   };
@@ -42,8 +50,14 @@ const BookDetails = () => {
   return (
     <div>
       <Row>
-        <Col xs={12} sm={4}>
-          <img src={book?.image} alt="Book" className="img-fluid" />
+        <Col xs={12} sm={2}>
+          <img
+            src={book?.image}
+            alt="Book"
+            className="img-fluid border border-primary"
+            height="250"
+            width="250"
+          />
         </Col>
         <Col xs={12} sm={8}>
           <h2>{book?.title}</h2>
@@ -89,19 +103,19 @@ const BookDetails = () => {
       )}
 
       {reviews?.map((review) => (
-        <Row key={review._id} className="my-4">
+        <Row key={review._id} className="my-4 align-items-center border">
           <Col md={1}>
             <img
-              src={review.user_image}
+              src={review.user_image ? review.user_image : userImage}
               alt={review.user_id}
               className="mr-3 rounded-circle"
               style={{ width: "64px", height: "64px" }}
             />
           </Col>
           <Col md={10}>
-            <h5>{review.user_id}</h5>
+            <h6>{review.user_id}</h6>
             {/* <p>Rating: {review.rating}</p> */}
-            <p>{review.comment}</p>
+            <p className="mb-0">{review.comment}</p>
           </Col>
         </Row>
       ))}
