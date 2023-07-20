@@ -9,13 +9,14 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { loginUser } from "../redux/features/users/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, FormEvent } from "react";
 
 const SignIn = () => {
   const { user, isLoading } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,12 +37,18 @@ const SignIn = () => {
         console.log(error);
       });
   };
+  type LocationState = {
+    from: {
+      pathname: string;
+    };
+  };
 
+  const from: string = (location.state as LocationState)?.from?.pathname || '/';
   useEffect(() => {
-    if (user.email && !isLoading) {
-      navigate("/");
+    if (user?.email && !isLoading) {
+      navigate(from, { replace: true });
     }
-  }, [user.email, isLoading, navigate]);
+  }, [user?.email, from ,isLoading, navigate]);
 
   return (
     <div className="py-5 px-md-5 text-center text-lg-start my-5 bg-warning">
