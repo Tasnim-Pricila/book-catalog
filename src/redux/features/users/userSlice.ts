@@ -63,6 +63,9 @@ const userSlice = createSlice({
     logout: (state) => {
       state.user.email = null
       state.isLoading = false
+      state.isError = false
+      state.isSuccess = false
+      state.error = null
   },
   },
   extraReducers: (builder) => {
@@ -91,6 +94,7 @@ const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.user.email = action.payload;
         state.isLoading = false;
+        state.isSuccess = true;
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.user.email = null;

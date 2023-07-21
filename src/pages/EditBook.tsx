@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { genres } from "../utils/constants";
 import { Button, Form } from "react-bootstrap";
 import { useEffect, useState, FormEvent } from "react";
-import { IBook } from "../types/globalTypes";
+import { IBook, IError } from "../types/globalTypes";
 import {
   useEditBookMutation,
   useGetBookByIdQuery,
@@ -13,7 +13,7 @@ const EditBook = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: bookData } = useGetBookByIdQuery(id!);
-  const [editBook, { isSuccess }] = useEditBookMutation();
+  const [editBook, { isSuccess, isError, error }] = useEditBookMutation();
   const [selectedOption, setSelectedOption] = useState("");
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
@@ -60,15 +60,19 @@ const EditBook = () => {
         navigate(`/bookdetails/${id!}`);
       }, 1500);
     }
-  }, [isSuccess, id, navigate]);
+    if (isError) {
+      handleShow();
+    }
+  }, [isSuccess, id, isError, navigate]);
+  const errorMessage = (error as IError)?.error as string
 
   return (
     <div>
       <ToastMessage
         show={show}
         handleClose={handleClose}
-        message="Book updated successfully"
-        variant="success"
+        message={isSuccess ? "Book updated successfully" : errorMessage}
+        variant={isSuccess ? "success" : "danger"}
       />
 
       <h1 className="mb-4">Edit Book</h1>

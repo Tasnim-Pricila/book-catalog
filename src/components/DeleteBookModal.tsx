@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useDeleteBookMutation } from "../redux/features/books/bookApi";
 import { Button, Modal } from "react-bootstrap";
 import ToastMessage from "../shared/ToastMessage";
+import { IError } from "../types/globalTypes";
 
 interface IProps {
   id: string;
@@ -16,7 +17,7 @@ const DeleteBookModal = ({ id }: IProps) => {
   const handleModalClose = () => setModal(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  const [deleteBook, { isSuccess }] = useDeleteBookMutation();
+  const [deleteBook, { isSuccess, isError, error }] = useDeleteBookMutation();
 
   const handleDelete = () => {
     deleteBook(id)
@@ -36,15 +37,21 @@ const DeleteBookModal = ({ id }: IProps) => {
         navigate("/allbooks");
       }, 1500);
     }
-  }, [isSuccess, navigate]);
+    if (isError) {
+      handleShow();
+      setModal(false);
+    }
+  }, [isSuccess, isError, navigate]);
+
+  const errorMessage = (error as IError)?.error as string
 
   return (
     <>
       <ToastMessage
         show={show}
         handleClose={handleClose}
-        message="Book deleted successfully"
-        variant="success"
+        message={isSuccess ? "Book deleted successfully" : errorMessage}
+        variant={isSuccess ? "success" : "danger"}
       />
 
       <Button variant="danger" onClick={handleModalShow}>

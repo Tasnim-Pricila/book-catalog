@@ -29,7 +29,9 @@ const Header = () => {
   return (
     <>
       <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary px-5">
-        <Navbar.Brand href="#home">Book Zone</Navbar.Brand>
+        <Navbar.Brand>
+          <Link to="/" className="text-decoration-none">Book Zone</Link>
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav ">
           <Nav className="me-auto w-50 d-flex justify-content-end">

@@ -2,14 +2,14 @@ import { Button, Form } from "react-bootstrap";
 import { genres } from "../utils/constants";
 import { FormEvent, useEffect, useState } from "react";
 import { useAppSelector } from "../redux/features/hook";
-import { IBook } from "../types/globalTypes";
+import { IBook, IError } from "../types/globalTypes";
 import { useCreateBookMutation } from "../redux/features/books/bookApi";
 import ToastMessage from "../shared/ToastMessage";
 import { useNavigate } from "react-router-dom";
 
 const AddNew = () => {
   const navigate = useNavigate();
-  const [createBook, { isSuccess }] = useCreateBookMutation();
+  const [createBook, { isSuccess, isError, error }] = useCreateBookMutation();
   const { user } = useAppSelector((state) => state.user);
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
@@ -22,7 +22,10 @@ const AddNew = () => {
         navigate("/allbooks");
       }, 1500);
     }
-  }, [isSuccess, navigate]);
+    if (isError) {
+      handleShow();
+    }
+  }, [isSuccess, navigate, isError]);
 
   const handleSumbit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,13 +57,15 @@ const AddNew = () => {
       });
   };
 
+  const errorMessage = (error as IError)?.error as string
+
   return (
     <div>
       <ToastMessage
         show={show}
         handleClose={handleClose}
-        message="Book created successfully"
-        variant="success"
+        message={isSuccess ? "Book created successfully" : errorMessage}
+        variant={isSuccess ? "success" : "danger"}
       />
 
       <Form onSubmit={handleSumbit}>

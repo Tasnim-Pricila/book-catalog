@@ -7,7 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { IBook, IUser } from "../types/globalTypes";
+import {  IBook, IError, IUser } from "../types/globalTypes";
 import {
   useGetUserByEmailQuery,
   useUpdateUserMutation,
@@ -27,7 +27,7 @@ const BookCard = ({ book }: IProps) => {
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
-  const [updateUser, { isSuccess }] = useUpdateUserMutation();
+  const [updateUser, { isSuccess, isError, error }] = useUpdateUserMutation();
   const { user } = useAppSelector((state) => state.user);
   const { data: getUser } = useGetUserByEmailQuery(user.email!);
   const userData: IUser = getUser?.data as IUser;
@@ -143,18 +143,20 @@ const BookCard = ({ book }: IProps) => {
   };
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess || isError) {
       handleShow();
     }
-  }, [isSuccess]);
+  }, [isSuccess, isError]);
+
+  const errorMessage = (error as IError)?.error as string;
 
   return (
     <div>
       <ToastMessage
         show={show}
         handleClose={handleClose}
-        message="Changes Saved"
-        variant="success"
+        message={isSuccess ? "Changes Saved" : errorMessage}
+        variant={isSuccess ? "success" : "danger"}
       />
       <Card>
         <div className="d-flex">

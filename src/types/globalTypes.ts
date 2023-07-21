@@ -1,3 +1,6 @@
+import { SerializedError } from "@reduxjs/toolkit";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
+
 export interface IReviews {
   _id?: string;
   user_id?: string;
@@ -40,4 +43,8 @@ export interface IResponse<T> {
 export interface ICreateResponse {
   status: boolean;
   data: object;
+}
+
+export interface IError  {
+  error: FetchBaseQueryError | SerializedError | undefined
 }
