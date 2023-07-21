@@ -10,7 +10,7 @@ const RecentBooks = () => {
   return (
     <>
       <Row>
-        {reversedBooks?.slice(0, 20).map((book: IBook, i: number) => (
+        {reversedBooks?.slice(0, 10).map((book: IBook, i: number) => (
           <Col md={4} lg={3} className="mb-3" key={i}>
             <BookCard book={book} />
           </Col>
