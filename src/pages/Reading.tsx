@@ -1,41 +1,11 @@
-import { Table } from "react-bootstrap";
-import MyTableHeader from "../shared/MyTableHeader";
 import { useAppSelector } from "../redux/features/hook";
 import { useGetUserByEmailQuery } from "../redux/features/users/userApi";
+import TableComponent from "../shared/TableComponent";
 
 const Reading = () => {
   const { user } = useAppSelector((state) => state.user);
   const { data: userData } = useGetUserByEmailQuery(user.email!);
-  return (
-    <Table striped>
-      <MyTableHeader />
-      {userData?.data?.currentlyReading?.length !== undefined ? (
-        userData?.data?.currentlyReading?.map((data, i) => (
-          <tbody>
-            <tr className="align-middle">
-              <td>{i + 1}</td>
-              <td>
-                <img
-                  src={data.image}
-                  alt=""
-                  className="img-fluid"
-                  width={50}
-                  height={50}
-                />
-              </td>
-              <td>{data.title}</td>
-              <td>{data.author}</td>
-              <td>{data.genre}</td>
-              <td>{data.publication_date}</td>
-              <td>{data.price}</td>
-            </tr>
-          </tbody>
-        ))
-      ) : (
-        <h5 className="text-center">No Books right now</h5>
-      )}
-    </Table>
-  );
+  return <TableComponent data={userData?.data?.currentlyReading} />;
 };
 
 export default Reading;
