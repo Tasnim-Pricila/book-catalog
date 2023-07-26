@@ -16,6 +16,8 @@ import { useAppSelector } from "../redux/features/hook";
 import { useEffect, useState } from "react";
 import ToastMessage from "../shared/ToastMessage";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import demoImage from '../../src/assets/images/book.jpg';
+import { isValidUrl } from "../utils/customFunction";
 
 interface IProps {
   book: IBook;
@@ -171,7 +173,7 @@ const BookCard = ({ book }: IProps) => {
       <Card>
         <div className="d-flex">
           <img
-            src={book?.image}
+            src={isValidUrl(book.image!) ? book?.image : demoImage}
             alt="fgfgggggg"
             className="img-fluid"
             width="130"

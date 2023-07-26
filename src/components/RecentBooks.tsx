@@ -2,10 +2,15 @@ import { Col, Row } from "react-bootstrap";
 import { useGetBooksQuery } from "../redux/features/books/bookApi";
 import { IBook } from "../types/globalTypes";
 import BookCard from "./BookCard";
+import Loading from "../shared/Loading";
 
 const RecentBooks = () => {
-  const { data: bookData } = useGetBooksQuery(undefined);
+  const { data: bookData, isLoading } = useGetBooksQuery(undefined);
   const reversedBooks = bookData?.data?.slice().reverse()
+
+  if(isLoading){
+    return <Loading/>
+  }
 
   return (
     <>

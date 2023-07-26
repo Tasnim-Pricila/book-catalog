@@ -13,6 +13,7 @@ import { useState, useEffect, FormEvent } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../redux/features/users/userApi";
 import ToastMessage from "../shared/ToastMessage";
+import Loading from "../shared/Loading";
 
 const Signup = () => {
   const dispatch = useAppDispatch();
@@ -76,13 +77,17 @@ const Signup = () => {
     if (user.email && !isLoading) {
       setTimeout(() => {
         navigate(from, { replace: true });
-      }, 1500);
+      }, 1000);
     }
     if (isError) {
       handleShow();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, user?.email, isLoading, isError, navigate]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <>

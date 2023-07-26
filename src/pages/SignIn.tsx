@@ -12,6 +12,8 @@ import { useAppDispatch, useAppSelector } from "../redux/features/hook";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, FormEvent } from "react";
 import ToastMessage from "../shared/ToastMessage";
+import Loading from "../shared/Loading";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
   const { user, isLoading, isError, error, isSuccess } = useAppSelector(
@@ -48,9 +50,8 @@ const SignIn = () => {
       pathname: string;
     };
   };
-
   const from: string = (location.state as LocationState)?.from?.pathname || "/";
-  
+
   useEffect(() => {
     if (isSuccess || isError) {
       handleShow();
@@ -62,6 +63,9 @@ const SignIn = () => {
     }
   }, [user?.email, from, isLoading, navigate, isSuccess, isError]);
 
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <ToastMessage

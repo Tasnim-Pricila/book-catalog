@@ -11,10 +11,11 @@ import { IBook } from "../types/globalTypes";
 import { useGetBooksQuery } from "../redux/features/books/bookApi";
 
 import BookCard from "../components/BookCard";
+import Loading from "../shared/Loading";
 
 const AllBooks = () => {
   const dispatch = useAppDispatch();
-  const { data: bookData } = useGetBooksQuery(undefined);
+  const { data: bookData, isLoading } = useGetBooksQuery(undefined);
   const { searchedText, genre, publicationDate } = useAppSelector(
     (state) => state.book
   );
@@ -70,6 +71,10 @@ const AllBooks = () => {
     );
   } else {
     books = bookData?.data;
+  }
+
+  if(isLoading){
+    return <Loading/>
   }
 
   return (

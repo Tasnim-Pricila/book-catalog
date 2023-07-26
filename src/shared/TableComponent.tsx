@@ -2,6 +2,7 @@ import { Table } from "react-bootstrap";
 import { IBook } from "../types/globalTypes";
 
 const TableComponent = ({ data }: { data: IBook[] | undefined }) => {
+  console.log(data);
   return (
     <>
       {data?.length !== undefined ? (

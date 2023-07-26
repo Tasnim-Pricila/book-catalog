@@ -2,7 +2,7 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from "../redux/features/hook";
 import { FormEvent } from "react";
-import { IReviews } from "../types/globalTypes";
+import { IBook, IReviews } from "../types/globalTypes";
 import {
   useEditBookMutation,
   useGetBookByIdQuery,
@@ -10,16 +10,19 @@ import {
 import DeleteBookModal from "../components/DeleteBookModal";
 import userImage from "../../src/assets/images/user.png";
 import { useGetUserByEmailQuery } from "../redux/features/users/userApi";
+import Loading from "../shared/Loading";
+import { isValidUrl } from "../utils/customFunction";
+import demoImage from "../../src/assets/images/book.jpg"
 
 const BookDetails = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { data: bookData } = useGetBookByIdQuery(id!);
+  const { data: bookData, isLoading } = useGetBookByIdQuery(id!);
 
   const [editBook] = useEditBookMutation();
   const { user } = useAppSelector((state) => state.user);
   const { data: userData } = useGetUserByEmailQuery(user.email!);
-  const book = bookData?.data;
+  const book = bookData?.data as IBook;
   const reviews: IReviews[] | undefined = bookData?.data?.reviews ?? [];
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -47,12 +50,16 @@ const BookDetails = () => {
     t.reset();
   };
 
+  if(isLoading){
+    return <Loading/>
+  }
+
   return (
     <div>
       <Row>
         <Col xs={12} sm={2}>
           <img
-            src={book?.image}
+            src={isValidUrl(book.image!) ? book?.image : demoImage}
             alt="Book"
             className="img-fluid border border-primary"
             height="250"
