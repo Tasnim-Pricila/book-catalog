@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import "bootstrap/dist/css/bootstrap.min.css";
 import MainLayout from "./layout/MainLayout";
 import { useAppDispatch } from "./redux/features/hook";
@@ -7,6 +8,10 @@ import { useEffect } from "react";
 import { setLoading, setUser } from "./redux/features/users/userSlice";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+AOS.init();
 
 function App() {
   const dispatch = useAppDispatch();
@@ -19,6 +24,9 @@ function App() {
         dispatch(setUser(user.email));
         dispatch(setLoading(false));
       } 
+      else{
+        dispatch(setLoading(false));
+      }
     });
   }, [dispatch]);
 

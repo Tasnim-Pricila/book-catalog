@@ -13,7 +13,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, FormEvent } from "react";
 import ToastMessage from "../shared/ToastMessage";
 import Loading from "../shared/Loading";
-import { toast } from "react-toastify";
 
 const SignIn = () => {
   const { user, isLoading, isError, error, isSuccess } = useAppSelector(
