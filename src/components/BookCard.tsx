@@ -15,9 +15,10 @@ import {
 import { useAppSelector } from "../redux/features/hook";
 import { useEffect, useState } from "react";
 import ToastMessage from "../shared/ToastMessage";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import demoImage from '../../src/assets/images/book.jpg';
+import { Image, OverlayTrigger, Tooltip } from "react-bootstrap";
+import demoImage from "../../src/assets/images/book.jpg";
 import { isValidUrl } from "../utils/customFunction";
+import "./style.css";
 
 interface IProps {
   book: IBook;
@@ -172,17 +173,27 @@ const BookCard = ({ book }: IProps) => {
       />
       <Card>
         <div className="d-flex">
-          <img
-            src={isValidUrl(book.image!) ? book?.image : demoImage}
-            alt="fgfgggggg"
-            className="img-fluid"
-            width="130"
-            height="auto"
-            onClick={() => navigate(`/bookdetails/${book._id!}`)}
-          />
+          <div className=" image-container">
+            <Image
+              role="button"
+              src={isValidUrl(book.image!) ? book?.image : demoImage}
+              alt="fgfgggggg"
+              className=""
+              width="150"
+              height="240"
+              onClick={() => navigate(`/bookdetails/${book._id!}`)}
+            />
+            <small
+              className="image-text"
+              onClick={() => navigate(`/bookdetails/${book._id!}`)}
+            >
+              View Details
+            </small>
+          </div>
+
           <Card.Body style={{ minWidth: 0 }}>
             <Card.Title className="text-truncate">{book?.title}</Card.Title>
-            <Card.Text className="mb-0">{book?.author}</Card.Text>
+            <Card.Text className="text-truncate mb-0">{book?.author}</Card.Text>
             <Card.Text className="mb-0">{book?.publication_date}</Card.Text>
             <Card.Text className="text-muted mb-0"> {book?.genre}</Card.Text>
             <div className="my-2">
