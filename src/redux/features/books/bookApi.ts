@@ -2,7 +2,7 @@ import { IAllResponse, IBook, IResponse } from "../../../types/globalTypes";
 import { api } from "../../api/apiSlice";
 
 export interface IEditBook {
-  id: string | undefined;
+  bookId: string | undefined;
   data: Partial<IBook> | undefined;
 }
 
@@ -28,8 +28,8 @@ const bookApi = api.injectEndpoints({
     }),
 
     editBook: builder.mutation<object, IEditBook>({
-      query: ({ id, data }) => ({
-        url: `/book/${id!}`,
+      query: ({ bookId, data }) => ({
+        url: `/book/${bookId!}`,
         method: "PATCH",
         body: data,
       }),

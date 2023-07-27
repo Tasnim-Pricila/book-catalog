@@ -36,7 +36,6 @@ const BookCard = ({ book }: IProps) => {
   const userData: IUser = getUser?.data as IUser;
   const id = userData?._id;
   const userWishlist = userData?.wishlist;
-
   const completedBooks = userData?.completedBooks;
   const currentlyReading = userData?.currentlyReading;
 
