@@ -94,6 +94,8 @@ const BookDetails = () => {
     dots: true,
     infinite: true,
     speed: 500,
+    autoplay: true,
+    autoplaySpeed: 3000,
     slidesToShow: 2,
     slidesToScroll: 1,
     vertical: true, // Enable vertical sliding
@@ -367,55 +369,56 @@ const BookDetails = () => {
             </div>
           )}
         </Col>
-        <Col
-          xs={12}
-          sm={3}
-          // className="border border-danger"
-        >
+        <Col xs={12} sm={3}>
           <h4>Related Books</h4>
-          {relatedBooks!.length > 0 ? (
-            <Slider {...settings}>
-              {relatedBooks?.slice(0, 3).map((book) => (
-                <>
-                  <Card>
-                    <div className="d-flex">
-                      <div>
-                        <Image
-                          role="button"
-                          src={
-                            isValidUrl(book.image!) ? book?.image : demoImage
-                          }
-                          alt="fgfgggggg"
-                          className=""
-                          width="100"
-                          height="150"
-                          onClick={() => navigate(`/bookdetails/${book._id!}`)}
-                        />
-                      </div>
+          {relatedBooks! &&
+          (relatedBooks?.length !== undefined || relatedBooks?.length > 0) ? (
+            <div style={{ width: "300px", margin: "auto", height: "300px" }}>
+              <Slider {...settings}>
+                {relatedBooks?.slice(0, 3).map((book) => (
+                  <>
+                    <Card>
+                      <div className="d-flex">
+                        <div>
+                          <Image
+                            role="button"
+                            src={
+                              isValidUrl(book.image!) ? book?.image : demoImage
+                            }
+                            alt="fgfgggggg"
+                            className=""
+                            width="100"
+                            height="150"
+                            onClick={() =>
+                              navigate(`/bookdetails/${book._id!}`)
+                            }
+                          />
+                        </div>
 
-                      <Card.Body style={{ minWidth: 0 }}>
-                        <Card.Title className="text-truncate">
-                          {book?.title}
-                        </Card.Title>
-                        <Card.Text className="text-truncate mb-0">
-                          {book?.author}
-                        </Card.Text>
-                        <Card.Text className="mb-0">
-                          {book?.publication_date}
-                        </Card.Text>
-                        <Card.Text className="text-muted mb-0">
-                          {" "}
-                          {book?.genre}
-                        </Card.Text>
-                        <Card.Text className="fw-bold">
-                          ${book?.price}
-                        </Card.Text>
-                      </Card.Body>
-                    </div>
-                  </Card>
-                </>
-              ))}
-            </Slider>
+                        <Card.Body style={{ minWidth: 0 }}>
+                          <Card.Title className="text-truncate">
+                            {book?.title}
+                          </Card.Title>
+                          <Card.Text className="text-truncate mb-0">
+                            {book?.author}
+                          </Card.Text>
+                          <Card.Text className="mb-0">
+                            {book?.publication_date}
+                          </Card.Text>
+                          <Card.Text className="text-muted mb-0">
+                            {" "}
+                            {book?.genre}
+                          </Card.Text>
+                          <Card.Text className="fw-bold">
+                            ${book?.price}
+                          </Card.Text>
+                        </Card.Body>
+                      </div>
+                    </Card>
+                  </>
+                ))}
+              </Slider>
+            </div>
           ) : (
             <p>No Related Books found</p>
           )}
