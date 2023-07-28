@@ -32,6 +32,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBookOpenReader,
   faCircleCheck,
+  faEdit,
   faHeart,
 } from "@fortawesome/free-solid-svg-icons";
 import ToastMessage from "../shared/ToastMessage";
@@ -362,9 +363,10 @@ const BookDetails = () => {
 
           {book?.createdBy === user?.email && (
             <div className="mt-3">
-              <Button onClick={() => navigate(`/editbook/${book._id!}`)}>
-                Edit Book
-              </Button>{" "}
+              <Button onClick={() => navigate(`/editbook/${book._id!}`)} className="me-2">
+                <FontAwesomeIcon icon={faEdit} className="me-1"></FontAwesomeIcon>
+                 Edit Book
+              </Button>
               <DeleteBookModal id={id!} />
             </div>
           )}

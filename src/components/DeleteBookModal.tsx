@@ -4,6 +4,8 @@ import { useDeleteBookMutation } from "../redux/features/books/bookApi";
 import { Button, Modal } from "react-bootstrap";
 import ToastMessage from "../shared/ToastMessage";
 import { IError } from "../types/globalTypes";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface IProps {
   id: string;
@@ -43,7 +45,7 @@ const DeleteBookModal = ({ id }: IProps) => {
     }
   }, [isSuccess, isError, navigate]);
 
-  const errorMessage = (error as IError)?.error as string
+  const errorMessage = (error as IError)?.error as string;
 
   return (
     <>
@@ -55,6 +57,7 @@ const DeleteBookModal = ({ id }: IProps) => {
       />
 
       <Button variant="danger" onClick={handleModalShow}>
+        <FontAwesomeIcon icon={faTrash} className="me-1"></FontAwesomeIcon>{" "}
         Delete Book
       </Button>
       <Modal show={modal} centered onHide={handleModalClose}>
