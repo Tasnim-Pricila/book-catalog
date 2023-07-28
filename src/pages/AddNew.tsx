@@ -7,7 +7,9 @@ import { useCreateBookMutation } from "../redux/features/books/bookApi";
 import ToastMessage from "../shared/ToastMessage";
 import { useNavigate } from "react-router-dom";
 import "./AddNew.css";
-import CustomBreadCrumb from "../components/CustomBreadCrumb";
+// import CustomBreadCrumb from "../components/CustomBreadCrumb";
+import CustomHeading from "../shared/CustomHeading";
+import CustomBreadCrumb from "../shared/CustomBreadCrumb";
 
 const AddNew = () => {
   const navigate = useNavigate();
@@ -69,9 +71,10 @@ const AddNew = () => {
         message={isSuccess ? "Book created successfully" : errorMessage}
         variant={isSuccess ? "success" : "danger"}
       />
-      <CustomBreadCrumb/>
+      <CustomBreadCrumb Menu1="Home" Menu2="All Books" activeMenu="Add New" />
       <Stack className="background-banner justify-content-center">
-        <Container className="w-50 p-5 m-5 mx-auto shadow border-none rounded-3 bg-form">
+        <Container className="w-50 px-5 pb-5 m-5 mx-auto shadow border-none rounded-3 bg-form">
+          <CustomHeading headTitle="Add New Book"/>
           <Form onSubmit={handleSumbit}>
             <Row>
               <Col xs={12} md={6}>
