@@ -171,7 +171,7 @@ const BookCard = ({ book }: IProps) => {
         variant={isSuccess ? "success" : "danger"}
       />
       <Card>
-        <div className="d-flex">
+        <div className="d-flex flex-md-row flex-column">
           <div className="image-container">
             <Image
               role="button"

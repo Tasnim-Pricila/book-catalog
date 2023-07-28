@@ -81,7 +81,7 @@ const AllBooks = () => {
     <>
       <Stack
         gap={3}
-        className="d-flex flex-md-row flex-column mb-5 px-5 mx-md-5 mt-5"
+        className="d-flex flex-md-row flex-column mb-5 px-md-5 mx-md-5 mx-2 mt-5"
       >
         <Form.Select
           style={{ flex: 1/2 }}
@@ -128,9 +128,9 @@ const AllBooks = () => {
         )}
       </Stack>
 
-      <Row className="mx-5">
+      <Row className="mx-md-5 mx-2">
         {books?.map((book: IBook, i: number) => (
-          <Col md={4} lg={3} className="mb-3" key={i}>
+          <Col md={6} xl={3} className="mb-3" key={i}>
             <BookCard book={book} />
           </Col>
         ))}

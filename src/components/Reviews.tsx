@@ -49,24 +49,26 @@ const Reviews = ({ reviews, bookId }: IProps) => {
         <p className="text-capitalize text-center fw-bold h6">No reviews yet</p>
       )}
       {user?.email && (
-        <Row className="w-50 mb-4 mx-5">
-          <Form onSubmit={handleSubmit} className="d-flex">
-            <Form.Control
-              type="text"
-              name="comment"
-              placeholder="Write your comment"
-              className="me-2 border border-primary"
-              required
-            />
-            <Button type="submit" variant="outline-primary">
-              Submit
-            </Button>
-          </Form>
+        <Row className="mb-4 mx-1 mx-md-5">
+          <Col xs={12} md={8}>
+            <Form onSubmit={handleSubmit} className="d-flex">
+              <Form.Control
+                type="text"
+                name="comment"
+                placeholder="Write your comment"
+                className="me-2 border border-primary"
+                required
+              />
+              <Button type="submit" variant="outline-primary">
+                Submit
+              </Button>
+            </Form>
+          </Col>
         </Row>
       )}
 
       {reviews?.map((review) => (
-        <Row key={review._id} className="mb-4 align-items-center border mx-5">
+        <Row key={review._id} className="mb-4 align-items-center border mx-2 mx-md-5">
           <Col md={1}>
             <img
               src={review.user_image ? review.user_image : userImage}

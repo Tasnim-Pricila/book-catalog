@@ -29,10 +29,10 @@ const BookDetails = () => {
   }
 
   return (
-    <div>
+    <>
       <BookDetailRow book={book} relatedBooks={relatedBooks} />
       <Reviews reviews={reviews} bookId={bookId!} />
-    </div>
+    </>
   );
 };
 

@@ -174,7 +174,7 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
         message={isSuccess ? "Changes Saved" : errorMessage}
         variant={isSuccess ? "success" : "danger"}
       />
-      <Row className="mt-3 mx-5">
+      <Row className="mt-5 mx-1 mx-md-5">
         <Col xs={12} sm={3}>
           <Image
             src={isValidUrl(book.image!) ? book?.image : demoImage}
