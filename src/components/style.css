@@ -1,6 +1,5 @@
 .image-container {
   position: relative;
-  border: 1px solid;
 }
 
 .image-container .image-text {
@@ -30,4 +29,28 @@
 }
 .image-container:hover img {
   opacity: 0.7;
+}
+
+.bread-bg{
+  background-image: url('../../src/assets/images/breadcrumb.png');
+  height: 20vh;
+  background-blend-mode: black;
+  /* background-position: center; */
+  background-attachment: fixed;
+}
+.bread-overlay{
+  background-color: rgba(76, 79, 79, 0.86);
+  height: 20vh;
+}
+
+.breadcrumb-item a{
+  text-decoration: none;
+  color: white;
+}
+.breadcrumb-item.active{
+  color: rgb(5 251 68);
+}
+
+.breadcrumb-item+.breadcrumb-item::before{
+  color: white;
 }

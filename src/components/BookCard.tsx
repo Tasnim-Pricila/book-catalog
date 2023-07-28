@@ -172,7 +172,7 @@ const BookCard = ({ book }: IProps) => {
       />
       <Card>
         <div className="d-flex">
-          <div className=" image-container">
+          <div className="image-container">
             <Image
               role="button"
               src={isValidUrl(book.image!) ? book?.image : demoImage}

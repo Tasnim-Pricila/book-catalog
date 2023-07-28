@@ -220,7 +220,7 @@ const BookDetails = () => {
   const removeSelectedBooks = allBooks?.data?.filter(
     (book) => book._id !== bookData?.data?._id
   );
-  const relatedBooks = removeSelectedBooks?.filter(
+  const relatedBooks: IBook[] | undefined = removeSelectedBooks?.filter(
     (book) =>
       book.genre === bookData?.data?.genre ||
       book.author === bookData?.data?.author
@@ -371,15 +371,15 @@ const BookDetails = () => {
         </Col>
         <Col xs={12} sm={3}>
           <h4>Related Books</h4>
-          {relatedBooks! &&
-          (relatedBooks?.length !== undefined || relatedBooks?.length > 0) ? (
-            <div style={{ width: "300px", margin: "auto", height: "300px" }}>
-              <Slider {...settings}>
-                {relatedBooks?.slice(0, 3).map((book) => (
-                  <>
-                    <Card>
-                      <div className="d-flex">
-                        <div>
+          {
+            relatedBooks && 
+              relatedBooks?.length > 0 ? (
+              <div style={{ width: "100%", height: "300px" }}>
+                <Slider {...settings}>
+                  {relatedBooks?.slice(0, 3).map((book) => (
+                    <>
+                      <Card className="mt-2">
+                        <div className="d-flex">
                           <Image
                             role="button"
                             src={
@@ -388,40 +388,39 @@ const BookDetails = () => {
                             alt="fgfgggggg"
                             className=""
                             width="100"
-                            height="150"
+                            height="160"
                             onClick={() =>
                               navigate(`/bookdetails/${book._id!}`)
                             }
                           />
+                          <Card.Body>
+                            <h5 className="text-truncate d-inline-block mb-0">
+                              {book?.title}
+                            </h5>
+                            <Card.Text className="text-truncate mb-0">
+                              {book?.author}
+                            </Card.Text>
+                            <Card.Text className="mb-0">
+                              {book?.publication_date}
+                            </Card.Text>
+                            <Card.Text className="text-muted mb-0">
+                              {" "}
+                              {book?.genre}
+                            </Card.Text>
+                            <Card.Text className="fw-bold">
+                              ${book?.price}
+                            </Card.Text>
+                          </Card.Body>
                         </div>
-
-                        <Card.Body style={{ minWidth: 0 }}>
-                          <Card.Title className="text-truncate">
-                            {book?.title}
-                          </Card.Title>
-                          <Card.Text className="text-truncate mb-0">
-                            {book?.author}
-                          </Card.Text>
-                          <Card.Text className="mb-0">
-                            {book?.publication_date}
-                          </Card.Text>
-                          <Card.Text className="text-muted mb-0">
-                            {" "}
-                            {book?.genre}
-                          </Card.Text>
-                          <Card.Text className="fw-bold">
-                            ${book?.price}
-                          </Card.Text>
-                        </Card.Body>
-                      </div>
-                    </Card>
-                  </>
-                ))}
-              </Slider>
-            </div>
-          ) : (
-            <p>No Related Books found</p>
-          )}
+                      </Card>
+                    </>
+                  ))}
+                </Slider>
+              </div>
+            ): (
+              <p> No Related Books found</p>
+            )
+           }
         </Col>
       </Row>
 

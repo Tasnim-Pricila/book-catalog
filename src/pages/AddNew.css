@@ -1,0 +1,12 @@
+.background-banner{
+    background-image: url('../../src/assets/images/high-angle-open-book_23-2148568913.avif');
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center bottom;
+    background-attachment: fixed;
+}
+
+.bg-form{
+    background-color: antiquewhite;
+}
