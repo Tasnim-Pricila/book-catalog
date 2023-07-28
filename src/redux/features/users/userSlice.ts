@@ -1,17 +1,20 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import type { PayloadAction } from '@reduxjs/toolkit';
-import { auth } from '../../../lib/firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import { auth } from "../../../lib/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 interface IUserState {
   user: {
-    id: string | null,
+    id: string | null;
     email: string | null;
   };
   isLoading: boolean;
   isError: boolean;
   error: string | null;
-  isSuccess: boolean
+  isSuccess: boolean;
 }
 
 interface ICredential {
@@ -27,11 +30,11 @@ const initialState: IUserState = {
   isLoading: false,
   isError: false,
   error: null,
-  isSuccess: false
+  isSuccess: false,
 };
 
 export const createUser = createAsyncThunk(
-  'user/createUser',
+  "user/createUser",
   async ({ email, password }: ICredential) => {
     const data = await createUserWithEmailAndPassword(auth, email, password);
     // console.log(data);
@@ -40,7 +43,7 @@ export const createUser = createAsyncThunk(
 );
 
 export const loginUser = createAsyncThunk(
-  'user/loginUser',
+  "user/loginUser",
   async ({ email, password }: ICredential) => {
     const data = await signInWithEmailAndPassword(auth, email, password);
     return data.user.email;
@@ -48,7 +51,7 @@ export const loginUser = createAsyncThunk(
 );
 
 const userSlice = createSlice({
-  name: 'user ',
+  name: "user ",
   initialState,
   reducers: {
     setUserId: (state, action: PayloadAction<string | null>) => {
@@ -61,12 +64,16 @@ const userSlice = createSlice({
       state.isLoading = action.payload;
     },
     logout: (state) => {
-      state.user.email = null
-      state.isLoading = false
+      state.user.email = null;
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = false;
+      state.error = null;
+    },
+    errorHandle: (state) => {
       state.isError = false
-      state.isSuccess = false
       state.error = null
-  },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -105,6 +112,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, setLoading, logout, setUserId } = userSlice.actions;
+export const { setUser, setLoading, logout, setUserId, errorHandle } = userSlice.actions;
 
 export default userSlice.reducer;

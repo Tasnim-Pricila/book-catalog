@@ -7,9 +7,9 @@ import {
   faInstagram,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
-import { loginUser } from "../redux/features/users/userSlice";
+import { errorHandle, loginUser } from "../redux/features/users/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect, FormEvent } from "react";
 import ToastMessage from "../shared/ToastMessage";
 import Loading from "../shared/Loading";
@@ -54,13 +54,16 @@ const SignIn = () => {
   useEffect(() => {
     if (isSuccess || isError) {
       handleShow();
+      setTimeout(() => {
+        dispatch(errorHandle())
+      }, 3000);
     }
     if (user?.email && !isLoading) {
       setTimeout(() => {
         navigate(from, { replace: true });
       }, 1500);
     }
-  }, [user?.email, from, isLoading, navigate, isSuccess, isError]);
+  }, [user?.email, from, isLoading, navigate, isSuccess, isError, dispatch]);
 
   if (isLoading) {
     return <Loading />;
@@ -73,7 +76,7 @@ const SignIn = () => {
         message={isSuccess ? "Login Successful" : error!}
         variant={isSuccess ? "success" : "danger"}
       />
-      <div className="py-5 px-md-5 text-center text-lg-start my-5 bg-warning">
+      <div className="py-5 px-md-5 text-center text-lg-start my-5 bg-warning mx-5">
         <Row className="gx-lg-5 align-items-center mb-5">
           <Col lg={6} className="mb-5 mb-lg-0">
             <h1 className="my-5 display-5 fw-bold ls-tight">
@@ -97,6 +100,7 @@ const SignIn = () => {
                     name="email"
                     placeholder="Enter email"
                     className="mb-4"
+                    required
                   />
 
                   <Form.Control
@@ -104,12 +108,17 @@ const SignIn = () => {
                     name="password"
                     placeholder="Enter password"
                     className="mb-4"
+                    required
                   />
 
                   {/* <!-- Submit Button --> */}
                   <Button variant="primary" type="submit" className="w-100">
                     Sign In
                   </Button>
+                  <p>
+                    Not registered yet? 
+                    <Link to="/signup" className="text-decoration-none"> Signup</Link>
+                  </p>
 
                   {/* <!-- Register Buttons --> */}
                   <div className="text-center">

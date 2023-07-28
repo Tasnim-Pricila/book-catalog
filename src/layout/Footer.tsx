@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Stack } from "react-bootstrap";
+import { Row, Stack } from "react-bootstrap";
 import { faDribbble, faFacebook, faGoogle, faInstagram, faSkype, faTwitter } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
@@ -20,9 +20,9 @@ const Footer = () => {
           </Stack>
         </section>
 
-        <section className="">
+        <section>
           <div className="container text-center text-md-start mt-5">
-            <div className="row mt-3">
+            <Row className="mt-3">
               <div className="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
                 <h6 className="text-uppercase fw-bold">Company name</h6>
                 <hr className="mb-4 mt-0 d-inline-block mx-auto" />
@@ -99,7 +99,7 @@ const Footer = () => {
                   <i className="fas fa-print mr-3"></i> + 01 234 567 89
                 </p>
               </div>
-            </div>
+            </Row>
           </div>
         </section>
 

@@ -8,9 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
-import { createUser } from "../redux/features/users/userSlice";
+import { createUser, errorHandle } from "../redux/features/users/userSlice";
 import { useState, useEffect, FormEvent } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useCreateUserMutation } from "../redux/features/users/userApi";
 import ToastMessage from "../shared/ToastMessage";
 import Loading from "../shared/Loading";
@@ -66,6 +66,9 @@ const Signup = () => {
   useEffect(() => {
     if (isSuccess) {
       handleShow();
+      setTimeout(() => {
+        dispatch(errorHandle());
+      }, 3000);
       createUserApi(userInfo)
         .then(() => {
           // Do something after successful login
@@ -81,6 +84,9 @@ const Signup = () => {
     }
     if (isError) {
       handleShow();
+      setTimeout(() => {
+        dispatch(errorHandle());
+      }, 3000);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess, user?.email, isLoading, isError, navigate]);
@@ -97,7 +103,7 @@ const Signup = () => {
         message={isSuccess ? "Registration Successful" : error!}
         variant={isSuccess ? "success" : "danger"}
       />
-      <div className="px-4 py-5 px-md-5 text-center text-lg-start my-5 bg-warning">
+      <div className="px-4 py-5 px-md-5 text-center text-lg-start my-5 bg-warning mx-5">
         <Row className="gx-lg-5 align-items-center mb-5">
           <Col className="mb-5 mb-lg-0" lg={6}>
             <h1 className="my-5 display-5 fw-bold ls-tight">
@@ -122,6 +128,7 @@ const Signup = () => {
                         type="text"
                         name="firstName"
                         placeholder="First Name"
+                        required
                         onChange={(e) =>
                           setUserInfo({
                             ...userInfo,
@@ -135,6 +142,7 @@ const Signup = () => {
                         type="text"
                         name="lastName"
                         placeholder="Last Name"
+                        required
                         onChange={(e) =>
                           setUserInfo({ ...userInfo, lastName: e.target.value })
                         }
@@ -146,6 +154,7 @@ const Signup = () => {
                     placeholder="Enter email"
                     name="email"
                     className="mb-4"
+                    required
                     onChange={(e) =>
                       setUserInfo({ ...userInfo, email: e.target.value })
                     }
@@ -155,6 +164,7 @@ const Signup = () => {
                     name="password"
                     placeholder="Enter password"
                     className="mb-4"
+                    required
                     onChange={(e) =>
                       setUserInfo({ ...userInfo, password: e.target.value })
                     }
@@ -164,23 +174,27 @@ const Signup = () => {
                   <Button variant="primary" type="submit" className="w-100">
                     Sign up
                   </Button>
+                  <p>
+                    Already have an account?
+                    <Link to="/signin" className="text-decoration-none"> Login</Link>
+                  </p>
 
                   {/* <!-- Register buttons --> */}
                   <div className="text-center">
-                    <p>or sign up with:</p>
-                    <Button className="btn btn-link btn-floating mx-1">
+                    <p className="mt-2 fw-bold">or sign up with:</p>
+                    <Button className="btn btn-link mx-1">
                       <FontAwesomeIcon icon={faFacebook} />
                     </Button>
 
-                    <Button className="btn btn-link btn-floating mx-1">
+                    <Button className="btn btn-link mx-1">
                       <FontAwesomeIcon icon={faGoogle} />
                     </Button>
 
-                    <Button className="btn btn-link btn-floating mx-1">
+                    <Button className="btn btn-link mx-1">
                       <FontAwesomeIcon icon={faTwitter} />
                     </Button>
 
-                    <Button className="btn btn-link btn-floating mx-1">
+                    <Button className="btn btn-link mx-1">
                       <FontAwesomeIcon icon={faInstagram} />
                     </Button>
                   </div>

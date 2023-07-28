@@ -81,10 +81,10 @@ const AllBooks = () => {
     <>
       <Stack
         gap={3}
-        className="d-flex flex-md-row flex-column mb-5 px-5 mx-md-5"
+        className="d-flex flex-md-row flex-column mb-5 px-5 mx-md-5 mt-5"
       >
         <Form.Select
-          style={{ flex: 1 }}
+          style={{ flex: 1/2 }}
           onChange={(e) => dispatch(setGenre(e.target.value))}
         >
           <option key="" value="">
@@ -97,7 +97,7 @@ const AllBooks = () => {
           ))}
         </Form.Select>
         <Form.Select
-          style={{ flex: 1 }}
+          style={{ flex: 1/2 }}
           onChange={(e) => dispatch(setPublicationDate(e.target.value))}
         >
           <option key="" value="">
@@ -112,7 +112,7 @@ const AllBooks = () => {
         <Form className="d-flex" style={{ flex: 1 }}>
           <Form.Control
             type="search"
-            placeholder="Search Here..."
+            placeholder="Search By book name, author or genre..."
             className="me-2 border border-primary"
             aria-label="Search"
             onChange={(e) => dispatch(setSearchedText(e.target.value))}
@@ -128,7 +128,7 @@ const AllBooks = () => {
         )}
       </Stack>
 
-      <Row>
+      <Row className="mx-5">
         {books?.map((book: IBook, i: number) => (
           <Col md={4} lg={3} className="mb-3" key={i}>
             <BookCard book={book} />

@@ -18,6 +18,7 @@ const ToastMessage = ({ show, handleClose, message, variant }: IProps) => {
         show={show}
         bg={variant}
         autohide={true}
+        delay={3000}
         className="d-flex align-items-center justify-content-between"
       >
         <Toast.Body className="text-white">{message}</Toast.Body>

@@ -1,16 +1,18 @@
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
 import { logout } from "../redux/features/users/userSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faBookOpen,
   faBookOpenReader,
   faCircleCheck,
   faHeart,
+  faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import { OverlayTrigger, Stack, Tooltip } from "react-bootstrap";
 
@@ -28,29 +30,28 @@ const Header = () => {
   };
   return (
     <>
-      <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary px-5">
+      <Navbar
+        collapseOnSelect
+        expand="lg"
+        className="px-md-5"
+        bg="dark" data-bs-theme="dark"
+        sticky="top"
+        style={{ height: "10vh"}}
+      >
         <Navbar.Brand>
-          <Link to="/" className="text-decoration-none">Book Zone</Link>
+          <Link to="/" className="text-decoration-none text-info fw-bold">
+            <FontAwesomeIcon icon={faBookOpen }></FontAwesomeIcon> Book Wheel
+          </Link>
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav ">
-          <Nav className="me-auto w-50 d-flex justify-content-end">
-            {/* <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2 border border-primary"
-                aria-label="Search"
-              />
-              <Button variant="outline-primary">Search</Button>
-            </Form> */}
-          </Nav>
+        <Navbar.Collapse id="responsive-navbar-nav bg-xs-dark">
+          <Nav className="me-auto"></Nav>
           <Nav
-            className="d-flex justify-content-center align-items-center"
+            className="d-flex justify-content-center align-items-center bg-dark"
             style={{ gap: 12 }}
           >
             {user.email && (
-              <Stack direction="horizontal" gap={3} className="me-5">
+              <Stack direction="horizontal" gap={3} className="me-5 d-flex align-items-center justify-content-center ps-5 ps-md-0">
                 <Link to="/wishlist">
                   <OverlayTrigger
                     placement="bottom"
@@ -75,7 +76,7 @@ const Header = () => {
                   >
                     <FontAwesomeIcon
                       icon={faBookOpenReader}
-                      className="text-primary"
+                      className="text-info"
                     ></FontAwesomeIcon>
                   </OverlayTrigger>
                 </Link>
@@ -89,31 +90,70 @@ const Header = () => {
                   >
                     <FontAwesomeIcon
                       icon={faCircleCheck}
-                      className="text-success"
+                      style={{ color: "#16c116" }}
                     ></FontAwesomeIcon>
                   </OverlayTrigger>
                 </Link>
               </Stack>
             )}
-            <Link to="/allbooks" className="text-decoration-none">
+
+            <NavLink
+              to="/allbooks"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-info text-decoration-none"
+                  : "text-decoration-none text-white"
+              }
+            >
               All Books
-            </Link>
+            </NavLink>
 
             {user.email ? (
               <>
-                <Link to="/addnew" className="text-decoration-none">
+                <NavLink
+                  to="/addnew"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-info text-decoration-none"
+                      : "text-decoration-none text-white"
+                  }
+                >
                   Add New
-                </Link>
-                <Button onClick={() => handleLogout()}>Logout</Button>
+                </NavLink>
+                <Button
+                  onClick={() => handleLogout()}
+                  variant="danger"
+                  className="fw-bold pb-2 pb-lg-0"
+                >
+                  <FontAwesomeIcon
+                    icon={faSignOut}
+                    className="me-2"
+                  ></FontAwesomeIcon>
+                  Logout
+                </Button>
               </>
             ) : (
               <>
-                <Link to="/signin" className="text-decoration-none">
-                  Sign In
-                </Link>
-                <Link to="/signup" className="text-decoration-none">
-                  Sign Up
-                </Link>
+                <NavLink
+                  to="/signin"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-info text-decoration-none"
+                      : "text-decoration-none text-white"
+                  }
+                >
+                  Login
+                </NavLink>
+                <NavLink
+                  to="/signup"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-info text-decoration-none pb-2 pb-lg-0"
+                      : "text-decoration-none text-white pb-2 pb-lg-0"
+                  }
+                >
+                  Signup
+                </NavLink>
               </>
             )}
           </Nav>

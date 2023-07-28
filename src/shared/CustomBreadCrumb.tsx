@@ -1,6 +1,6 @@
 import { Breadcrumb, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import './CustomBreadCrumb.css';
+import "./CustomBreadCrumb.css";
 
 interface IProps {
   Menu1: string;
@@ -12,7 +12,7 @@ interface IProps {
 const CustomBreadCrumb = ({ Menu1, Menu2, Menu3, activeMenu }: IProps) => {
   return (
     <Stack className="bread-bg">
-      <Breadcrumb className="bread-overlay border border-danger d-flex align-items-center  justify-content-center">
+      <Breadcrumb className="bread-overlay d-flex align-items-center  justify-content-center">
         <Breadcrumb.Item className="text-decoration-none">
           <Link to="/">{Menu1} </Link>
         </Breadcrumb.Item>
