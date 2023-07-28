@@ -18,7 +18,7 @@ const Banner = () => {
         <Carousel.Item>
           <Container>
             <Row className="align-items-center mt-5">
-              <Col md={6} className="pe-5">
+              <Col xs={12} md={6} className="pe-5">
                 <div>
                   <small
                     data-aos="fade-up"
@@ -54,7 +54,7 @@ const Banner = () => {
                   </Button>
                 </div>
               </Col>
-              <Col md={6}>
+              <Col md={6} className="d-none d-md-inline-block">
                 <div>
                   <img
                     data-aos="fade-up-left"
@@ -73,7 +73,7 @@ const Banner = () => {
         <Carousel.Item id="parent">
           <Container className="mb-5">
             <Row className="align-items-center mt-5">
-              <Col md={6} className=" pe-5">
+              <Col xs={12} md={6} className="pe-5">
                 <div>
                   <small
                     data-aos="fade-up"
@@ -112,7 +112,7 @@ const Banner = () => {
                   </Button>
                 </div>
               </Col>
-              <Col md={6}>
+              <Col md={6} className="d-none d-md-inline-block">
                 <div>
                   <img
                     src={banner2}
@@ -129,7 +129,7 @@ const Banner = () => {
         <Carousel.Item>
           <Container className="mb-5">
             <Row className="align-items-center mt-5">
-              <Col md={6} className=" pe-5">
+              <Col xs={12} md={6} className="pe-5">
                 <div>
                   <small
                     data-aos="fade-up"
@@ -165,7 +165,7 @@ const Banner = () => {
                   </Button>
                 </div>
               </Col>
-              <Col md={6}>
+              <Col md={6} className="d-none d-md-inline-block">
                 <div>
                   <img
                     src={banner3}

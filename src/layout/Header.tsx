@@ -123,7 +123,7 @@ const Header = () => {
                 <Button
                   onClick={() => handleLogout()}
                   variant="danger"
-                  className="fw-bold pb-2 pb-lg-0"
+                  className="fw-bold"
                 >
                   <FontAwesomeIcon
                     icon={faSignOut}

@@ -6,7 +6,7 @@ interface Iprops {
 
 const CustomHeading = ({ smallTitle, headTitle, paragraph }: Iprops) => {
   return (
-    <div className="text-center my-5 w-50 mx-auto">
+    <div className="text-center my-5 mx-auto">
       {
         smallTitle &&  <small className="text-uppercase bg-secondary px-3 py-2 text-white border-none rounded-3 d-inline-block my-1 mt-5">
         {smallTitle}

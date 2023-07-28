@@ -6,12 +6,12 @@ const About = () => {
   return (
     <Container className="mb-5">
     <Row className="align-items-center my-5">
-      <Col md={6}>
+      <Col xs={12} md={6}>
         <div>
-            <Image src={model} alt="" className="rounded-3" />
+            <Image src={model} alt="" className="rounded-3 img-fluid" />
         </div>
       </Col>
-      <Col md={6} className="pe-5">
+      <Col xs={12} md={6} className="pe-5">
         <div>
           <small
             data-aos="fade-up"
