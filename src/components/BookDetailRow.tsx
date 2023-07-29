@@ -6,7 +6,12 @@ import {
   Row,
   Tooltip,
 } from "react-bootstrap";
-import { isValidUrl } from "../utils/customFunction";
+import {
+  isValidUrl,
+  updateCompletedBooks,
+  updateCurrentlyReading,
+  updateWishlist,
+} from "../utils/customFunction";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBookOpenReader,
@@ -47,117 +52,29 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
   const currentlyReading = userData?.currentlyReading;
 
   const addToWishlist = (book: IBook) => {
-    if (user?.email) {
-      const isExist = userWishlist?.find((list) => list._id === book._id);
-      if (isExist) {
-        const removeFromWishlist = userWishlist?.filter(
-          (list) => list._id !== book._id
-        );
-        const data = {
-          wishlist: removeFromWishlist,
-        };
-        updateUser({ id, data })
-          .then(() => {
-            //   console.log(data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        const data = userWishlist
-          ? {
-              wishlist: [...userWishlist, book],
-            }
-          : {
-              wishlist: [book],
-            };
-        //   console.log(data);
-        updateUser({ id, data })
-          .then(() => {
-            //   console.log(data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    } else {
-      navigate("/signin");
-    }
+    updateWishlist(user?.email, book, userWishlist, updateUser, id, navigate);
   };
+
   const markAsRead = (book: IBook) => {
-    if (user?.email) {
-      const isExist = completedBooks?.find((list) => list._id === book._id);
-      if (isExist) {
-        const removeFromCompleted = completedBooks?.filter(
-          (list) => list._id !== book._id
-        );
-        const data = {
-          completedBooks: removeFromCompleted,
-        };
-        updateUser({ id, data })
-          .then(() => {
-            //   console.log(data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        const data = completedBooks
-          ? {
-              completedBooks: [...completedBooks, book],
-            }
-          : {
-              completedBooks: [book],
-            };
-        updateUser({ id, data })
-          .then(() => {
-            //   console.log(data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    } else {
-      navigate("/signin");
-    }
+    updateCompletedBooks(
+      user?.email,
+      book,
+      completedBooks,
+      updateUser,
+      id,
+      navigate
+    );
   };
 
   const readingNow = (book: IBook) => {
-    if (user?.email) {
-      const isExist = currentlyReading?.find((list) => list._id === book._id);
-      if (isExist) {
-        const removeFromReading = currentlyReading?.filter(
-          (list) => list._id !== book._id
-        );
-        const data = {
-          currentlyReading: removeFromReading,
-        };
-        updateUser({ id, data })
-          .then(() => {
-            //   console.log(data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        const data = currentlyReading
-          ? {
-              currentlyReading: [...currentlyReading, book],
-            }
-          : {
-              currentlyReading: [book],
-            };
-        updateUser({ id, data })
-          .then(() => {
-            //   console.log(data);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    } else {
-      navigate("/signin");
-    }
+    updateCurrentlyReading(
+      user?.email,
+      book,
+      currentlyReading,
+      updateUser,
+      id,
+      navigate
+    );
   };
 
   const errorMessage = (error as IError)?.error as string;
