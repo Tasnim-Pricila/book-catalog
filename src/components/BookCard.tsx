@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBookOpenReader,
   faCircleCheck,
-  faStar,
 } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
@@ -23,6 +22,7 @@ import {
   updateCurrentlyReading,
   updateWishlist,
 } from "../utils/customFunction";
+import { Rating } from "react-simple-star-rating";
 import "./style.css";
 
 interface IProps {
@@ -34,6 +34,7 @@ const BookCard = ({ book }: IProps) => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+  const [avgRating, setAvgRating] = useState(0);
 
   const [updateUser, { isSuccess, isError, error }] = useUpdateUserMutation();
   const { user } = useAppSelector((state) => state.user);
@@ -43,6 +44,14 @@ const BookCard = ({ book }: IProps) => {
   const userWishlist = userData?.wishlist;
   const completedBooks = userData?.completedBooks;
   const currentlyReading = userData?.currentlyReading;
+
+  useEffect(() => {
+    let sum = 0;
+    book?.reviews?.forEach((review) => {
+      sum = sum + review.rating!;
+      setAvgRating(sum / book.reviews!.length);
+    });
+  }, [avgRating, book?.reviews]);
 
   const addToWishlist = (book: IBook) => {
     updateWishlist(user?.email, book, userWishlist, updateUser, id, navigate);
@@ -108,30 +117,17 @@ const BookCard = ({ book }: IProps) => {
 
           <Card.Body style={{ minWidth: 0 }}>
             <Card.Title className="text-truncate">{book?.title}</Card.Title>
+            
             <Card.Text className="text-truncate mb-0">{book?.author}</Card.Text>
             <Card.Text className="mb-0">{book?.publication_date}</Card.Text>
             <Card.Text className="text-muted mb-0"> {book?.genre}</Card.Text>
             <div className="my-2">
-              <FontAwesomeIcon
-                icon={faStar}
-                className="text-warning"
-              ></FontAwesomeIcon>
-              <FontAwesomeIcon
-                icon={faStar}
-                className="text-warning"
-              ></FontAwesomeIcon>
-              <FontAwesomeIcon
-                icon={faStar}
-                className="text-warning"
-              ></FontAwesomeIcon>
-              <FontAwesomeIcon
-                icon={faStar}
-                className="text-warning"
-              ></FontAwesomeIcon>
-              <FontAwesomeIcon
-                icon={faStar}
-                className="text-warning"
-              ></FontAwesomeIcon>
+              <Rating
+                allowFraction
+                initialValue={avgRating}
+                size={20}
+                readonly
+              />
             </div>
             <Card.Text className="fw-bold mb-1">${book?.price}</Card.Text>
             <div>

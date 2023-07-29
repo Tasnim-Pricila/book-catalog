@@ -31,6 +31,7 @@ import {
 import ToastMessage from "../shared/ToastMessage";
 import { useState, useEffect } from "react";
 import RelatedBooksSlider from "./RelatedBooksSlider";
+import { Rating } from "react-simple-star-rating";
 
 interface IProps {
   book: IBook;
@@ -42,6 +43,8 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+  const [avgRating, setAvgRating] = useState(0);
+
   const { user } = useAppSelector((state) => state.user);
   const { data: getUser } = useGetUserByEmailQuery(user.email!);
   const [updateUser, { isSuccess, isError, error }] = useUpdateUserMutation();
@@ -83,6 +86,15 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
       handleShow();
     }
   }, [isSuccess, isError]);
+
+  useEffect(() => {
+    let sum = 0;
+    book?.reviews?.forEach((review) => {
+      sum = sum + review.rating!;
+      setAvgRating(sum / book.reviews!.length);
+    });
+  }, [avgRating, book?.reviews]);
+
   return (
     <>
       <ToastMessage
@@ -102,16 +114,17 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
         </Col>
         <Col xs={12} sm={6}>
           <small>{book?.genre}</small>
-          <h2 className="mt-2">{book?.title}</h2>
+          <h2>{book?.title}</h2>
           <p className="mb-1">By {book?.author}</p>
-          <p>Published on {book?.publication_date}</p>
-          <p className="text-success fw-bold">${book?.price}</p>
+          <p className="mb-0">Published on {book?.publication_date}</p>
+          <Rating allowFraction initialValue={avgRating} size={20} readonly className="mb-2" />
+          <p className="h5 text-success fw-bold mb-3">${book?.price}</p>
           <p className="pe-5 text-justify w-75">
             Interdum velit laoreet id donec ultrices tincidunt. Purus faucibus
             ornare suspendisse sed. Vitae congue mauris rhoncus aenean vel. A
             cras semper auctor neque vitae tempus quam pellentesque nec.
           </p>
-          <div>
+          <div className="mt-4">
             <>
               {userWishlist?.find((wishlist) => wishlist._id === book._id) ? (
                 <OverlayTrigger
@@ -124,7 +137,7 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
                   <FontAwesomeIcon
                     role="button"
                     icon={faHeart}
-                    className="me-4 text-danger"
+                    className="me-4 text-danger fa-2x"
                     onClick={() => addToWishlist(book)}
                   ></FontAwesomeIcon>
                 </OverlayTrigger>
@@ -139,7 +152,7 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
                   <FontAwesomeIcon
                     role="button"
                     icon={faHeart}
-                    className="me-4"
+                    className="me-4 fa-2x"
                     onClick={() => addToWishlist(book)}
                   ></FontAwesomeIcon>
                 </OverlayTrigger>
@@ -159,7 +172,7 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
                   <FontAwesomeIcon
                     role="button"
                     icon={faCircleCheck}
-                    className="me-4 text-success"
+                    className="me-4 text-success fa-2x"
                     onClick={() => markAsRead(book)}
                   ></FontAwesomeIcon>
                 </OverlayTrigger>
@@ -174,7 +187,7 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
                   <FontAwesomeIcon
                     role="button"
                     icon={faCircleCheck}
-                    className="me-4"
+                    className="me-4 fa-2x"
                     onClick={() => markAsRead(book)}
                   ></FontAwesomeIcon>
                 </OverlayTrigger>
@@ -190,7 +203,7 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
                   <FontAwesomeIcon
                     role="button"
                     icon={faBookOpenReader}
-                    className="me-4 text-primary"
+                    className="me-4 text-primary fa-2x"
                     onClick={() => readingNow(book)}
                   ></FontAwesomeIcon>
                 </OverlayTrigger>
@@ -203,7 +216,7 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
                   <FontAwesomeIcon
                     role="button"
                     icon={faBookOpenReader}
-                    className="me-4"
+                    className="me-4 fa-2x"
                     onClick={() => readingNow(book)}
                   ></FontAwesomeIcon>
                 </OverlayTrigger>

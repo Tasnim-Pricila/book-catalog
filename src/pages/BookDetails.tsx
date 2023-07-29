@@ -10,6 +10,7 @@ import Reviews from "../components/Reviews";
 
 const BookDetails = () => {
   const { id: bookId } = useParams();
+
   const { data: allBooks } = useGetBooksQuery(undefined);
   const { data: bookData, isLoading } = useGetBookByIdQuery(bookId!);
   const book: IBook = bookData?.data as IBook;
@@ -23,6 +24,7 @@ const BookDetails = () => {
       book.genre === bookData?.data?.genre ||
       book.author === bookData?.data?.author
   );
+ 
 
   if (isLoading) {
     return <Loading />;

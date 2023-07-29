@@ -128,7 +128,7 @@ const AllBooks = () => {
         )}
       </Stack>
 
-      <Row className="mx-md-5 mx-2">
+      <Row className="justify-content-center mx-md-5 mx-2">
         {books?.map((book: IBook, i: number) => (
           <Col md={6} xl={3} className="mb-3" key={i}>
             <BookCard book={book} />

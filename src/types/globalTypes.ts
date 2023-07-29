@@ -5,7 +5,7 @@ export interface IReviews {
   _id?: string;
   user_id?: string;
   user_image?: string;
-  rating?: string;
+  rating?: number;
   comment: string;
 }
 

@@ -10,7 +10,7 @@ const bookApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getBooks: builder.query<IAllResponse<IBook>, void>({
       query: () => "/books",
-      providesTags: ["create", "delete"]
+      providesTags: ["create", "delete", "comment"]
     }),
 
     getBookById: builder.query<IResponse<IBook>, string>({
