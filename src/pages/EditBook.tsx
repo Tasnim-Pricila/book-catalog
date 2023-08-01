@@ -136,8 +136,8 @@ const EditBook = () => {
                     type="date"
                     name="publication_date"
                     placeholder="Enter publication date"
-                    defaultValue={book?.publication_date}
-                    onChange={(e) => console.log(e.target.value)}
+                    defaultValue={book?.publication_date?.slice(0, 10)}
+                    // onChange={(e) => console.log(e.target.value)}
                     required
                   />
                 </Form.Group>
