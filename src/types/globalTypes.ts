@@ -26,7 +26,7 @@ export interface IUser {
   firstName: string;
   lastName: string;
   email: string;
-  image: string;
+  image?: string;
   password: string;
   wishlist?: IBook[] | undefined;
   completedBooks?: IBook[] | undefined;
