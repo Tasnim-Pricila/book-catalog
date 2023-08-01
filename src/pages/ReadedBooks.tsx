@@ -5,7 +5,9 @@ import TableComponent from "../shared/TableComponent";
 const ReadedBooks = () => {
   const { user } = useAppSelector((state) => state.user);
   const { data: userData } = useGetUserByEmailQuery(user.email!);
-  return <TableComponent data={userData?.data?.completedBooks} />;
+
+  const completedBooks = userData?.data?.completedBooks;
+  return <TableComponent data={completedBooks} />;
 };
 
 export default ReadedBooks;

@@ -2,11 +2,11 @@ import { Table } from "react-bootstrap";
 import { IBook } from "../types/globalTypes";
 
 const TableComponent = ({ data }: { data: IBook[] | undefined }) => {
-  console.log(data);
+  // console.log(data);
   return (
     <>
       {data?.length !== undefined ? (
-        <Table striped>
+        <Table striped className="mx-4 my-4">
           <thead>
             <tr>
               <th>#</th>
@@ -34,7 +34,7 @@ const TableComponent = ({ data }: { data: IBook[] | undefined }) => {
                 <td>{data.title}</td>
                 <td>{data.author}</td>
                 <td>{data.genre}</td>
-                <td>{data.publication_date}</td>
+                <td>{data.publication_date?.slice(0, 10)}</td>
                 <td>{data.price}</td>
               </tr>
             </tbody>

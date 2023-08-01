@@ -1,9 +1,9 @@
-import { IBook, IResponse, IUser } from "../../../types/globalTypes";
+import { IResponse, IUser } from "../../../types/globalTypes";
 import { api } from "../../api/apiSlice";
 
 export interface IUpdateUser {
   id: string | undefined;
-  data: Partial<IUser> | Partial<IBook> | undefined;
+  data: Partial<IUser> | undefined | string[];
 }
 
 const userApi = api.injectEndpoints({

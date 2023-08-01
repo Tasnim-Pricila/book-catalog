@@ -40,7 +40,7 @@ const BookCard = ({ book }: IProps) => {
   const { user } = useAppSelector((state) => state.user);
   const { data: getUser } = useGetUserByEmailQuery(user.email!);
   const userData: IUser = getUser?.data as IUser;
-  const id = userData?._id;
+  // const id = userData?._id;
   const userWishlist = userData?.wishlist;
   const completedBooks = userData?.completedBooks;
   const currentlyReading = userData?.currentlyReading;
@@ -54,7 +54,7 @@ const BookCard = ({ book }: IProps) => {
   }, [avgRating, book?.reviews]);
 
   const addToWishlist = (book: IBook) => {
-    updateWishlist(user?.email, book, userWishlist, updateUser, id, navigate);
+    updateWishlist(user?.email, book, userWishlist, updateUser, navigate);
   };
 
   const markAsRead = (book: IBook) => {
@@ -63,7 +63,6 @@ const BookCard = ({ book }: IProps) => {
       book,
       completedBooks,
       updateUser,
-      id,
       navigate
     );
   };
@@ -74,7 +73,6 @@ const BookCard = ({ book }: IProps) => {
       book,
       currentlyReading,
       updateUser,
-      id,
       navigate
     );
   };
@@ -201,7 +199,7 @@ const BookCard = ({ book }: IProps) => {
               </>
               <>
                 {currentlyReading?.find(
-                  (reading) => reading._id === book._id
+                  (reading) => reading?._id === book._id
                 ) ? (
                   <OverlayTrigger
                     placement="bottom"

@@ -15,7 +15,6 @@ export const updateWishlist = (
     id: string | undefined;
     data: { wishlist: IBook[] | undefined } | { wishlist: IBook[] };
   }) => Promise<any>,
-  userId: string | undefined,
   navigate: (route: string) => void
 ) => {
   if (userEmail) {
@@ -27,7 +26,7 @@ export const updateWishlist = (
       const data = {
         wishlist: removeFromWishlist,
       };
-      updateUser({ id: userId, data })
+      updateUser({ id: userEmail, data })
         .then(() => {
           //   console.log(data);
         })
@@ -42,7 +41,7 @@ export const updateWishlist = (
         : {
             wishlist: [book],
           };
-      updateUser({ id: userId, data })
+      updateUser({ id: userEmail, data })
         .then(() => {
           //   console.log(data);
         })
@@ -63,7 +62,6 @@ export const updateCompletedBooks = (
     id: string | undefined;
     data: { completedBooks: IBook[] | undefined } | { completedBooks: IBook[] };
   }) => Promise<any>,
-  userId: string | undefined,
   navigate: (route: string) => void
 ) => {
   if (userEmail) {
@@ -75,7 +73,7 @@ export const updateCompletedBooks = (
       const data = {
         completedBooks: removeFromCompleted,
       };
-      updateUser({ id: userId, data })
+      updateUser({ id: userEmail, data })
         .then(() => {
           //   console.log(data);
         })
@@ -90,7 +88,7 @@ export const updateCompletedBooks = (
         : {
             completedBooks: [book],
           };
-      updateUser({ id: userId, data })
+      updateUser({ id: userEmail, data })
         .then(() => {
           //   console.log(data);
         })
@@ -113,7 +111,6 @@ export const updateCurrentlyReading = (
       | { currentlyReading: IBook[] | undefined }
       | { currentlyReading: IBook[] };
   }) => Promise<any>,
-  userId: string | undefined,
   navigate: (route: string) => void
 ) => {
   if (userEmail) {
@@ -125,7 +122,7 @@ export const updateCurrentlyReading = (
       const data = {
         currentlyReading: removeFromReading,
       };
-      updateUser({ id: userId, data })
+      updateUser({ id: userEmail, data })
         .then(() => {
           //   console.log(data);
         })
@@ -140,7 +137,7 @@ export const updateCurrentlyReading = (
         : {
             currentlyReading: [book],
           };
-      updateUser({ id: userId, data })
+      updateUser({ id: userEmail, data })
         .then(() => {
           //   console.log(data);
         })

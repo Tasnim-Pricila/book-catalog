@@ -27,7 +27,6 @@ const Reviews = ({ reviews, bookId }: IProps) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (rating <= 0) {
-      console.log("required");
       setError("Rating is required");
     } else {
       setError("");
@@ -123,8 +122,8 @@ const Reviews = ({ reviews, bookId }: IProps) => {
         >
           <Col md={1}>
             <img
-              src={review.user_image ? review.user_image : userImage}
-              alt={review.user_id}
+              src={getUser?.data?.image ? getUser?.data?.image : userImage}
+              alt={review?.user_id}
               className="mr-3 rounded-circle"
               style={{ width: "64px", height: "64px" }}
             />
