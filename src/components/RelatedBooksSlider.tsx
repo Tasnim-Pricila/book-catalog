@@ -30,37 +30,35 @@ const RelatedBooksSlider = ({ relatedBooks }: IProps) => {
         <div style={{ width: "100%", height: "300px" }}>
           <Slider {...settings}>
             {relatedBooks?.slice(0, 3).map((book) => (
-              <>
-                <Card className="mt-2">
-                  <div className="d-flex">
-                    <Image
-                      role="button"
-                      src={isValidUrl(book.image!) ? book?.image : demoImage}
-                      alt="fgfgggggg"
-                      className=""
-                      width="100"
-                      height="160"
-                      onClick={() => navigate(`/bookdetails/${book._id!}`)}
-                    />
-                    <Card.Body>
-                      <h5 className="text-truncate d-inline-block mb-0">
-                        {book?.title}
-                      </h5>
-                      <Card.Text className="text-truncate mb-0">
-                        {book?.author}
-                      </Card.Text>
-                      <Card.Text className="mb-0">
-                        {book?.publication_date}
-                      </Card.Text>
-                      <Card.Text className="text-muted mb-0">
-                        {" "}
-                        {book?.genre}
-                      </Card.Text>
-                      <Card.Text className="fw-bold">${book?.price}</Card.Text>
-                    </Card.Body>
-                  </div>
-                </Card>
-              </>
+              <Card className="mt-2" key={book._id}>
+                <div className="d-flex">
+                  <Image
+                    role="button"
+                    src={isValidUrl(book.image!) ? book?.image : demoImage}
+                    alt="fgfgggggg"
+                    className=""
+                    width="100"
+                    height="160"
+                    onClick={() => navigate(`/bookdetails/${book._id!}`)}
+                  />
+                  <Card.Body>
+                    <h5 className="text-truncate d-inline-block mb-0">
+                      {book?.title}
+                    </h5>
+                    <Card.Text className="text-truncate mb-0">
+                      {book?.author}
+                    </Card.Text>
+                    <Card.Text className="mb-0">
+                      {book?.publication_date}
+                    </Card.Text>
+                    <Card.Text className="text-muted mb-0">
+                      {" "}
+                      {book?.genre}
+                    </Card.Text>
+                    <Card.Text className="fw-bold">${book?.price}</Card.Text>
+                  </Card.Body>
+                </div>
+              </Card>
             ))}
           </Slider>
         </div>

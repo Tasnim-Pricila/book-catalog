@@ -49,13 +49,12 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
   const { data: getUser } = useGetUserByEmailQuery(user.email!);
   const [updateUser, { isSuccess, isError, error }] = useUpdateUserMutation();
   const userData: IUser = getUser?.data as IUser;
-  const id = userData?._id;
   const userWishlist = userData?.wishlist;
   const completedBooks = userData?.completedBooks;
   const currentlyReading = userData?.currentlyReading;
 
   const addToWishlist = (book: IBook) => {
-    updateWishlist(user?.email, book, userWishlist, updateUser, id, navigate);
+    updateWishlist(user?.email, book, userWishlist, updateUser, navigate);
   };
 
   const markAsRead = (book: IBook) => {
@@ -64,7 +63,6 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
       book,
       completedBooks,
       updateUser,
-      id,
       navigate
     );
   };
@@ -75,7 +73,6 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
       book,
       currentlyReading,
       updateUser,
-      id,
       navigate
     );
   };
@@ -90,7 +87,7 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
   useEffect(() => {
     let sum = 0;
     book?.reviews?.forEach((review) => {
-      sum = sum + review.rating!;
+      sum = sum + review.rating;
       setAvgRating(sum / book.reviews!.length);
     });
   }, [avgRating, book?.reviews]);

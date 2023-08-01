@@ -1,12 +1,11 @@
 import { Button, Col, Form, Row } from "react-bootstrap";
-import userImage from "../../src/assets/images/user.png";
 import { IReviews } from "../types/globalTypes";
 import { FormEvent, useEffect, useState } from "react";
 import { useAppSelector } from "../redux/features/hook";
-import { useGetUserByEmailQuery } from "../redux/features/users/userApi";
 import { useEditBookMutation } from "../redux/features/books/bookApi";
 import CustomHeading from "../shared/CustomHeading";
 import { Rating } from "react-simple-star-rating";
+import ReviewCard from "./ReviewCard";
 
 interface IProps {
   reviews: IReviews[];
@@ -14,7 +13,6 @@ interface IProps {
 }
 const Reviews = ({ reviews, bookId }: IProps) => {
   const { user } = useAppSelector((state) => state.user);
-  const { data: getUser } = useGetUserByEmailQuery(user.email!);
   const [editBook, { isSuccess }] = useEditBookMutation();
 
   const [rating, setRating] = useState(0);
@@ -36,8 +34,9 @@ const Reviews = ({ reviews, bookId }: IProps) => {
       const t = e.target as HTMLFormElement;
 
       const comment = {
-        user_id: getUser?.data?.firstName,
+        user_email: user.email,
         rating: rating,
+        // ratingLabel: rating,
         comment: target.comment.value,
       };
       const data = {
@@ -62,7 +61,7 @@ const Reviews = ({ reviews, bookId }: IProps) => {
   }, [isSuccess, rating]);
 
   return (
-    <div>
+    <>
       <CustomHeading headTitle="Reviews" />
       {reviews.length > 0 ? (
         ""
@@ -116,31 +115,9 @@ const Reviews = ({ reviews, bookId }: IProps) => {
       )}
 
       {reviews?.map((review) => (
-        <Row
-          key={review._id}
-          className="mb-4 align-items-center border mx-2 mx-md-5"
-        >
-          <Col md={1}>
-            <img
-              src={getUser?.data?.image ? getUser?.data?.image : userImage}
-              alt={review?.user_id}
-              className="mr-3 rounded-circle"
-              style={{ width: "64px", height: "64px" }}
-            />
-          </Col>
-          <Col md={10}>
-            <h6 className="mb-0">{review?.user_id}</h6>
-            <Rating
-              allowFraction
-              initialValue={review?.rating}
-              size={20}
-              readonly
-            />
-            <p className="mb-0">{review?.comment}</p>
-          </Col>
-        </Row>
+        <ReviewCard review={review} />
       ))}
-    </div>
+    </>
   );
 };
 

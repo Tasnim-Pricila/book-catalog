@@ -3,9 +3,9 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/dist/query";
 
 export interface IReviews {
   _id?: string;
-  user_id?: string;
-  user_image?: string;
-  rating?: number;
+  user_email: string;
+  rating: number;
+  ratingLabel?: string;
   comment: string;
 }
 

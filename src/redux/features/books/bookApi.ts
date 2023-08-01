@@ -3,7 +3,7 @@ import { api } from "../../api/apiSlice";
 
 export interface IEditBook {
   bookId: string | undefined;
-  data: Partial<IBook> | undefined;
+  data: object;
 }
 
 const bookApi = api.injectEndpoints({
