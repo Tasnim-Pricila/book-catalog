@@ -14,13 +14,13 @@ const bookApi = api.injectEndpoints({
     }),
 
     getBookById: builder.query<IResponse<IBook>, string>({
-      query: (id) => `/book/${id}`,
+      query: (id) => `/books/${id}`,
       providesTags: ["comment"],
     }),
 
     createBook: builder.mutation<object, IBook>({
       query: (data) => ({
-        url: "/book",
+        url: "/books",
         method: "POST",
         body: data,
       }),
@@ -29,7 +29,7 @@ const bookApi = api.injectEndpoints({
 
     editBook: builder.mutation<object, IEditBook>({
       query: ({ bookId, data }) => ({
-        url: `/book/${bookId!}`,
+        url: `/books/${bookId!}`,
         method: "PATCH",
         body: data,
       }),
@@ -38,7 +38,7 @@ const bookApi = api.injectEndpoints({
 
     deleteBook: builder.mutation<object, string>({
       query: (id) => ({
-        url: `/book/${id}`,
+        url: `/books/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["delete"]

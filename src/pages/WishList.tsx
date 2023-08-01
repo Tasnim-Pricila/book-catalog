@@ -5,6 +5,7 @@ import TableComponent from "../shared/TableComponent";
 const WishList = () => {
   const { user } = useAppSelector((state) => state.user);
   const { data: userData } = useGetUserByEmailQuery(user.email!);
+  console.log(userData);
   return <TableComponent data={userData?.data?.wishlist} />;
 };
 

@@ -119,7 +119,7 @@ const BookCard = ({ book }: IProps) => {
             <Card.Title className="text-truncate">{book?.title}</Card.Title>
             
             <Card.Text className="text-truncate mb-0">{book?.author}</Card.Text>
-            <Card.Text className="mb-0">{book?.publication_date}</Card.Text>
+            <Card.Text className="mb-0">{book?.publication_date?.slice(0, 10)}</Card.Text>
             <Card.Text className="text-muted mb-0"> {book?.genre}</Card.Text>
             <div className="my-2">
               <Rating

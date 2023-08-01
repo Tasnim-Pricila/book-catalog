@@ -116,7 +116,7 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
           <small>{book?.genre}</small>
           <h2>{book?.title}</h2>
           <p className="mb-1">By {book?.author}</p>
-          <p className="mb-0">Published on {book?.publication_date}</p>
+          <p className="mb-0">Published on {book?.publication_date?.slice(0, 10)}</p>
           <Rating allowFraction initialValue={avgRating} size={20} readonly className="mb-2" />
           <p className="h5 text-success fw-bold mb-3">${book?.price}</p>
           <p className="pe-5 text-justify w-75">

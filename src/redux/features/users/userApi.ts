@@ -10,24 +10,24 @@ const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     createUser: builder.mutation<object, IUser>({
       query: (data) => ({
-        url: "/user",
+        url: "/users",
         method: "POST",
         body: data,
       }),
     }),
 
     getUserById: builder.query<IResponse<IUser>, string>({
-      query: (id) => `/user/${id}`,
+      query: (id) => `/users/${id}`,
     }),
 
     getUserByEmail: builder.query<IResponse<IUser>, string>({
-      query: (email) => `/user/${email}`,
+      query: (email) => `/users/${email}`,
       providesTags: ["wishlist"],
     }),
 
     updateUser: builder.mutation<object, IUpdateUser>({
       query: ({ id, data }) => ({
-        url: `/user/${id!}`,
+        url: `/users/${id!}`,
         method: "PATCH",
         body: data,
       }),
