@@ -1,5 +1,6 @@
 import { useAppSelector } from "../redux/features/hook";
 import { useGetUserByEmailQuery } from "../redux/features/users/userApi";
+import CustomBreadCrumb from "../shared/CustomBreadCrumb";
 import TableComponent from "../shared/TableComponent";
 
 const ReadedBooks = () => {
@@ -7,7 +8,12 @@ const ReadedBooks = () => {
   const { data: userData } = useGetUserByEmailQuery(user.email!);
 
   const completedBooks = userData?.data?.completedBooks;
-  return <TableComponent data={completedBooks} />;
+  return (
+    <>
+      <CustomBreadCrumb Menu1="Home" activeMenu="Completed Books" />
+      <TableComponent data={completedBooks} />
+    </>
+  );
 };
 
 export default ReadedBooks;

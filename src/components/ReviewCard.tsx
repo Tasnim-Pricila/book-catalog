@@ -10,9 +10,9 @@ const ReviewCard = ({ review }: { review: IReviews }) => {
   return (
     <Row
       key={review._id}
-      className="mb-4 align-items-center border mx-2 mx-md-5"
+      className="mb-4 align-items-center border mx-2 mx-md-5 py-1 rounded-3"
     >
-      <Col md={1}>
+      <Col xs={4} sm={2} md={2} lg={1}>
         <img
           src={getUser?.data?.image ? getUser?.data?.image : userImage}
           alt={review?._id}
@@ -20,7 +20,7 @@ const ReviewCard = ({ review }: { review: IReviews }) => {
           style={{ width: "64px", height: "64px" }}
         />
       </Col>
-      <Col md={10}>
+      <Col xs={8} sm={10} md={10} lg={11}>
         <h6 className="mb-0">
           {getUser?.data?.firstName} {getUser?.data?.lastName}
         </h6>

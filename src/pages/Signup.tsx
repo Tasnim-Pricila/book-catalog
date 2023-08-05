@@ -103,7 +103,7 @@ const Signup = () => {
         message={isSuccess ? "Registration Successful" : error!}
         variant={isSuccess ? "success" : "danger"}
       />
-      <div className="px-4 py-5 px-md-5 text-center text-lg-start my-5 bg-warning mx-md-5 mx-1">
+      <div className="py-5 px-5 text-center text-lg-start my-5 bg-warning mx-2 mx-md-5">
         <Row className="gx-lg-5 align-items-center mb-5">
           <Col className="mb-5 mb-lg-0" lg={6}>
             <h1 className="my-5 display-5 fw-bold ls-tight">
@@ -120,7 +120,7 @@ const Signup = () => {
 
           <Col lg={6} className="mb-5 mb-lg-0 position-relative">
             <Card className="bg-glass">
-              <Card.Body className="px-2 py-5 px-md-5">
+              <Card.Body className="px-2 px-sm-5 py-5">
                 <Form onSubmit={handleSubmit}>
                   <Row>
                     <Col md={6} className="mb-4">

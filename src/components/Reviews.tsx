@@ -63,57 +63,55 @@ const Reviews = ({ reviews, bookId }: IProps) => {
   return (
     <>
       <CustomHeading headTitle="Reviews" />
+
+      {user?.email && (
+        <Form onSubmit={handleSubmit} className="d-flex">
+          <Row className="mb-4 mx-1 mx-md-5 w-100">
+            <Col xs={12} sm={6} md={4}>
+              <Form.Control
+                type="text"
+                name="comment"
+                placeholder="Write your comment"
+                className="me-2 border border-primary"
+                required
+              />
+            </Col>
+            <Col xs={12} sm={6} md={4} className="ps-2 mt-2 mt-md-0">
+              <Rating
+                initialValue={rating}
+                size={30}
+                allowFraction
+                onClick={handleRating}
+                showTooltip
+                tooltipArray={[
+                  "Terrible",
+                  "Terrible+",
+                  "Bad",
+                  "Bad+",
+                  "Average",
+                  "Average+",
+                  "Great",
+                  "Great+",
+                  "Awesome",
+                  "Awesome+",
+                ]}
+                transition
+              />
+              <p className="ms-2 text-danger"> {error && error}</p>
+            </Col>
+            <Col xs={12} md={4}>
+              <Button type="submit" variant="primary">
+                Submit
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      )}
       {reviews.length > 0 ? (
         ""
       ) : (
         <p className="text-capitalize text-center fw-bold h6">No reviews yet</p>
       )}
-      {user?.email && (
-        <Row className="mb-4 mx-1 mx-md-5">
-          <Col xs={12}>
-            <Form onSubmit={handleSubmit} className="d-flex">
-              <Col md={4}>
-                <Form.Control
-                  type="text"
-                  name="comment"
-                  placeholder="Write your comment"
-                  className="me-2 border border-primary"
-                  required
-                />
-              </Col>
-              <Col md={4} className="ps-2">
-                <Rating
-                  initialValue={rating}
-                  size={30}
-                  allowFraction
-                  onClick={handleRating}
-                  showTooltip
-                  tooltipArray={[
-                    "Terrible",
-                    "Terrible+",
-                    "Bad",
-                    "Bad+",
-                    "Average",
-                    "Average+",
-                    "Great",
-                    "Great+",
-                    "Awesome",
-                    "Awesome+",
-                  ]}
-                  transition
-                />
-                <p className="ms-2 text-danger"> {error && error}</p>
-              </Col>
-              <Col>
-                <Button type="submit" variant="outline-primary">
-                  Submit
-                </Button>
-              </Col>
-            </Form>
-          </Col>
-        </Row>
-      )}
-
       {reviews?.map((review) => (
         <ReviewCard review={review} />
       ))}

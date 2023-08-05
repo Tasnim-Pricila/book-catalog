@@ -1,22 +1,21 @@
-import { Button, Carousel, Col, Container, Row } from "react-bootstrap";
+import { Button, Carousel, Col, Row } from "react-bootstrap";
 import banner1 from "../../src/assets/images/reading-books.png";
 import banner2 from "../../src/assets/images/girl-reading-books-online.png";
 import banner3 from "../../src/assets/images/girl-searching-online.png";
 
 const Banner = () => {
   return (
-    <div 
-    // className="bg-dark text-white"
-    >
+    <div>
       <Carousel
         data-bs-theme="dark"
         touch={true}
         controls={false}
         pause={false}
-        style={{ height: "80vh" }}
+        style={{ minHeight: "80vh" }}
+        className="px-2 px-md-5"
       >
         <Carousel.Item>
-          <Container>
+          {/* <Container> */}
             <Row className="align-items-center mt-5">
               <Col xs={12} md={6} className="pe-5">
                 <div>
@@ -54,7 +53,7 @@ const Banner = () => {
                   </Button>
                 </div>
               </Col>
-              <Col md={6} className="d-none d-md-inline-block">
+              <Col xs={12} md={6} className="d-md-inline-block">
                 <div>
                   <img
                     data-aos="fade-up-left"
@@ -68,10 +67,10 @@ const Banner = () => {
                 </div>
               </Col>
             </Row>
-          </Container>
+          {/* </Container> */}
         </Carousel.Item>
         <Carousel.Item id="parent">
-          <Container className="mb-5">
+          {/* <Container className="mb-5"> */}
             <Row className="align-items-center mt-5">
               <Col xs={12} md={6} className="pe-5">
                 <div>
@@ -112,7 +111,7 @@ const Banner = () => {
                   </Button>
                 </div>
               </Col>
-              <Col md={6} className="d-none d-md-inline-block">
+              <Col xs={12} md={6} className="d-md-inline-block">
                 <div>
                   <img
                     src={banner2}
@@ -124,10 +123,10 @@ const Banner = () => {
                 </div>
               </Col>
             </Row>
-          </Container>
+          {/* </Container> */}
         </Carousel.Item>
         <Carousel.Item>
-          <Container className="mb-5">
+          {/* <Container className="mb-5"> */}
             <Row className="align-items-center mt-5">
               <Col xs={12} md={6} className="pe-5">
                 <div>
@@ -165,7 +164,7 @@ const Banner = () => {
                   </Button>
                 </div>
               </Col>
-              <Col md={6} className="d-none d-md-inline-block">
+              <Col xs={12} md={6} className="d-md-inline-block">
                 <div>
                   <img
                     src={banner3}
@@ -177,7 +176,7 @@ const Banner = () => {
                 </div>
               </Col>
             </Row>
-          </Container>
+          {/* </Container> */}
         </Carousel.Item>
       </Carousel>
     </div>

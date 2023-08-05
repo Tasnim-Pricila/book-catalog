@@ -12,7 +12,7 @@ const About = () => {
         </div>
       </Col>
       <Col xs={12} md={6} className="pe-5">
-        <div>
+        <div className="mt-3 mt-md-1">
           <small
             data-aos="fade-up"
             data-aos-duration="3000"
@@ -26,7 +26,7 @@ const About = () => {
             className="mt-2"
             style={{ fontSize: 60 }}
           >
-            BookChoix has a big catalog of 12 Million books online
+            Book Wheel has a big catalog of 12 Million books online
           </h1>
           <p
             data-aos="fade-up"

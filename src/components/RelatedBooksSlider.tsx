@@ -1,4 +1,4 @@
-import { Card, Col, Image } from "react-bootstrap";
+import { Card, Image } from "react-bootstrap";
 import Slider from "react-slick";
 import { IBook } from "../types/globalTypes";
 import { isValidUrl } from "../utils/customFunction";
@@ -24,10 +24,10 @@ const RelatedBooksSlider = ({ relatedBooks }: IProps) => {
   };
 
   return (
-    <Col xs={12} sm={3}>
+    <>
       <h4>Related Books</h4>
       {relatedBooks && relatedBooks?.length > 0 ? (
-        <div style={{ width: "100%", height: "300px" }}>
+        <div style={{ width: "100%", height: "300px" }} className="mb-5">
           <Slider {...settings}>
             {relatedBooks?.slice(0, 3).map((book) => (
               <Card className="mt-2" key={book._id}>
@@ -38,18 +38,18 @@ const RelatedBooksSlider = ({ relatedBooks }: IProps) => {
                     alt="fgfgggggg"
                     className=""
                     width="100"
-                    height="160"
+                    height="auto"
                     onClick={() => navigate(`/bookdetails/${book._id!}`)}
                   />
-                  <Card.Body>
-                    <h5 className="text-truncate d-inline-block mb-0">
+                  <Card.Body style={{ minWidth: 0 }}>
+                    <h5 className="text-truncate mb-0">
                       {book?.title}
                     </h5>
                     <Card.Text className="text-truncate mb-0">
                       {book?.author}
                     </Card.Text>
                     <Card.Text className="mb-0">
-                      {book?.publication_date}
+                      {book?.publication_date?.slice(0, 10)}
                     </Card.Text>
                     <Card.Text className="text-muted mb-0">
                       {" "}
@@ -65,7 +65,7 @@ const RelatedBooksSlider = ({ relatedBooks }: IProps) => {
       ) : (
         <p> No Related Books found</p>
       )}
-    </Col>
+    </>
   );
 };
 

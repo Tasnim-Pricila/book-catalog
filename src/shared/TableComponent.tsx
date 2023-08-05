@@ -6,7 +6,7 @@ const TableComponent = ({ data }: { data: IBook[] | undefined }) => {
   return (
     <>
       {data?.length !== undefined ? (
-        <Table striped className="mx-4 my-4">
+        <Table responsive className="mx-4 my-4 text-center">
           <thead>
             <tr>
               <th>#</th>
@@ -20,7 +20,7 @@ const TableComponent = ({ data }: { data: IBook[] | undefined }) => {
           </thead>
           {data.map((data, i) => (
             <tbody>
-              <tr className="align-middle">
+              <tr className="align-middle text-center">
                 <td>{i + 1}</td>
                 <td>
                   <img

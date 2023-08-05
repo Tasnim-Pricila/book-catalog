@@ -101,22 +101,31 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
         variant={isSuccess ? "success" : "danger"}
       />
       <Row className="mt-5 mx-1 mx-md-5">
-        <Col xs={12} sm={3}>
+        <Col xs={12} md={5} lg={4} xl={3}>
           <Image
             src={isValidUrl(book.image!) ? book?.image : demoImage}
             alt="Book"
-            height="400"
+            height="100%"
             width="250"
+            // className="img-fluid"
           />
         </Col>
-        <Col xs={12} sm={6}>
+        <Col xs={12} md={7} lg={5} xl={6}>
           <small>{book?.genre}</small>
           <h2>{book?.title}</h2>
           <p className="mb-1">By {book?.author}</p>
-          <p className="mb-0">Published on {book?.publication_date?.slice(0, 10)}</p>
-          <Rating allowFraction initialValue={avgRating} size={20} readonly className="mb-2" />
+          <p className="mb-0">
+            Published on {book?.publication_date?.slice(0, 10)}
+          </p>
+          <Rating
+            allowFraction
+            initialValue={avgRating}
+            size={20}
+            readonly
+            className="mb-2"
+          />
           <p className="h5 text-success fw-bold mb-3">${book?.price}</p>
-          <p className="pe-5 text-justify w-75">
+          <p className="pe-5 text-justify">
             Interdum velit laoreet id donec ultrices tincidunt. Purus faucibus
             ornare suspendisse sed. Vitae congue mauris rhoncus aenean vel. A
             cras semper auctor neque vitae tempus quam pellentesque nec.
@@ -222,7 +231,7 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
           </div>
 
           {book?.createdBy === user?.email && (
-            <div className="mt-3">
+            <div className="d-flex mt-3 flex-wrap" style={{ gap: '8px'}}>
               <Button
                 onClick={() => navigate(`/editbook/${book._id!}`)}
                 className="me-2"
@@ -237,7 +246,9 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
             </div>
           )}
         </Col>
-        <RelatedBooksSlider relatedBooks={relatedBooks} />
+        <Col xs={12} md={12} lg={3} className="mt-5 mt-lg-0">
+          <RelatedBooksSlider relatedBooks={relatedBooks} />
+        </Col>
       </Row>
     </>
   );

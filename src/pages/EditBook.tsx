@@ -79,7 +79,7 @@ const EditBook = () => {
       />
       <CustomBreadCrumb Menu1="Home" Menu2="All Books" activeMenu="Edit Book" />
       <Stack className="background-banner justify-content-center">
-        <Container className="w-50 px-5 pb-5 m-5 mx-auto shadow border-none rounded-3 bg-form">
+      <div className="add-book-card px-3 px-sm-5 pb-5 m-5 mx-auto shadow border-none rounded-3 bg-form">
           <CustomHeading headTitle="Edit Book" />
           <Form onSubmit={handleSumbit}>
             <Row>
@@ -168,7 +168,7 @@ const EditBook = () => {
               Update Book
             </Button>
           </Form>
-        </Container>
+        </div>
       </Stack>
     </div>
   );

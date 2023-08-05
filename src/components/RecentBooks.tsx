@@ -20,9 +20,9 @@ const RecentBooks = () => {
         headTitle="Recently Added"
         paragraph="Reading helps you developing your communication skills "
       />
-      <Row className="justify-content-center mx-md-5 mx-2">
+      <Row className="justify-content-center mx-md-5 mx-1">
         {reversedBooks?.slice(0, 10).map((book: IBook, i: number) => (
-          <Col md={4} lg={3} className="mb-3" key={i}>
+          <Col sm={6} lg={4} xl={3} className="mb-3" key={i}>
             <BookCard book={book} />
           </Col>
         ))}

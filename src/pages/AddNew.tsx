@@ -1,4 +1,4 @@
-import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
+import { Button, Col, Form, Row, Stack } from "react-bootstrap";
 import { genres } from "../utils/constants";
 import { FormEvent, useEffect, useState } from "react";
 import { useAppSelector } from "../redux/features/hook";
@@ -7,7 +7,6 @@ import { useCreateBookMutation } from "../redux/features/books/bookApi";
 import ToastMessage from "../shared/ToastMessage";
 import { useNavigate } from "react-router-dom";
 import "./AddNew.css";
-// import CustomBreadCrumb from "../components/CustomBreadCrumb";
 import CustomHeading from "../shared/CustomHeading";
 import CustomBreadCrumb from "../shared/CustomBreadCrumb";
 
@@ -73,8 +72,9 @@ const AddNew = () => {
       />
       <CustomBreadCrumb Menu1="Home" Menu2="All Books" activeMenu="Add New" />
       <Stack className="background-banner justify-content-center">
-        <Container className="w-50 px-5 pb-5 m-5 mx-auto shadow border-none rounded-3 bg-form">
-          <CustomHeading headTitle="Add New Book"/>
+        <div className="add-book-card px-3 px-sm-5 pb-5 m-5 mx-auto shadow border-none rounded-3 bg-form">
+          <CustomHeading headTitle="Add New Book" />
+
           <Form onSubmit={handleSumbit}>
             <Row>
               <Col xs={12} md={6}>
@@ -104,14 +104,14 @@ const AddNew = () => {
               <Col xs={12} md={6}>
                 <Form.Group className="mb-2" controlId="bookGenre">
                   <Form.Label className="fw-bold">Genre</Form.Label>
-                  <Form.Control as="select" name="genre" required>
+                  <Form.Select name="genre" required>
                     <option value="">Select genre</option>
                     {genres?.map((genre) => (
                       <option key={genre} value={genre}>
                         {genre}
                       </option>
                     ))}
-                  </Form.Control>
+                  </Form.Select>
                 </Form.Group>
               </Col>
               <Col xs={12} md={6}>
@@ -149,7 +149,7 @@ const AddNew = () => {
               Add Book
             </Button>
           </Form>
-        </Container>
+        </div>
       </Stack>
     </div>
   );

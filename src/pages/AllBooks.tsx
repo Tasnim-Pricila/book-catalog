@@ -12,6 +12,7 @@ import { useGetBooksQuery } from "../redux/features/books/bookApi";
 
 import BookCard from "../components/BookCard";
 import Loading from "../shared/Loading";
+import CustomBreadCrumb from "../shared/CustomBreadCrumb";
 
 const AllBooks = () => {
   const dispatch = useAppDispatch();
@@ -73,18 +74,20 @@ const AllBooks = () => {
     books = bookData?.data;
   }
 
-  if(isLoading){
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
     <>
+      <CustomBreadCrumb Menu1="Home" activeMenu="All Books" />
+
       <Stack
         gap={3}
         className="d-flex flex-md-row flex-column mb-5 px-md-5 mx-md-5 mx-2 mt-5"
       >
         <Form.Select
-          style={{ flex: 1/2 }}
+          style={{ flex: 1 / 2 }}
           onChange={(e) => dispatch(setGenre(e.target.value))}
         >
           <option key="" value="">
@@ -97,7 +100,7 @@ const AllBooks = () => {
           ))}
         </Form.Select>
         <Form.Select
-          style={{ flex: 1/2 }}
+          style={{ flex: 1 / 2 }}
           onChange={(e) => dispatch(setPublicationDate(e.target.value))}
         >
           <option key="" value="">

@@ -48,7 +48,7 @@ const BookCard = ({ book }: IProps) => {
   useEffect(() => {
     let sum = 0;
     book?.reviews?.forEach((review) => {
-      sum = sum + review.rating!;
+      sum = sum + review.rating;
       setAvgRating(sum / book.reviews!.length);
     });
   }, [avgRating, book?.reviews]);
@@ -94,7 +94,7 @@ const BookCard = ({ book }: IProps) => {
         variant={isSuccess ? "success" : "danger"}
       />
       <Card>
-        <div className="d-flex flex-md-row flex-column">
+        <div className="d-flex">
           <div className="image-container">
             <Image
               role="button"
@@ -113,7 +113,7 @@ const BookCard = ({ book }: IProps) => {
             </small>
           </div>
 
-          <Card.Body style={{ minWidth: 0 }}>
+          <Card.Body style={{ minWidth: 0 }} className="px-2">
             <Card.Title className="text-truncate">{book?.title}</Card.Title>
             
             <Card.Text className="text-truncate mb-0">{book?.author}</Card.Text>

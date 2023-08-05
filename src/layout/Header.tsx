@@ -33,7 +33,7 @@ const Header = () => {
       <Navbar
         collapseOnSelect
         expand="lg"
-        className="px-md-5"
+        className="px-2 px-md-5"
         bg="dark" data-bs-theme="dark"
         sticky="top"
         style={{ height: "10vh"}}
