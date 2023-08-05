@@ -32,7 +32,7 @@ const Banner = () => {
                     className="mt-2"
                     style={{ fontSize: 60 }}
                   >
-                    Read <span className="text-success">PDF Books </span> Online
+                    Read <span className="text-success">PDF Books </span> <br /> Online
                   </h1>
                   <p
                     data-aos="fade-up"

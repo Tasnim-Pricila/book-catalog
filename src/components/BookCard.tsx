@@ -114,7 +114,7 @@ const BookCard = ({ book }: IProps) => {
           </div>
 
           <Card.Body style={{ minWidth: 0 }} className="px-2">
-            <Card.Title className="text-truncate">{book?.title}</Card.Title>
+            <Card.Title className="text-truncate fw-bold">{book?.title}</Card.Title>
             
             <Card.Text className="text-truncate mb-0">{book?.author}</Card.Text>
             <Card.Text className="mb-0">{book?.publication_date?.slice(0, 10)}</Card.Text>

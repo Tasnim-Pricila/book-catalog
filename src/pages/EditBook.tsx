@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { genres } from "../utils/constants";
-import { Button, Col, Container, Form, Row, Stack } from "react-bootstrap";
+import { Button, Col, Form, Row, Stack } from "react-bootstrap";
 import { useEffect, useState, FormEvent } from "react";
 import { IError } from "../types/globalTypes";
 import {

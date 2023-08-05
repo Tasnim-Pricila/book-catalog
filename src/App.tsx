@@ -12,6 +12,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import './App.css'
 // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 AOS.init();
 
