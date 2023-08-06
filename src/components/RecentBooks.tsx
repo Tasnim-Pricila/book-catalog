@@ -4,6 +4,7 @@ import { IBook } from "../types/globalTypes";
 import BookCard from "./BookCard";
 import Loading from "../shared/Loading";
 import CustomHeading from "../shared/CustomHeading";
+import './style.css'
 
 const RecentBooks = () => {
   const { data: bookData, isLoading } = useGetBooksQuery(undefined);
@@ -14,20 +15,20 @@ const RecentBooks = () => {
   }
   
   return (
-    <>
+    <div className="card-background">
       <CustomHeading
         smallTitle="Read New"
         headTitle="Recently Added"
         paragraph="Reading helps you developing your communication skills "
       />
-      <Row className="justify-content-center mx-md-5 mx-1">
-        {reversedBooks?.slice(0, 10).map((book: IBook, i: number) => (
-          <Col sm={6} lg={4} xl={3} className="mb-3" key={i}>
+      <Row className="justify-content-center mx-md-5 mx-1 pb-5" >
+        {reversedBooks?.slice(0, 8).map((book: IBook, i: number) => (
+          <Col sm={6} lg={4} xl={3} className="mb-4" key={i}>
             <BookCard book={book} />
           </Col>
         ))}
       </Row>
-    </>
+    </div>
   );
 };
 

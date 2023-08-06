@@ -93,14 +93,14 @@ const BookCard = ({ book }: IProps) => {
         message={isSuccess ? "Changes Saved" : errorMessage}
         variant={isSuccess ? "success" : "danger"}
       />
-      <Card>
+      <Card className="border-0 book-card">
         <div className="d-flex">
           <div className="image-container">
             <Image
               role="button"
               src={isValidUrl(book.image!) ? book?.image : demoImage}
               alt="fgfgggggg"
-              className=""
+              className="rounded-3"
               width="150"
               height="240"
               onClick={() => navigate(`/bookdetails/${book._id!}`)}
@@ -116,9 +116,9 @@ const BookCard = ({ book }: IProps) => {
           <Card.Body style={{ minWidth: 0 }} className="px-2">
             <Card.Title className="text-truncate fw-bold">{book?.title}</Card.Title>
             
-            <Card.Text className="text-truncate mb-0">{book?.author}</Card.Text>
-            <Card.Text className="mb-0">{book?.publication_date?.slice(0, 10)}</Card.Text>
-            <Card.Text className="text-muted mb-0"> {book?.genre}</Card.Text>
+            <Card.Text className="text-truncate mb-0" style={{color:"#121823"}}>{book?.author}</Card.Text>
+            <Card.Text className="mb-0 text-muted">{book?.publication_date?.slice(0, 10)}</Card.Text>
+            <Card.Text className="text-muted mb-0" > {book?.genre}</Card.Text>
             <div className="my-2">
               <Rating
                 allowFraction

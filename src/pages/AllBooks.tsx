@@ -9,10 +9,12 @@ import {
 import { Link } from "react-router-dom";
 import { IBook } from "../types/globalTypes";
 import { useGetBooksQuery } from "../redux/features/books/bookApi";
-
 import BookCard from "../components/BookCard";
 import Loading from "../shared/Loading";
 import CustomBreadCrumb from "../shared/CustomBreadCrumb";
+import ResponsivePagination from "react-responsive-pagination";
+import "react-responsive-pagination/themes/classic.css";
+import { useState } from "react";
 
 const AllBooks = () => {
   const dispatch = useAppDispatch();
@@ -73,6 +75,12 @@ const AllBooks = () => {
   } else {
     books = bookData?.data;
   }
+  const [currentPage, setCurrentPage] = useState(1);
+  const length: number | undefined = bookData?.data?.length;
+  const itemsPerPage = 12
+  const totalPages = Math.ceil(length! / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage; 
+  const endIndex = startIndex + itemsPerPage;
 
   if (isLoading) {
     return <Loading />;
@@ -88,6 +96,7 @@ const AllBooks = () => {
       >
         <Form.Select
           style={{ flex: 1 / 2 }}
+          value={genre}
           onChange={(e) => dispatch(setGenre(e.target.value))}
         >
           <option key="" value="">
@@ -101,6 +110,7 @@ const AllBooks = () => {
         </Form.Select>
         <Form.Select
           style={{ flex: 1 / 2 }}
+          value={publicationDate}
           onChange={(e) => dispatch(setPublicationDate(e.target.value))}
         >
           <option key="" value="">
@@ -132,12 +142,19 @@ const AllBooks = () => {
       </Stack>
 
       <Row className="justify-content-center mx-md-5 mx-2">
-        {books?.map((book: IBook, i: number) => (
+        {books?.slice(startIndex, endIndex).map((book: IBook, i: number) => (
           <Col md={6} xl={3} className="mb-3" key={i}>
             <BookCard book={book} />
           </Col>
         ))}
       </Row>
+      <div className="my-5">
+        <ResponsivePagination
+          current={currentPage}
+          total={totalPages}
+          onPageChange={setCurrentPage}
+        />
+      </div>
     </>
   );
 };

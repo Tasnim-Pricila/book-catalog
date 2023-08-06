@@ -1,0 +1,67 @@
+.first-col{
+    background: url('../assets//images/fiction.jpg');
+    background-repeat: no-repeat;
+    height: 45vh;
+    background-size: cover;
+    border-radius: 3%;
+    position: relative;
+    background-position: center;
+}
+.second-col{
+    background: url('../assets//images/cooking.jpg');
+    background-repeat: no-repeat;
+    height: 45vh;
+    background-size: cover;
+    border-radius: 3%;
+    position: relative;
+    background-position: center;
+}
+.third-col{
+    background: url('../assets//images/fantasy.jpg');
+    background-repeat: no-repeat;
+    height: 94vh;
+    background-size: cover;
+    border-radius: 3%;
+    position: relative;
+    background-position: center;
+}
+.fourth-col{
+    background: url('../assets//images/music.jpg');
+    background-repeat: no-repeat;
+    height: 45vh;
+    background-size: cover;
+    background-position: bottom;
+    border-radius: 3%;
+    position: relative;
+    background-position: center;
+}
+.fifth-col{
+    background: url('../assets//images/history.jpg');
+    background-repeat: no-repeat;
+    height: 45vh;
+    background-size: cover;
+    border-radius: 3%;
+    position: relative;
+    background-position: center;
+}
+.category-text{
+    background-color: rgba(255, 255, 255, 0.834);
+    font-weight: bolder;
+    position: absolute;
+    width: 80%;
+    bottom: 0%;
+    display: none;
+    transition-duration: 4s;
+}
+.category-text .second-line{
+    color: rgb(87, 85, 85);
+}
+.hover-col {
+    transition-duration: 4s;
+    cursor: pointer;
+}
+.hover-col:hover .category-text{
+    display: block;
+    bottom: 10%;
+    transition-duration: 4s;
+}

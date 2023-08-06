@@ -111,10 +111,10 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
           />
         </Col>
         <Col xs={12} md={7} lg={5} xl={6}>
-          <small>{book?.genre}</small>
-          <h2>{book?.title}</h2>
-          <p className="mb-1">By {book?.author}</p>
-          <p className="mb-0">
+          <small className="text-muted">{book?.genre}</small>
+          <h2 className="fw-bold">{book?.title}</h2>
+          <p className="mb-1" style={{color:"#121823"}}>By {book?.author}</p>
+          <p className="mb-0 text-muted">
             Published on {book?.publication_date?.slice(0, 10)}
           </p>
           <Rating

@@ -20,7 +20,7 @@
   left: 0;
   right: 0;
   top: 45%;
-  background-color: violet;
+  background-color: #0dcaf0;
   text-align: center;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -30,3 +30,12 @@
 .image-container:hover img {
   opacity: 0.7;
 }
+.card-background{
+  background: url('../assets/images/card-bg.avif');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+/* .book-card:hover{
+  box-shadow: black;
+} */
