@@ -1,6 +1,6 @@
 .background-banner{
-    background-image: url('../../src/assets/images/high-angle-open-book_23-2148568913.avif');
-    min-height: 100vh;
+    background-image: url('../../src/assets/images/book-turning-pages-cup_1150-147.avif');
+    min-height: 130vh;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -8,7 +8,7 @@
 }
 
 .bg-form{
-    background-color: antiquewhite;
+    background-color: rgba(250, 235, 215, 0.49);
 }
 .add-book-card{
     width: 75%;
