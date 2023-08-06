@@ -1,12 +1,12 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Card, Col, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import {
-  faFacebook,
-  faGoogle,
-  faInstagram,
-  faTwitter,
-} from "@fortawesome/free-brands-svg-icons";
+// import {
+//   faFacebook,
+//   faGoogle,
+//   faInstagram,
+//   faTwitter,
+// } from "@fortawesome/free-brands-svg-icons";
 import { errorHandle, loginUser } from "../redux/features/users/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/features/hook";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -121,7 +121,7 @@ const SignIn = () => {
                   </p>
 
                   {/* <!-- Register Buttons --> */}
-                  <div className="text-center">
+                  {/* <div className="text-center">
                     <p>or sign up with:</p>
                     <Button className="btn btn-link btn-floating mx-1">
                       <FontAwesomeIcon icon={faFacebook} />
@@ -138,7 +138,7 @@ const SignIn = () => {
                     <Button className="btn btn-link btn-floating mx-1">
                       <FontAwesomeIcon icon={faInstagram} />
                     </Button>
-                  </div>
+                  </div> */}
                 </Form>
               </Card.Body>
             </Card>
