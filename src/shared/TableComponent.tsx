@@ -1,12 +1,13 @@
 import { Table } from "react-bootstrap";
 import { IBook } from "../types/globalTypes";
+import './CustomBreadCrumb.css'
 
 const TableComponent = ({ data }: { data: IBook[] | undefined }) => {
   // console.log(data);
   return (
     <>
       {data?.length !== undefined ? (
-        <Table responsive className="mx-4 my-4 text-center">
+        <Table responsive hover className="mx-4 my-4 text-center mx-auto" style={{width: 1200}}>
           <thead>
             <tr>
               <th>#</th>
@@ -31,7 +32,7 @@ const TableComponent = ({ data }: { data: IBook[] | undefined }) => {
                     height={50}
                   />
                 </td>
-                <td>{data.title}</td>
+                <td className="nowrap-cell">{data.title}</td>
                 <td>{data.author}</td>
                 <td>{data.genre}</td>
                 <td>{data.publication_date?.slice(0, 10)}</td>

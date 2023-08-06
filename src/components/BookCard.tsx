@@ -76,6 +76,7 @@ const BookCard = ({ book }: IProps) => {
       navigate
     );
   };
+  const errorMessage = (error as IError)?.error as string;
 
   useEffect(() => {
     if (isSuccess || isError) {
@@ -83,7 +84,6 @@ const BookCard = ({ book }: IProps) => {
     }
   }, [isSuccess, isError]);
 
-  const errorMessage = (error as IError)?.error as string;
 
   return (
     <div>

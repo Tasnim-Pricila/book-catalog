@@ -6,8 +6,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./lib/firebase";
 import { useEffect } from "react";
 import { setLoading, setUser } from "./redux/features/users/userSlice";
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from "react-toastify";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import 'slick-carousel/slick/slick.css';
@@ -36,7 +34,6 @@ function App() {
   return (
     <>
       <MainLayout />
-      <ToastContainer/>
     </>
   );
 }

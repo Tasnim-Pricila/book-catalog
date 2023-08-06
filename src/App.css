@@ -4,3 +4,11 @@ body {
   font-family: "Fira Sans", sans-serif;
   font-family: "Mulish", sans-serif;
 }
+.toast-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9999; /* Set a high z-index to ensure the container appears on top of other content */
+  overflow-y: auto; /* Enable vertical scrolling when the content overflows */
+  max-height: 100vh; /* Set a maximum height to avoid taking up the whole viewport */
+}

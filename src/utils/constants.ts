@@ -52,7 +52,7 @@ export const genres = [
     'Gothic',
     'Magical Realism',
     'Epic Poetry',
-  ];
+  ].sort();
 
   const currentYear = new Date().getFullYear();
   export const years = Array.from(
