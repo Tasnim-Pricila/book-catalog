@@ -14,7 +14,7 @@ import CustomBreadCrumb from "../shared/CustomBreadCrumb";
 import {
   getDownloadURL,
   ref,
-  uploadBytes,
+  // uploadBytes,
   uploadBytesResumable,
 } from "firebase/storage";
 import { storage } from "../lib/firebase";
@@ -33,7 +33,6 @@ const AddNew = () => {
   useEffect(() => {
     if (isSuccess) {
       handleShow();
-      setFile("");
       setTimeout(() => {
         navigate("/allbooks");
       }, 1500);
@@ -67,19 +66,20 @@ const AddNew = () => {
 
     if (!file) return;
     // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-    const fileName = Date.now() + file.name;
+    const fileName = file.name + Date.now() ;
     // const storageRef = ref(storage, `/files/${file.name}`);
     const storageRef = ref(storage, `/files/${fileName}`);
-    uploadBytes(storageRef, file)
-      .then(() => {
-        // ... rest of the code ...
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // uploadBytes(storageRef, file)
+    //   .then(() => {
+    //     // ... rest of the code ...
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
 
-    // generate link
-    const uploadTask = uploadBytesResumable(storageRef);
+    // upload file 
+    const uploadTask = uploadBytesResumable(storageRef, file);
+    // progress and generate link
     uploadTask.on(
       "state_changed",
       (snapshot) => {
