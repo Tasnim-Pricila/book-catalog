@@ -12,6 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 import WishList from "../pages/WishList";
 import Reading from "../pages/Reading";
 import ReadedBooks from "../pages/ReadedBooks";
+import ReadBook from "../pages/ReadBook";
 
 const routes = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const routes = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      // {
+      //   path: "/read-book",
+      //   element: <ReadBook />,
+      // },
       {
         path: "/signin",
         element: <SignIn />,

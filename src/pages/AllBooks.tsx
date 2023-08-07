@@ -88,7 +88,6 @@ const AllBooks = () => {
   const totalPages = Math.ceil(length! / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
-  console.log(currentPage);
 
   if (isLoading) {
     return <Loading />;

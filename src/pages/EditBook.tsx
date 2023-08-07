@@ -67,7 +67,8 @@ const EditBook = () => {
       handleShow();
     }
   }, [isSuccess, id, isError, navigate]);
-  const errorMessage = (error as IError)?.error as string;
+  
+  const errorMessage = (error as IError)?.data?.message;
 
   return (
     <div>

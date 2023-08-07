@@ -14,7 +14,7 @@ import {
 import { useAppSelector } from "../redux/features/hook";
 import { useEffect, useState } from "react";
 import ToastMessage from "../shared/ToastMessage";
-import { Image, OverlayTrigger, Tooltip } from "react-bootstrap";
+import {  Image, OverlayTrigger, Tooltip } from "react-bootstrap";
 import demoImage from "../../src/assets/images/book.jpg";
 import {
   isValidUrl,
@@ -76,14 +76,13 @@ const BookCard = ({ book }: IProps) => {
       navigate
     );
   };
-  const errorMessage = (error as IError)?.error as string;
+  const errorMessage = (error as IError)?.data?.message;
 
   useEffect(() => {
     if (isSuccess || isError) {
       handleShow();
     }
   }, [isSuccess, isError]);
-
 
   return (
     <div>
@@ -102,7 +101,7 @@ const BookCard = ({ book }: IProps) => {
               alt="fgfgggggg"
               className="rounded-3"
               width="150"
-              height="240"
+              height="100%"
               onClick={() => navigate(`/bookdetails/${book._id!}`)}
             />
             <small
@@ -114,11 +113,23 @@ const BookCard = ({ book }: IProps) => {
           </div>
 
           <Card.Body style={{ minWidth: 0 }} className="px-2">
-            <Card.Title className="text-truncate fw-bold">{book?.title}</Card.Title>
-            
-            <Card.Text className="text-truncate mb-0" style={{color:"#121823"}}>{book?.author}</Card.Text>
-            <Card.Text className="mb-0 text-muted">{book?.publication_date?.slice(0, 10)}</Card.Text>
-            <Card.Text className="text-muted mb-0" > {book?.genre}</Card.Text>
+            <Card.Title className="text-truncate fw-bold">
+              {book?.title}
+            </Card.Title>
+
+            <Card.Text
+              className="text-truncate mb-0"
+              style={{ color: "#121823" }}
+            >
+              {book?.author}
+            </Card.Text>
+            <Card.Text className="mb-0 text-muted">
+              {book?.publication_date?.slice(0, 10)}
+            </Card.Text>
+            <Card.Text className="text-truncate text-muted mb-0">
+              {" "}
+              {book?.genre}
+            </Card.Text>
             <div className="my-2">
               <Rating
                 allowFraction
@@ -128,6 +139,12 @@ const BookCard = ({ book }: IProps) => {
               />
             </div>
             <Card.Text className="fw-bold mb-1">${book?.price}</Card.Text>
+            {/* <Button variant="link"> */}
+              <a href={book?.pdfFileUrl} target="_blank" className="my-1 d-inline-block text-decoration-none" >
+                Read Now
+              </a>
+            {/* </Button> */}
+
             <div>
               <>
                 {userWishlist?.find((wishlist) => wishlist._id === book._id) ? (

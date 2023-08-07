@@ -45,7 +45,7 @@ const DeleteBookModal = ({ id }: IProps) => {
     }
   }, [isSuccess, isError, navigate]);
 
-  const errorMessage = (error as IError)?.error as string;
+  const errorMessage = (error as IError)?.data?.message;
 
   return (
     <>

@@ -77,7 +77,7 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
     );
   };
 
-  const errorMessage = (error as IError)?.error as string;
+  const errorMessage = (error as IError)?.data?.message;
   useEffect(() => {
     if (isSuccess || isError) {
       handleShow();
