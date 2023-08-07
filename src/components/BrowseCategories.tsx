@@ -4,6 +4,7 @@ import "./BrowseCategories.css";
 import { useAppDispatch } from "../redux/features/hook";
 import { setGenre } from "../redux/features/books/bookSlice";
 import { useNavigate } from "react-router-dom";
+import { goToTop } from "../utils/customFunction";
 
 const BrowseCategories = () => {
   const dispatch = useAppDispatch();
@@ -11,6 +12,7 @@ const BrowseCategories = () => {
   const handleClick = (value: string) => {
     navigate("/allbooks");
     dispatch(setGenre(value));
+    goToTop();
   };
   return (
     <>
@@ -22,7 +24,8 @@ const BrowseCategories = () => {
       />
       <Row className="justify-content-center mx-md-5 mx-1 mb-5">
         <Col lg={3} className="pe-5">
-          <Row
+          <Row data-aos="fade-right"
+            data-aos-duration="3000"
             className="hover-col first-col mb-4"
             onClick={() => handleClick("Fiction")}
           >
@@ -33,7 +36,8 @@ const BrowseCategories = () => {
               </div>
             </Col>
           </Row>
-          <Row
+          <Row data-aos="fade-right"
+            data-aos-duration="3000"
             className="hover-col fourth-col mb-4 mb-lg-0"
             onClick={() => handleClick("Music")}
           >
@@ -46,7 +50,8 @@ const BrowseCategories = () => {
           </Row>
         </Col>
         <Col lg={3}>
-          <Row
+          <Row data-aos="fade-down"
+            data-aos-duration="3000"
             className="hover-col second-col mb-4"
             onClick={() => handleClick("Cooking")}
           >
@@ -57,9 +62,10 @@ const BrowseCategories = () => {
               </div>
             </Col>
           </Row>
-          <Row
+          <Row data-aos="fade-up"
+            data-aos-duration="3000"
             className="hover-col fifth-col mb-4 mb-lg-0"
-            onClick={() => handleClick("Historical Fiction")}
+            onClick={() => handleClick("History")}
           >
             <Col xs={12}>
               <div className="category-text mx-3 px-3 py-2 rounded-3">
@@ -70,7 +76,8 @@ const BrowseCategories = () => {
           </Row>
         </Col>
         <Col lg={6} className=" ps-0 ps-lg-5">
-          <Row
+          <Row data-aos="fade-left"
+            data-aos-duration="3000"
             className="hover-col third-col"
             onClick={() => handleClick("Fantasy")}
           >

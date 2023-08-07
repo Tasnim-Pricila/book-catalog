@@ -15,6 +15,7 @@ import CustomBreadCrumb from "../shared/CustomBreadCrumb";
 import ResponsivePagination from "react-responsive-pagination";
 import "react-responsive-pagination/themes/classic.css";
 import { useEffect, useState } from "react";
+import { goToTop } from "../utils/customFunction";
 
 const AllBooks = () => {
   const dispatch = useAppDispatch();
@@ -141,7 +142,7 @@ const AllBooks = () => {
         </Form>
         {user.email && (
           <Button variant="success">
-            <Link to="/addnew" className="text-decoration-none text-white">
+            <Link to="/addnew" onClick={goToTop} className="text-decoration-none text-white">
               + Add New
             </Link>
           </Button>

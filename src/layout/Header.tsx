@@ -15,6 +15,7 @@ import {
   faSignOut,
 } from "@fortawesome/free-solid-svg-icons";
 import { OverlayTrigger, Stack, Tooltip } from "react-bootstrap";
+import { goToTop } from "../utils/customFunction";
 
 const Header = () => {
   const { user } = useAppSelector((state) => state.user);
@@ -28,6 +29,7 @@ const Header = () => {
         console.error(error);
       });
   };
+  
   return (
     <>
       <Navbar
@@ -39,7 +41,7 @@ const Header = () => {
         style={{ height: "10vh"}}
       >
         <Navbar.Brand>
-          <Link to="/" className="text-decoration-none text-info fw-bold">
+          <Link to="/" onClick={goToTop} className="text-decoration-none text-info fw-bold">
             <FontAwesomeIcon icon={faBookOpen }></FontAwesomeIcon> Book Wheel
           </Link>
         </Navbar.Brand>
@@ -52,7 +54,7 @@ const Header = () => {
           >
             {user.email && (
               <Stack direction="horizontal" gap={3} className="me-5 d-flex align-items-center justify-content-center ps-5 ps-md-0">
-                <Link to="/wishlist">
+                <Link to="/wishlist" onClick={goToTop}>
                   <OverlayTrigger
                     placement="bottom"
                     delay={{ hide: 450, show: 300 }}
@@ -66,7 +68,7 @@ const Header = () => {
                     ></FontAwesomeIcon>
                   </OverlayTrigger>
                 </Link>
-                <Link to="/reading">
+                <Link to="/reading" onClick={goToTop}>
                   <OverlayTrigger
                     placement="bottom"
                     delay={{ hide: 450, show: 300 }}
@@ -80,7 +82,7 @@ const Header = () => {
                     ></FontAwesomeIcon>
                   </OverlayTrigger>
                 </Link>
-                <Link to="/readedBooks">
+                <Link to="/readedBooks" onClick={goToTop}>
                   <OverlayTrigger
                     placement="bottom"
                     delay={{ hide: 450, show: 300 }}
@@ -104,6 +106,7 @@ const Header = () => {
                   ? "text-info text-decoration-none"
                   : "text-decoration-none text-white"
               }
+              onClick={goToTop}
             >
               All Books
             </NavLink>
@@ -112,6 +115,7 @@ const Header = () => {
               <>
                 <NavLink
                   to="/addnew"
+                  onClick={goToTop}
                   className={({ isActive }) =>
                     isActive
                       ? "text-info text-decoration-none"
@@ -136,6 +140,7 @@ const Header = () => {
               <>
                 <NavLink
                   to="/signin"
+                  onClick={goToTop}
                   className={({ isActive }) =>
                     isActive
                       ? "text-info text-decoration-none"
@@ -146,6 +151,7 @@ const Header = () => {
                 </NavLink>
                 <NavLink
                   to="/signup"
+                  onClick={goToTop}
                   className={({ isActive }) =>
                     isActive
                       ? "text-info text-decoration-none pb-2 pb-lg-0"

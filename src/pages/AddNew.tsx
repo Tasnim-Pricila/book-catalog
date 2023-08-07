@@ -201,7 +201,7 @@ const AddNew = () => {
                 placeholder="Enter image link"
               />
             </Form.Group>
-            <Form.Label className="fw-bold">Uplod Pdf</Form.Label>
+            <Form.Label className="fw-bold">Upload Pdf</Form.Label>
             <input
               type="file"
               name="files"

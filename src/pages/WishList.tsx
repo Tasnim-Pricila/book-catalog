@@ -5,13 +5,13 @@ import TableComponent from "../shared/TableComponent";
 
 const WishList = () => {
   const { user } = useAppSelector((state) => state.user);
-  const { data: userData } = useGetUserByEmailQuery(user.email!);
+  const { data: userData, isLoading } = useGetUserByEmailQuery(user.email!);
 
   const wishlist = userData?.data?.wishlist;
   return(
   <>
     <CustomBreadCrumb Menu1="Home" activeMenu="Your Wishlist" />
-    <TableComponent data={wishlist} />;
+    <TableComponent data={wishlist} loading={isLoading} />;
   </>
 )};
 

@@ -2,8 +2,10 @@ import { Button, Carousel, Col, Row } from "react-bootstrap";
 import banner1 from "../../src/assets/images/reading-books.png";
 import banner2 from "../../src/assets/images/girl-reading-books-online.png";
 import banner3 from "../../src/assets/images/girl-searching-online.png";
+import { useNavigate } from "react-router-dom";
 
 const Banner = () => {
+  const navigate = useNavigate()
   return (
     <div>
       <Carousel
@@ -49,6 +51,7 @@ const Banner = () => {
                   data-aos-duration="2000"
                   variant="success"
                   className="mt-4 py-3 px-4"
+                  onClick={() => navigate('/allbooks')}
                 >
                   Explore Now
                 </Button>

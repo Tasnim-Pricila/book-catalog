@@ -56,7 +56,7 @@ const DeleteBookModal = ({ id }: IProps) => {
         variant={isSuccess ? "success" : "danger"}
       />
 
-      <Button variant="danger" onClick={handleModalShow}>
+      <Button variant="danger" onClick={handleModalShow} className="btn-sm">
         <FontAwesomeIcon icon={faTrash} className="me-1"></FontAwesomeIcon>{" "}
         Delete Book
       </Button>
@@ -66,7 +66,7 @@ const DeleteBookModal = ({ id }: IProps) => {
         </Modal.Header>
         <Modal.Body>Are you sure you want to delete this book?</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleDelete()}>
+          <Button variant="danger" onClick={() => handleDelete()}>
             Yes
           </Button>
           <Button variant="primary" onClick={handleModalClose}>

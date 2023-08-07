@@ -7,6 +7,7 @@ import {
   Tooltip,
 } from "react-bootstrap";
 import {
+  goToTop,
   isValidUrl,
   updateCompletedBooks,
   updateCurrentlyReading,
@@ -17,7 +18,8 @@ import {
   faBookOpenReader,
   faCircleCheck,
   faEdit,
-  faHeart,
+  faExternalLink,
+  faHeart
 } from "@fortawesome/free-solid-svg-icons";
 import DeleteBookModal from "./DeleteBookModal";
 import { useNavigate } from "react-router-dom";
@@ -113,7 +115,9 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
         <Col xs={12} md={7} lg={5} xl={6}>
           <small className="text-muted">{book?.genre}</small>
           <h2 className="fw-bold">{book?.title}</h2>
-          <p className="mb-1" style={{color:"#121823"}}>By {book?.author}</p>
+          <p className="mb-1" style={{ color: "#121823" }}>
+            By {book?.author}
+          </p>
           <p className="mb-0 text-muted">
             Published on {book?.publication_date?.slice(0, 10)}
           </p>
@@ -130,6 +134,13 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
             ornare suspendisse sed. Vitae congue mauris rhoncus aenean vel. A
             cras semper auctor neque vitae tempus quam pellentesque nec.
           </p>
+          <a
+            href={book?.pdfFileUrl}
+            target="_blank"
+            className="my-1 d-inline-block text-decoration-none bg-primary text-white px-3 py-2"
+          >
+            Read Now <FontAwesomeIcon icon={faExternalLink} className="ps-2"></FontAwesomeIcon>
+          </a>
           <div className="mt-4">
             <>
               {userWishlist?.find((wishlist) => wishlist._id === book._id) ? (
@@ -231,10 +242,13 @@ const BookDetailRow = ({ book, relatedBooks }: IProps) => {
           </div>
 
           {book?.createdBy === user?.email && (
-            <div className="d-flex mt-3 flex-wrap" style={{ gap: '8px'}}>
+            <div className="d-flex mt-3 flex-wrap" style={{ gap: "8px" }}>
               <Button
-                onClick={() => navigate(`/editbook/${book._id!}`)}
-                className="me-2"
+                onClick={() => {
+                  navigate(`/editbook/${book._id!}`);
+                  goToTop();
+                }}
+                className="me-2 btn-sm"
               >
                 <FontAwesomeIcon
                   icon={faEdit}

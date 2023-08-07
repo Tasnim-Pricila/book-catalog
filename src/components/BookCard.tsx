@@ -17,6 +17,7 @@ import ToastMessage from "../shared/ToastMessage";
 import {  Image, OverlayTrigger, Tooltip } from "react-bootstrap";
 import demoImage from "../../src/assets/images/book.jpg";
 import {
+  goToTop,
   isValidUrl,
   updateCompletedBooks,
   updateCurrentlyReading,
@@ -102,11 +103,11 @@ const BookCard = ({ book }: IProps) => {
               className="rounded-3"
               width="150"
               height="100%"
-              onClick={() => navigate(`/bookdetails/${book._id!}`)}
+              onClick={() => {navigate(`/bookdetails/${book._id!}`); goToTop()}}
             />
             <small
               className="image-text"
-              onClick={() => navigate(`/bookdetails/${book._id!}`)}
+              onClick={() => {navigate(`/bookdetails/${book._id!}`); goToTop()}}
             >
               View Details
             </small>
@@ -139,11 +140,9 @@ const BookCard = ({ book }: IProps) => {
               />
             </div>
             <Card.Text className="fw-bold mb-1">${book?.price}</Card.Text>
-            {/* <Button variant="link"> */}
               <a href={book?.pdfFileUrl} target="_blank" className="my-1 d-inline-block text-decoration-none" >
                 Read Now
               </a>
-            {/* </Button> */}
 
             <div>
               <>

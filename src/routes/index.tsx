@@ -12,7 +12,7 @@ import PrivateRoute from "./PrivateRoute";
 import WishList from "../pages/WishList";
 import Reading from "../pages/Reading";
 import ReadedBooks from "../pages/ReadedBooks";
-import ReadBook from "../pages/ReadBook";
+// import ReadBook from "../pages/ReadBook";
 
 const routes = createBrowserRouter([
   {

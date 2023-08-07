@@ -55,13 +55,19 @@ const SignIn = () => {
     if (isSuccess || isError) {
       handleShow();
       setTimeout(() => {
-        dispatch(errorHandle())
+        dispatch(errorHandle());
       }, 3000);
     }
     if (user?.email && !isLoading) {
-      setTimeout(() => {
+      if (from === "/") {
+        setTimeout(() => {
+          navigate(from, { replace: true });
+          console.log(from);
+        }, 1000);
+      }
+      else{
         navigate(from, { replace: true });
-      }, 1500);
+      }
     }
   }, [user?.email, from, isLoading, navigate, isSuccess, isError, dispatch]);
 
@@ -116,8 +122,11 @@ const SignIn = () => {
                     Sign In
                   </Button>
                   <p>
-                    Not registered yet? 
-                    <Link to="/signup" className="text-decoration-none"> Signup</Link>
+                    Not registered yet?
+                    <Link to="/signup" className="text-decoration-none">
+                      {" "}
+                      Signup
+                    </Link>
                   </p>
 
                   {/* <!-- Register Buttons --> */}

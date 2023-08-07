@@ -7,6 +7,13 @@ export const isValidUrl = (url: string) => {
   return pattern.test(url);
 };
 
+export const goToTop = () => {
+  window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+  });
+}
+
 export const updateWishlist = (
   userEmail: string | null,
   book: IBook,
