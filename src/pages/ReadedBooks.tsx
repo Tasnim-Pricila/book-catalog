@@ -5,13 +5,13 @@ import TableComponent from "../shared/TableComponent";
 
 const ReadedBooks = () => {
   const { user } = useAppSelector((state) => state.user);
-  const { data: userData } = useGetUserByEmailQuery(user.email!);
+  const { data: userData, isLoading } = useGetUserByEmailQuery(user.email!);
 
   const completedBooks = userData?.data?.completedBooks;
   return (
     <>
       <CustomBreadCrumb Menu1="Home" activeMenu="Completed Books" />
-      <TableComponent data={completedBooks} />
+      <TableComponent data={completedBooks} loading={isLoading}/>
     </>
   );
 };
