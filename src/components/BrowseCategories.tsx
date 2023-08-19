@@ -76,7 +76,8 @@ const BrowseCategories = () => {
           </Row>
         </Col>
         <Col lg={6} className=" ps-0 ps-lg-5">
-          <Row data-aos="fade-left"
+          <Row 
+          data-aos="fade-down-right"
             data-aos-duration="3000"
             className="hover-col third-col"
             onClick={() => handleClick("Fantasy")}

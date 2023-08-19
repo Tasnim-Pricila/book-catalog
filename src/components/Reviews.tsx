@@ -62,7 +62,7 @@ const Reviews = ({ reviews, bookId }: IProps) => {
 
   return (
     <>
-      <CustomHeading headTitle="Reviews" />
+      <CustomHeading headTitle={`Reviews (${reviews?.length})`} />
 
       {user?.email && (
         <Form onSubmit={handleSubmit} className="d-flex">

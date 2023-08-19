@@ -6,7 +6,6 @@ import userImage from "../../src/assets/images/user.png";
 
 const ReviewCard = ({ review }: { review: IReviews }) => {
   const { data: getUser } = useGetUserByEmailQuery(review.user_email);
-
   return (
     <Row
       key={review._id}
@@ -21,8 +20,10 @@ const ReviewCard = ({ review }: { review: IReviews }) => {
         />
       </Col>
       <Col xs={8} sm={10} md={10} lg={11}>
-        <h6 className="mb-0">
-          {getUser?.data?.firstName} {getUser?.data?.lastName}
+        <h6 className="mb-0 fw-bold">
+          {(getUser?.data?.firstName || getUser?.data?.lastName)
+            ? getUser?.data?.firstName + "" + getUser?.data?.lastName
+            : review?.user_email}
         </h6>
         <Rating
           allowFraction
