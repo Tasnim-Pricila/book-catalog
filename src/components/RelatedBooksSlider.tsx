@@ -42,9 +42,7 @@ const RelatedBooksSlider = ({ relatedBooks }: IProps) => {
                     onClick={() => navigate(`/bookdetails/${book._id!}`)}
                   />
                   <Card.Body style={{ minWidth: 0 }}>
-                    <h5 className="text-truncate mb-0">
-                      {book?.title}
-                    </h5>
+                    <h5 className="text-truncate mb-0">{book?.title}</h5>
                     <Card.Text className="text-truncate mb-0">
                       {book?.author}
                     </Card.Text>

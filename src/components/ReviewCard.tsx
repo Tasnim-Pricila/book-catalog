@@ -21,7 +21,7 @@ const ReviewCard = ({ review }: { review: IReviews }) => {
       </Col>
       <Col xs={8} sm={10} md={10} lg={11}>
         <h6 className="mb-0 fw-bold">
-          {(getUser?.data?.firstName || getUser?.data?.lastName)
+          {getUser?.data?.firstName || getUser?.data?.lastName
             ? getUser?.data?.firstName + "" + getUser?.data?.lastName
             : review?.user_email}
         </h6>
