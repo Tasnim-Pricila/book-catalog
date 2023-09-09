@@ -100,6 +100,17 @@ const Header = () => {
             )}
 
             <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? "text-info text-decoration-none"
+                  : "text-decoration-none text-white"
+              }
+              onClick={goToTop}
+            >
+              Home
+            </NavLink>
+            <NavLink
               to="/allbooks"
               className={({ isActive }) =>
                 isActive
